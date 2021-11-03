@@ -1,0 +1,23 @@
+{
+  "name": "CPTWordCloud",
+  "version": "0.1.0",
+  "summary": "Framework used to create a word cloud graphic from an input of string content.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/ChronicStim/CPTWordCloud",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "ChronicStim": "support@chronicstimulation.com"
+  },
+  "source": {
+    "git": "https://github.com/ChronicStim/CPTWordCloud.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "CPTWordCloud/Classes/**/*",
+  "public_header_files": "Pod/Classes/**/*.h"
+}

@@ -1,0 +1,6 @@
+framework module CPTWordCloud {
+  umbrella header "CPTWordCloud-umbrella.h"
+
+  export *
+  module * { export * }
+}

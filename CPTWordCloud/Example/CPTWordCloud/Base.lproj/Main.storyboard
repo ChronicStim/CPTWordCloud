@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="whP-gf-Uak">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="wQg-tq-qST">
+            <objects>
+                <viewController id="whP-gf-Uak" customClass="CPTViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uEw-UM-LJ8"/>
+                        <viewControllerLayoutGuide type="bottom" id="Mvr-aV-6Um"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TpU-gO-2f1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="07F-kH-H98">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="drq-4s-iCv">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3z6-Q4-vKz">
+                                                <rect key="frame" x="37.5" y="3" width="300" height="44"/>
+                                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="sHG-h9-WkG"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Initialize Cloud">
+                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="initializeCloudButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="uD9-eA-vEF"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="3z6-Q4-vKz" firstAttribute="width" secondItem="drq-4s-iCv" secondAttribute="width" multiplier="0.8" id="JeU-ct-ksb"/>
+                                            <constraint firstAttribute="height" constant="50" id="Kgm-3A-gTx"/>
+                                            <constraint firstItem="3z6-Q4-vKz" firstAttribute="centerY" secondItem="drq-4s-iCv" secondAttribute="centerY" id="Yqe-dR-Hpf"/>
+                                            <constraint firstItem="3z6-Q4-vKz" firstAttribute="centerX" secondItem="drq-4s-iCv" secondAttribute="centerX" id="lt4-dn-Zre"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zCT-cv-pIV">
+                                        <rect key="frame" x="0.0" y="50" width="375" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BHq-NP-KVM">
+                                                <rect key="frame" x="37.5" y="3" width="300" height="44"/>
+                                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="wvF-3J-cxl"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Regenerate Cloud">
+                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="regenerateCloudButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="d6X-e8-1yN"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="BHq-NP-KVM" firstAttribute="centerY" secondItem="zCT-cv-pIV" secondAttribute="centerY" id="Ldx-Wa-NlA"/>
+                                            <constraint firstItem="BHq-NP-KVM" firstAttribute="centerX" secondItem="zCT-cv-pIV" secondAttribute="centerX" id="rwI-iF-C9A"/>
+                                            <constraint firstItem="BHq-NP-KVM" firstAttribute="width" secondItem="zCT-cv-pIV" secondAttribute="width" multiplier="0.8" id="xEF-5g-vus"/>
+                                            <constraint firstAttribute="height" constant="50" id="ymY-Zh-2pr"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJR-jj-rgm">
+                                        <rect key="frame" x="0.0" y="100" width="375" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="agn-OS-cL2">
+                                                <rect key="frame" x="37.5" y="3" width="300" height="44"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="xiW-ym-HKV"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Clear Cloud">
+                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="clearCloudButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="ZB1-WW-FZK"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="agn-OS-cL2" firstAttribute="centerX" secondItem="EJR-jj-rgm" secondAttribute="centerX" id="E2W-0v-s7D"/>
+                                            <constraint firstItem="agn-OS-cL2" firstAttribute="centerY" secondItem="EJR-jj-rgm" secondAttribute="centerY" id="zVp-ny-EYI"/>
+                                        </constraints>
+                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6eE-CK-vVb">
+                                        <rect key="frame" x="0.0" y="150" width="375" height="517"/>
+                                        <connections>
+                                            <segue destination="etU-LK-HXe" kind="embed" identifier="EmbedSegueCPTViewControllerToCPTWordCloudViewController" id="KxH-6R-wsn"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="EJR-jj-rgm" firstAttribute="height" secondItem="zCT-cv-pIV" secondAttribute="height" id="9kL-kW-TW4"/>
+                                    <constraint firstItem="agn-OS-cL2" firstAttribute="width" secondItem="BHq-NP-KVM" secondAttribute="width" id="BRA-XN-Vai"/>
+                                    <constraint firstItem="zCT-cv-pIV" firstAttribute="width" secondItem="07F-kH-H98" secondAttribute="width" id="efc-pc-C2p"/>
+                                    <constraint firstItem="EJR-jj-rgm" firstAttribute="width" secondItem="07F-kH-H98" secondAttribute="width" id="niw-Iv-fDe"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="07F-kH-H98" firstAttribute="centerY" secondItem="TpU-gO-2f1" secondAttribute="centerY" id="6At-1c-CE0"/>
+                            <constraint firstItem="07F-kH-H98" firstAttribute="centerX" secondItem="TpU-gO-2f1" secondAttribute="centerX" id="Ii7-vl-JsV"/>
+                            <constraint firstItem="07F-kH-H98" firstAttribute="height" secondItem="TpU-gO-2f1" secondAttribute="height" id="dUX-Sc-g2N"/>
+                            <constraint firstItem="07F-kH-H98" firstAttribute="width" secondItem="TpU-gO-2f1" secondAttribute="width" id="xHH-hU-Jsd"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-354" y="388"/>
+        </scene>
+        <!--Word Cloud View Controller-->
+        <scene sceneID="Q6f-6Z-VDF">
+            <objects>
+                <viewController storyboardIdentifier="CPTWordCloudViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="etU-LK-HXe" customClass="CPTWordCloudViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gHc-OY-uNj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="517"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IPA-sR-79b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="465" y="433"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

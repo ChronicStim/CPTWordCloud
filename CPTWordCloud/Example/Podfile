@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '9.0'
+
+target 'CPTWordCloud_Example' do
+  pod 'CPTWordCloud', :path => '../'
+
+  target 'CPTWordCloud_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

@@ -1,0 +1,798 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		203A49ECB5EA4040E6B77946CCF26BA0 /* CPTWordCloudView.h in Headers */ = {isa = PBXBuildFile; fileRef = C9094C67114E8FFAF71C63126C26EAB5 /* CPTWordCloudView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2AE89146A327038AD5515E367EF2F847 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		2EDED69FBE8AC76BD11044783927A8D9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		3247CAB78EF63B933B9344F8C3A42623 /* Pods-CPTWordCloud_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 96F49A5FE2B0C70C7E01345DF0729F7D /* Pods-CPTWordCloud_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		553C203A36ED4066B50B664F74E0F2D6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
+		6DC693FC2CB3F9093D9EC115BBC51A48 /* CPTWord.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C03DB2BB85DF5F98C225FAA314F30DA /* CPTWord.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		74FB9A652AA5957CC4CCCBD77F432FA8 /* CPTWordCloudViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A08923BDFE710B0FE55546D85ADB7442 /* CPTWordCloudViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7E89A40643AEC12478ABF61A31614A51 /* Pods-CPTWordCloud_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 701A2AA126020E4382CE336DCED5F13B /* Pods-CPTWordCloud_Tests-dummy.m */; };
+		A7075FE940E88460E8DFEBA073036F8E /* CPTWordCloudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9949F40EEEC61FC2F65510B31DC1551 /* CPTWordCloudViewController.m */; };
+		A8683C19D7618772C1236706F905F299 /* CPTWordCloud-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7441B9C28E0BD6997A59B3B3EDBC1E1F /* CPTWordCloud-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A869E2159DE30F00F4363BF0FAC1BC4F /* CPTWordCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC61BEA3D70F180185921CF82992DB7 /* CPTWordCloud.m */; };
+		B6FA507094EB4ABC3DC86FEE7DDA0221 /* Pods-CPTWordCloud_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 640966861FCCCFDB444166861C2807AF /* Pods-CPTWordCloud_Example-dummy.m */; };
+		D4760889414EFF85F7FF51BE562EF366 /* CPTWordCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E3DC718448B501482C2F43134968F8C /* CPTWordCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D919F6BD7597A8694C9DE70070F2C34A /* CPTWordCloud-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BE8A5B3D73FB42A5D003C05E0C21B /* CPTWordCloud-dummy.m */; };
+		EA26ABC7C4CD727261A0FA3CFD723362 /* Pods-CPTWordCloud_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E3C42A766BF822F76579ECDF5CD7116 /* Pods-CPTWordCloud_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAED7457762E47433ED6774EB430B949 /* CPTWord.m in Sources */ = {isa = PBXBuildFile; fileRef = B906B35D8A161FFA1FB515E47CC1C442 /* CPTWord.m */; };
+		FF71BC63249E63B8D101E5C24EEC7CEA /* CPTWordCloudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 257D7339D77110A418D5C33D80694052 /* CPTWordCloudView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1342E22C686D67943AA56C94E586FEB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BC2822490813276E616FB0D250C9C745;
+			remoteInfo = CPTWordCloud;
+		};
+		A781CEA1EF289366A92FB6F7DF637D60 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 771EADAF4E2AD3FE40F29E66624795D0;
+			remoteInfo = "Pods-CPTWordCloud_Example";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0CDC2599C079741EAE8C94B5522DC63D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		131F253118AEADC3DEBCD9DED723AD8C /* Pods-CPTWordCloud_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CPTWordCloud_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		1C03DB2BB85DF5F98C225FAA314F30DA /* CPTWord.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWord.h; path = CPTWordCloud/Classes/CPTWord.h; sourceTree = "<group>"; };
+		1E1601740F12236A66CA3816864D870C /* Pods-CPTWordCloud_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CPTWordCloud_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		1E3DC718448B501482C2F43134968F8C /* CPTWordCloud.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWordCloud.h; path = CPTWordCloud/Classes/CPTWordCloud.h; sourceTree = "<group>"; };
+		257D7339D77110A418D5C33D80694052 /* CPTWordCloudView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWordCloudView.m; path = CPTWordCloud/Classes/CPTWordCloudView.m; sourceTree = "<group>"; };
+		2E7DF3D1762751CA422DF2FF65A84776 /* CPTWordCloud.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = CPTWordCloud.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		30DC39044360E402DDF4A413E38ADF14 /* CPTWordCloud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CPTWordCloud.debug.xcconfig; sourceTree = "<group>"; };
+		353BF2FFB8A121B6F9883ED1D571BBBF /* Pods-CPTWordCloud_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CPTWordCloud_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		3A8E99FCC49CBEB4464F0663A92102BB /* CPTWordCloud-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CPTWordCloud-prefix.pch"; sourceTree = "<group>"; };
+		425141348C145EC32E8521A0A3F8E2A6 /* Pods-CPTWordCloud_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CPTWordCloud_Example.release.xcconfig"; sourceTree = "<group>"; };
+		55B09D2AABEDCA28974B65E3ED4CD8DA /* Pods-CPTWordCloud_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CPTWordCloud_Tests.modulemap"; sourceTree = "<group>"; };
+		640966861FCCCFDB444166861C2807AF /* Pods-CPTWordCloud_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CPTWordCloud_Example-dummy.m"; sourceTree = "<group>"; };
+		6B9BE8A5B3D73FB42A5D003C05E0C21B /* CPTWordCloud-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CPTWordCloud-dummy.m"; sourceTree = "<group>"; };
+		701A2AA126020E4382CE336DCED5F13B /* Pods-CPTWordCloud_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CPTWordCloud_Tests-dummy.m"; sourceTree = "<group>"; };
+		72D2C11DAC3184DFD8EBDC1FCD573D73 /* CPTWordCloud-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CPTWordCloud-Info.plist"; sourceTree = "<group>"; };
+		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		7441B9C28E0BD6997A59B3B3EDBC1E1F /* CPTWordCloud-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CPTWordCloud-umbrella.h"; sourceTree = "<group>"; };
+		86CC62EC00E120FB6DDD6A0C10DBBED7 /* Pods-CPTWordCloud_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CPTWordCloud_Example-Info.plist"; sourceTree = "<group>"; };
+		8ADD8266A059960D61EFF2921D7C097B /* Pods_CPTWordCloud_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_CPTWordCloud_Tests.framework; path = "Pods-CPTWordCloud_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		91AF53406AFB8D33418D4DB3D6127D16 /* Pods-CPTWordCloud_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CPTWordCloud_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		96F49A5FE2B0C70C7E01345DF0729F7D /* Pods-CPTWordCloud_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CPTWordCloud_Tests-umbrella.h"; sourceTree = "<group>"; };
+		99B2E757595C36AE0ECD4A2ECCE074B7 /* CPTWordCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CPTWordCloud.framework; path = CPTWordCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AC61BEA3D70F180185921CF82992DB7 /* CPTWordCloud.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWordCloud.m; path = CPTWordCloud/Classes/CPTWordCloud.m; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9E3C42A766BF822F76579ECDF5CD7116 /* Pods-CPTWordCloud_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CPTWordCloud_Example-umbrella.h"; sourceTree = "<group>"; };
+		A08923BDFE710B0FE55546D85ADB7442 /* CPTWordCloudViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWordCloudViewController.h; path = CPTWordCloud/Classes/CPTWordCloudViewController.h; sourceTree = "<group>"; };
+		A1A37CFAF9DCB19F5B0DAE97D5798CC7 /* CPTWordCloud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CPTWordCloud.release.xcconfig; sourceTree = "<group>"; };
+		A944BA88EB91A0BB9F6E2205420312FF /* Pods-CPTWordCloud_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CPTWordCloud_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		AA6F6A3D44A6E4C4E2F58636B20A461C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		AF8A6F3DCEE8DCABF3B7AC3AA67AD837 /* Pods-CPTWordCloud_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CPTWordCloud_Example-frameworks.sh"; sourceTree = "<group>"; };
+		B906B35D8A161FFA1FB515E47CC1C442 /* CPTWord.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWord.m; path = CPTWordCloud/Classes/CPTWord.m; sourceTree = "<group>"; };
+		C29E727B9CC39FDF9240A05D74713377 /* Pods-CPTWordCloud_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CPTWordCloud_Example.modulemap"; sourceTree = "<group>"; };
+		C9094C67114E8FFAF71C63126C26EAB5 /* CPTWordCloudView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWordCloudView.h; path = CPTWordCloud/Classes/CPTWordCloudView.h; sourceTree = "<group>"; };
+		CD6830BB4F538D3AC30877A2E7408698 /* Pods_CPTWordCloud_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_CPTWordCloud_Example.framework; path = "Pods-CPTWordCloud_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFE5BFFF36E5739E086F34E5BB3F1680 /* Pods-CPTWordCloud_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CPTWordCloud_Tests-Info.plist"; sourceTree = "<group>"; };
+		D0A1CE86055C5412C2B41B1E8CF49716 /* CPTWordCloud.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = CPTWordCloud.modulemap; sourceTree = "<group>"; };
+		D3B6E7D6B387A3BC2C3FFE177D676C0D /* Pods-CPTWordCloud_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CPTWordCloud_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		D7CB19AA65E7D9458172F806A7A0CC87 /* Pods-CPTWordCloud_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CPTWordCloud_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		D9949F40EEEC61FC2F65510B31DC1551 /* CPTWordCloudViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWordCloudViewController.m; path = CPTWordCloud/Classes/CPTWordCloudViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3DF35086FC2D4A19E7B37391339C05A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				553C203A36ED4066B50B664F74E0F2D6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6899F8771B631B6B0EC1FCD930DBD1B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AE89146A327038AD5515E367EF2F847 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C800D260D1875AF494B88E6AE40D3E61 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EDED69FBE8AC76BD11044783927A8D9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3B492E0236A954DADEA843B3FF253C32 /* Pods-CPTWordCloud_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				55B09D2AABEDCA28974B65E3ED4CD8DA /* Pods-CPTWordCloud_Tests.modulemap */,
+				A944BA88EB91A0BB9F6E2205420312FF /* Pods-CPTWordCloud_Tests-acknowledgements.markdown */,
+				D7CB19AA65E7D9458172F806A7A0CC87 /* Pods-CPTWordCloud_Tests-acknowledgements.plist */,
+				701A2AA126020E4382CE336DCED5F13B /* Pods-CPTWordCloud_Tests-dummy.m */,
+				CFE5BFFF36E5739E086F34E5BB3F1680 /* Pods-CPTWordCloud_Tests-Info.plist */,
+				96F49A5FE2B0C70C7E01345DF0729F7D /* Pods-CPTWordCloud_Tests-umbrella.h */,
+				91AF53406AFB8D33418D4DB3D6127D16 /* Pods-CPTWordCloud_Tests.debug.xcconfig */,
+				353BF2FFB8A121B6F9883ED1D571BBBF /* Pods-CPTWordCloud_Tests.release.xcconfig */,
+			);
+			name = "Pods-CPTWordCloud_Tests";
+			path = "Target Support Files/Pods-CPTWordCloud_Tests";
+			sourceTree = "<group>";
+		};
+		46EEBE99DE1304F5775F148BEE66A409 /* CPTWordCloud */ = {
+			isa = PBXGroup;
+			children = (
+				1C03DB2BB85DF5F98C225FAA314F30DA /* CPTWord.h */,
+				B906B35D8A161FFA1FB515E47CC1C442 /* CPTWord.m */,
+				1E3DC718448B501482C2F43134968F8C /* CPTWordCloud.h */,
+				9AC61BEA3D70F180185921CF82992DB7 /* CPTWordCloud.m */,
+				C9094C67114E8FFAF71C63126C26EAB5 /* CPTWordCloudView.h */,
+				257D7339D77110A418D5C33D80694052 /* CPTWordCloudView.m */,
+				A08923BDFE710B0FE55546D85ADB7442 /* CPTWordCloudViewController.h */,
+				D9949F40EEEC61FC2F65510B31DC1551 /* CPTWordCloudViewController.m */,
+				A4D4D4913BA8FD51E13C84B52D44C170 /* Pod */,
+				8699E03ED07E3A255BF0104AE525FFC7 /* Support Files */,
+			);
+			name = CPTWordCloud;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		551D3F7C964DC1AD0654608B54D7D7E2 /* Pods-CPTWordCloud_Example */ = {
+			isa = PBXGroup;
+			children = (
+				C29E727B9CC39FDF9240A05D74713377 /* Pods-CPTWordCloud_Example.modulemap */,
+				1E1601740F12236A66CA3816864D870C /* Pods-CPTWordCloud_Example-acknowledgements.markdown */,
+				D3B6E7D6B387A3BC2C3FFE177D676C0D /* Pods-CPTWordCloud_Example-acknowledgements.plist */,
+				640966861FCCCFDB444166861C2807AF /* Pods-CPTWordCloud_Example-dummy.m */,
+				AF8A6F3DCEE8DCABF3B7AC3AA67AD837 /* Pods-CPTWordCloud_Example-frameworks.sh */,
+				86CC62EC00E120FB6DDD6A0C10DBBED7 /* Pods-CPTWordCloud_Example-Info.plist */,
+				9E3C42A766BF822F76579ECDF5CD7116 /* Pods-CPTWordCloud_Example-umbrella.h */,
+				131F253118AEADC3DEBCD9DED723AD8C /* Pods-CPTWordCloud_Example.debug.xcconfig */,
+				425141348C145EC32E8521A0A3F8E2A6 /* Pods-CPTWordCloud_Example.release.xcconfig */,
+			);
+			name = "Pods-CPTWordCloud_Example";
+			path = "Target Support Files/Pods-CPTWordCloud_Example";
+			sourceTree = "<group>";
+		};
+		578452D2E740E91742655AC8F1636D1F /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		74ACB3C2D5D19E8A16F3A45C3B3F7E5B /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				551D3F7C964DC1AD0654608B54D7D7E2 /* Pods-CPTWordCloud_Example */,
+				3B492E0236A954DADEA843B3FF253C32 /* Pods-CPTWordCloud_Tests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		8699E03ED07E3A255BF0104AE525FFC7 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D0A1CE86055C5412C2B41B1E8CF49716 /* CPTWordCloud.modulemap */,
+				6B9BE8A5B3D73FB42A5D003C05E0C21B /* CPTWordCloud-dummy.m */,
+				72D2C11DAC3184DFD8EBDC1FCD573D73 /* CPTWordCloud-Info.plist */,
+				3A8E99FCC49CBEB4464F0663A92102BB /* CPTWordCloud-prefix.pch */,
+				7441B9C28E0BD6997A59B3B3EDBC1E1F /* CPTWordCloud-umbrella.h */,
+				30DC39044360E402DDF4A413E38ADF14 /* CPTWordCloud.debug.xcconfig */,
+				A1A37CFAF9DCB19F5B0DAE97D5798CC7 /* CPTWordCloud.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/CPTWordCloud";
+			sourceTree = "<group>";
+		};
+		A4D4D4913BA8FD51E13C84B52D44C170 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				2E7DF3D1762751CA422DF2FF65A84776 /* CPTWordCloud.podspec */,
+				AA6F6A3D44A6E4C4E2F58636B20A461C /* LICENSE */,
+				0CDC2599C079741EAE8C94B5522DC63D /* README.md */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		A6048ED0ECCAFC7F3A3C90530DD479BC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99B2E757595C36AE0ECD4A2ECCE074B7 /* CPTWordCloud.framework */,
+				CD6830BB4F538D3AC30877A2E7408698 /* Pods_CPTWordCloud_Example.framework */,
+				8ADD8266A059960D61EFF2921D7C097B /* Pods_CPTWordCloud_Tests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CB903CF2D78D9C120D79CBDA01E26FB6 /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				46EEBE99DE1304F5775F148BEE66A409 /* CPTWordCloud */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				CB903CF2D78D9C120D79CBDA01E26FB6 /* Development Pods */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				A6048ED0ECCAFC7F3A3C90530DD479BC /* Products */,
+				74ACB3C2D5D19E8A16F3A45C3B3F7E5B /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				578452D2E740E91742655AC8F1636D1F /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		16B72AF3D541BD62F8D5F4CD80EE5FCF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3247CAB78EF63B933B9344F8C3A42623 /* Pods-CPTWordCloud_Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5988B375B0E97CA5B90D759AE647E7E9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA26ABC7C4CD727261A0FA3CFD723362 /* Pods-CPTWordCloud_Example-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8DB8420D143A485DFE04CB2161EC493 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DC693FC2CB3F9093D9EC115BBC51A48 /* CPTWord.h in Headers */,
+				A8683C19D7618772C1236706F905F299 /* CPTWordCloud-umbrella.h in Headers */,
+				D4760889414EFF85F7FF51BE562EF366 /* CPTWordCloud.h in Headers */,
+				203A49ECB5EA4040E6B77946CCF26BA0 /* CPTWordCloudView.h in Headers */,
+				74FB9A652AA5957CC4CCCBD77F432FA8 /* CPTWordCloudViewController.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		771EADAF4E2AD3FE40F29E66624795D0 /* Pods-CPTWordCloud_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C837947CCA4418DDD92BCC5ADD2B8778 /* Build configuration list for PBXNativeTarget "Pods-CPTWordCloud_Example" */;
+			buildPhases = (
+				5988B375B0E97CA5B90D759AE647E7E9 /* Headers */,
+				C920780E46BC1043A8320DFBA6AFFCB6 /* Sources */,
+				C800D260D1875AF494B88E6AE40D3E61 /* Frameworks */,
+				A565342C7D7F6BB2545A13FE800F312A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				63BFF46E3F91F3AC619BA20D1E2E44FA /* PBXTargetDependency */,
+			);
+			name = "Pods-CPTWordCloud_Example";
+			productName = "Pods-CPTWordCloud_Example";
+			productReference = CD6830BB4F538D3AC30877A2E7408698 /* Pods_CPTWordCloud_Example.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A46B91B6B79CE16080746E6244433474 /* Pods-CPTWordCloud_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1B8285F08E180B3EB8723C893DB2E32 /* Build configuration list for PBXNativeTarget "Pods-CPTWordCloud_Tests" */;
+			buildPhases = (
+				16B72AF3D541BD62F8D5F4CD80EE5FCF /* Headers */,
+				4D6635E65C19BC1676CECFC69466DECB /* Sources */,
+				6899F8771B631B6B0EC1FCD930DBD1B4 /* Frameworks */,
+				F8E7F0B2F16791DD33485DA64DC576ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D785921AEF430B361006F5C6AC69AF5F /* PBXTargetDependency */,
+			);
+			name = "Pods-CPTWordCloud_Tests";
+			productName = "Pods-CPTWordCloud_Tests";
+			productReference = 8ADD8266A059960D61EFF2921D7C097B /* Pods_CPTWordCloud_Tests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BC2822490813276E616FB0D250C9C745 /* CPTWordCloud */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E84F145867D15386C02017C557E2F8D /* Build configuration list for PBXNativeTarget "CPTWordCloud" */;
+			buildPhases = (
+				E8DB8420D143A485DFE04CB2161EC493 /* Headers */,
+				EB00A54A0B5152A132EA265A44424270 /* Sources */,
+				3DF35086FC2D4A19E7B37391339C05A8 /* Frameworks */,
+				E9866CEA46571AA97B2513FD77C776FF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CPTWordCloud;
+			productName = CPTWordCloud;
+			productReference = 99B2E757595C36AE0ECD4A2ECCE074B7 /* CPTWordCloud.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = A6048ED0ECCAFC7F3A3C90530DD479BC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BC2822490813276E616FB0D250C9C745 /* CPTWordCloud */,
+				771EADAF4E2AD3FE40F29E66624795D0 /* Pods-CPTWordCloud_Example */,
+				A46B91B6B79CE16080746E6244433474 /* Pods-CPTWordCloud_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A565342C7D7F6BB2545A13FE800F312A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E9866CEA46571AA97B2513FD77C776FF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8E7F0B2F16791DD33485DA64DC576ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4D6635E65C19BC1676CECFC69466DECB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E89A40643AEC12478ABF61A31614A51 /* Pods-CPTWordCloud_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C920780E46BC1043A8320DFBA6AFFCB6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6FA507094EB4ABC3DC86FEE7DDA0221 /* Pods-CPTWordCloud_Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB00A54A0B5152A132EA265A44424270 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAED7457762E47433ED6774EB430B949 /* CPTWord.m in Sources */,
+				D919F6BD7597A8694C9DE70070F2C34A /* CPTWordCloud-dummy.m in Sources */,
+				A869E2159DE30F00F4363BF0FAC1BC4F /* CPTWordCloud.m in Sources */,
+				FF71BC63249E63B8D101E5C24EEC7CEA /* CPTWordCloudView.m in Sources */,
+				A7075FE940E88460E8DFEBA073036F8E /* CPTWordCloudViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		63BFF46E3F91F3AC619BA20D1E2E44FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CPTWordCloud;
+			target = BC2822490813276E616FB0D250C9C745 /* CPTWordCloud */;
+			targetProxy = 1342E22C686D67943AA56C94E586FEB4 /* PBXContainerItemProxy */;
+		};
+		D785921AEF430B361006F5C6AC69AF5F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-CPTWordCloud_Example";
+			target = 771EADAF4E2AD3FE40F29E66624795D0 /* Pods-CPTWordCloud_Example */;
+			targetProxy = A781CEA1EF289366A92FB6F7DF637D60 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		25AD9454612BF454A1E3DC4CD4FA8C6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		7F0C24C5475E668AC09D5D6A640965D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 30DC39044360E402DDF4A413E38ADF14 /* CPTWordCloud.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/CPTWordCloud/CPTWordCloud-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CPTWordCloud/CPTWordCloud-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/CPTWordCloud/CPTWordCloud.modulemap";
+				PRODUCT_MODULE_NAME = CPTWordCloud;
+				PRODUCT_NAME = CPTWordCloud;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		84036F5FBDD4348BAECF92977839BC1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 353BF2FFB8A121B6F9883ED1D571BBBF /* Pods-CPTWordCloud_Tests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-CPTWordCloud_Tests/Pods-CPTWordCloud_Tests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CPTWordCloud_Tests/Pods-CPTWordCloud_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8CEC9F06A13F7A067B48470BBE43C0AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 425141348C145EC32E8521A0A3F8E2A6 /* Pods-CPTWordCloud_Example.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-CPTWordCloud_Example/Pods-CPTWordCloud_Example-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CPTWordCloud_Example/Pods-CPTWordCloud_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		9066DC2A0C0D942E5FC6F2C399F9A49A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 131F253118AEADC3DEBCD9DED723AD8C /* Pods-CPTWordCloud_Example.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-CPTWordCloud_Example/Pods-CPTWordCloud_Example-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CPTWordCloud_Example/Pods-CPTWordCloud_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B2375B4E55CED9F1DDE1298BDBA65296 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1A37CFAF9DCB19F5B0DAE97D5798CC7 /* CPTWordCloud.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/CPTWordCloud/CPTWordCloud-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CPTWordCloud/CPTWordCloud-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/CPTWordCloud/CPTWordCloud.modulemap";
+				PRODUCT_MODULE_NAME = CPTWordCloud;
+				PRODUCT_NAME = CPTWordCloud;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		CA547D2C7E9A8A153DC2B27FBE00B112 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		EB8786917203DADC4B1F3841B46F03AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91AF53406AFB8D33418D4DB3D6127D16 /* Pods-CPTWordCloud_Tests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-CPTWordCloud_Tests/Pods-CPTWordCloud_Tests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-CPTWordCloud_Tests/Pods-CPTWordCloud_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25AD9454612BF454A1E3DC4CD4FA8C6D /* Debug */,
+				CA547D2C7E9A8A153DC2B27FBE00B112 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4E84F145867D15386C02017C557E2F8D /* Build configuration list for PBXNativeTarget "CPTWordCloud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F0C24C5475E668AC09D5D6A640965D9 /* Debug */,
+				B2375B4E55CED9F1DDE1298BDBA65296 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C837947CCA4418DDD92BCC5ADD2B8778 /* Build configuration list for PBXNativeTarget "Pods-CPTWordCloud_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9066DC2A0C0D942E5FC6F2C399F9A49A /* Debug */,
+				8CEC9F06A13F7A067B48470BBE43C0AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1B8285F08E180B3EB8723C893DB2E32 /* Build configuration list for PBXNativeTarget "Pods-CPTWordCloud_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB8786917203DADC4B1F3841B46F03AD /* Debug */,
+				84036F5FBDD4348BAECF92977839BC1D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}
