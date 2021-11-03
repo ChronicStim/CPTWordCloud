@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) id<CPTWordCloudViewControllerDelegate> delegate;
 @property (nonatomic, readonly) CPTWordCloud *wordCloud;
+@property (nonatomic, readonly) CPTWordCloudView *wordCloudView;
 
 -(void)clearWordCloudView;
 -(void)regenerateWordCloudView;
