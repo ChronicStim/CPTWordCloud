@@ -21,7 +21,6 @@
     //NSCharacterSet* nonLetterCharacterSet;
 }
 @property (nonatomic, strong) GKRandomSource *randomSource;
-@property (nonatomic, strong) NSArray *allSystemFontNames;
 
 - (void) incrementCount:(NSString*)word;
 - (void) decrementCount:(NSString*)word;
@@ -44,6 +43,7 @@
         _minimumWordLength = 1;
         _probabilityOfWordVertical = 0.0f;
         _usingRandomFontPerWord = NO;
+        _selectableFontNames = [NSArray new];
         
         _minFontSize = 10;
         _maxFontSize = 100;
@@ -143,31 +143,27 @@
     return _font;
 }
 
--(UIFont *)randomSystemFontOfSize:(CGFloat)size;
+-(UIFont *)randomFontFromFontNames:(NSArray *)fontNames ofSize:(CGFloat)size;
 {
+    // Defaults to self.font in case where fontNames is nil or empty array
     UIFont *randomFont = [self.font fontWithSize:size];
-    if (nil != self.allSystemFontNames && 0 < [self.allSystemFontNames count]) {
-        GKRandomDistribution *randomDistribution = [[GKRandomDistribution alloc] initWithRandomSource:self.randomSource lowestValue:0 highestValue:(self.allSystemFontNames.count-1)];
+    if (nil != fontNames && 0 < [fontNames count]) {
+        GKRandomDistribution *randomDistribution = [[GKRandomDistribution alloc] initWithRandomSource:self.randomSource lowestValue:0 highestValue:(fontNames.count-1)];
         NSInteger nextInteger = [randomDistribution nextInt];
-        randomFont = [UIFont fontWithName:self.allSystemFontNames[nextInteger] size:size];
+        randomFont = [UIFont fontWithName:fontNames[nextInteger] size:size];
     }
     return randomFont;
 }
 
 -(NSArray *)allSystemFontNames;
 {
-    if (nil != _allSystemFontNames) {
-        return _allSystemFontNames;
-    }
-    
     NSMutableArray *mutArray = [NSMutableArray new];
     for (NSString *familyName in [UIFont familyNames]) {
         for (NSString *fontName in [UIFont fontNamesForFamilyName:familyName]) {
             [mutArray addObject:fontName];
         }
     }
-    _allSystemFontNames = [NSArray arrayWithArray:mutArray];
-    return _allSystemFontNames;
+    return [NSArray arrayWithArray:mutArray];
 }
 
 // private
@@ -303,7 +299,7 @@
         CPTWord* word = [sortedWords objectAtIndex:index];
         
         if (self.isUsingRandomFontPerWord) {
-            word.font = [self randomSystemFontOfSize:(self.minFontSize + (fontSizePerOccurance * word.count))];
+            word.font = [self randomFontFromFontNames:self.selectableFontNames ofSize:(self.minFontSize + (fontSizePerOccurance * word.count))];
         }
         else {
             word.font = [self.font fontWithSize:self.minFontSize + (fontSizePerOccurance * word.count)];
@@ -507,6 +503,14 @@
 {
     if (usingRandomFontPerWord != _usingRandomFontPerWord) {
         _usingRandomFontPerWord = usingRandomFontPerWord;
+        [self setNeedsGenerateCloud];
+    }
+}
+
+-(void)setSelectableFontNames:(NSArray *)selectableFontNames;
+{
+    if (selectableFontNames != _selectableFontNames) {
+        _selectableFontNames = selectableFontNames;
         [self setNeedsGenerateCloud];
     }
 }

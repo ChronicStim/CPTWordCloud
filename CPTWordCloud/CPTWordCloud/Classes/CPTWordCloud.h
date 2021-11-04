@@ -42,6 +42,8 @@
 
 // Use random fonts from system for each word. (defaults to NO)
 @property (nonatomic, getter=isUsingRandomFontPerWord) BOOL usingRandomFontPerWord;
+// An array of NSString fontNames that should be used when randomly assigning a font per word. This property is only used if usingRandomFontPerWord == YES
+@property (nonatomic, strong) NSArray *selectableFontNames;
 
 - (void)rebuild:(NSArray*)words;
 
@@ -60,6 +62,9 @@
 
 // reset the cloud, removing all words
 - (void)resetCloud;
+
+// Used for demo app
+-(NSArray *)allSystemFontNames;
 
 @end
 
