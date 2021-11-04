@@ -28,13 +28,13 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'CPTWordCloud/Classes/**/*'
+  s.source_files = 'CPTWordCloud/CPTWordCloud/Classes/**/*'
   
   # s.resource_bundles = {
   #   'CPTWordCloud' => ['CPTWordCloud/Assets/*.png']
   # }
 
-  s.public_header_files = 'CPTWordCloud/Classes/**/*.h'
+  s.public_header_files = 'CPTWordCloud/CPTWordCloud/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
