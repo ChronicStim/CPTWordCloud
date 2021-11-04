@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = 'Framework used to create a word cloud graphic from an input of string content.'
+  s.description      = 'Framework used to create a word cloud graphic from an input of string content. Includes options for word rotation and variable fonts per word. The color and size of the words will vary based on the count of the word in the input text string.'
 
   s.homepage         = 'https://github.com/ChronicStim/CPTWordCloud'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
