@@ -21,6 +21,7 @@
     //NSCharacterSet* nonLetterCharacterSet;
 }
 @property (nonatomic, strong) GKRandomSource *randomSource;
+@property (nonatomic, strong) NSArray *allSystemFontNames;
 
 - (void) incrementCount:(NSString*)word;
 - (void) decrementCount:(NSString*)word;
@@ -32,6 +33,7 @@
 @end
 
 @implementation CPTWordCloud
+@synthesize font = _font;
 
 - (id) init
 {
@@ -41,10 +43,10 @@
         _maxNumberOfWords = 0;
         _minimumWordLength = 1;
         _probabilityOfWordVertical = 0.0f;
+        _usingRandomFontPerWord = NO;
         
         _minFontSize = 10;
         _maxFontSize = 100;
-        _font = [UIFont systemFontOfSize:self.minFontSize];
         
         _wordBorderSize = 2;
         
@@ -126,6 +128,46 @@
 -(void)resetCloud;
 {
     [self removeAllWords];
+}
+
+// Fonts
+
+-(UIFont *)font;
+{
+    if (nil != _font) {
+        return _font;
+    }
+    // Assign the default font to ivar
+    _font = [UIFont systemFontOfSize:self.minFontSize];
+
+    return _font;
+}
+
+-(UIFont *)randomSystemFontOfSize:(CGFloat)size;
+{
+    UIFont *randomFont = [self.font fontWithSize:size];
+    if (nil != self.allSystemFontNames && 0 < [self.allSystemFontNames count]) {
+        GKRandomDistribution *randomDistribution = [[GKRandomDistribution alloc] initWithRandomSource:self.randomSource lowestValue:0 highestValue:(self.allSystemFontNames.count-1)];
+        NSInteger nextInteger = [randomDistribution nextInt];
+        randomFont = [UIFont fontWithName:self.allSystemFontNames[nextInteger] size:size];
+    }
+    return randomFont;
+}
+
+-(NSArray *)allSystemFontNames;
+{
+    if (nil != _allSystemFontNames) {
+        return _allSystemFontNames;
+    }
+    
+    NSMutableArray *mutArray = [NSMutableArray new];
+    for (NSString *familyName in [UIFont familyNames]) {
+        for (NSString *fontName in [UIFont fontNamesForFamilyName:familyName]) {
+            [mutArray addObject:fontName];
+        }
+    }
+    _allSystemFontNames = [NSArray arrayWithArray:mutArray];
+    return _allSystemFontNames;
 }
 
 // private
@@ -260,18 +302,18 @@
     {
         CPTWord* word = [sortedWords objectAtIndex:index];
         
-        // only recalculate the word's size if its count has changed, or if the highest count has increased
-        // (thus increasing the size per occurance)
-        //if (word.countChanged || highestWordCountChanged) {
+        if (self.isUsingRandomFontPerWord) {
+            word.font = [self randomSystemFontOfSize:(self.minFontSize + (fontSizePerOccurance * word.count))];
+        }
+        else {
             word.font = [self.font fontWithSize:self.minFontSize + (fontSizePerOccurance * word.count)];
+        }
                         
-            word.color = [UIColor colorWithRed:lowCountColorComponents[0] + (rColorPerOccurance * word.count)
+        word.color = [UIColor colorWithRed:lowCountColorComponents[0] + (rColorPerOccurance * word.count)
                                          green:lowCountColorComponents[1] + (gColorPerOccurance * word.count)
                                           blue:lowCountColorComponents[2] + (bColorPerOccurance * word.count)
                                          alpha:lowCountColorComponents[3] + (aColorPerOccurance * word.count)];
             
-            //word.countChanged = FALSE;
-        //}
         NSDictionary *textAttributes = @{ NSFontAttributeName : word.font,
                                           NSForegroundColorAttributeName : word.color };
         CGSize wordSize = [word.text sizeWithAttributes:textAttributes];
@@ -292,7 +334,7 @@
         
         word.bounds = CGRectMake(arc4random_uniform(10) + horizCenter, arc4random_uniform(10) + vertCenter, wordSize.width, wordSize.height);
 
-        NSLog(@"Bounds for %@ word: %@ %@",word.isRotated ? @"ROTATED" : @"NONROTATED",word.text,NSStringFromCGRect(word.bounds));
+        //NSLog(@"Bounds for %@ word: %@ %@",word.isRotated ? @"ROTATED" : @"NONROTATED",word.text,NSStringFromCGRect(word.bounds));
         
         BOOL intersects = FALSE;
         double angleStep = (index % 2 == 0 ? 1 : -1) * step;
@@ -457,6 +499,14 @@
 {
     if (probabilityOfWordVertical != _probabilityOfWordVertical) {
         _probabilityOfWordVertical = probabilityOfWordVertical;
+        [self setNeedsGenerateCloud];
+    }
+}
+
+-(void)setUsingRandomFontPerWord:(BOOL)usingRandomFontPerWord;
+{
+    if (usingRandomFontPerWord != _usingRandomFontPerWord) {
+        _usingRandomFontPerWord = usingRandomFontPerWord;
         [self setNeedsGenerateCloud];
     }
 }

@@ -40,6 +40,9 @@
 // probability that words are rotated to a vertical position (defaults to 0%)
 @property (nonatomic) CGFloat probabilityOfWordVertical;
 
+// Use random fonts from system for each word. (defaults to NO)
+@property (nonatomic, getter=isUsingRandomFontPerWord) BOOL usingRandomFontPerWord;
+
 - (void)rebuild:(NSArray*)words;
 
 // add words to the cloud
