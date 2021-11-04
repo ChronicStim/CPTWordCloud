@@ -75,9 +75,9 @@
     [self.wordCloud generateCloud];
 }
 
-- (void)viewWillLayoutSubviews
+-(void)viewDidLayoutSubviews;
 {
-    [super viewWillLayoutSubviews];
+    [super viewDidLayoutSubviews];
     
     if (!CGSizeEqualToSize(self.view.bounds.size, self.wordCloud.cloudSize)) {
         self.wordCloud.cloudSize = self.view.bounds.size;

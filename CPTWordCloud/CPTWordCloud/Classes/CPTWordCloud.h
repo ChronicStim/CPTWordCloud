@@ -37,6 +37,9 @@
 // the size of the word cloud
 @property (nonatomic) CGSize cloudSize;
 
+// probability that words are rotated to a vertical position (defaults to 0%)
+@property (nonatomic) CGFloat probabilityOfWordVertical;
+
 - (void)rebuild:(NSArray*)words;
 
 // add words to the cloud

@@ -17,6 +17,8 @@
         _text = word;
         _count = count;
         _color = [UIColor blackColor];
+        _transform = CGAffineTransformIdentity;
+        _rotated = NO;
         //_countChanged = TRUE;
     }
     return self;

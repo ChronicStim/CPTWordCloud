@@ -189,22 +189,34 @@
     for (CPTWord* word in self.words)
     {
         UIColor* color = [highlightedWords containsObject:word] ? highlightColor : word.color;
+        UIColor *backColor = [UIColor clearColor];
         
         UIFont *font = word.font;
         NSDictionary *attrsDictionary = @{ NSFontAttributeName : font,
-                                           NSForegroundColorAttributeName : color };
+                                           NSForegroundColorAttributeName : color,
+                                           NSBackgroundColorAttributeName : backColor
+        };
 
         NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:word.text attributes:attrsDictionary];
         CFAttributedStringRef cfAttrString  = (__bridge CFAttributedStringRef)attrString;
         
         CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
         
-        // You need to set the text matrix at least to CGAffineTransformIdentity
-        // Here we translate to the desired position
-        CGContextSetTextMatrix(c, CGAffineTransformMakeTranslation(self.xShift + word.bounds.origin.x * self.scalingFactor, self.yShift + word.bounds.origin.y * self.scalingFactor));
+        CGContextSetTextMatrix(c, CGAffineTransformIdentity);
+        
+        CGContextSaveGState(c);
+        
+        CGContextTranslateCTM(c, self.xShift + word.bounds.origin.x * self.scalingFactor, self.yShift + word.bounds.origin.y * self.scalingFactor);
+        
+        if (word.isRotated) {
+            CGContextRotateCTM(c, M_PI / 2.0f);
+            CGContextTranslateCTM(c, 0, -word.bounds.size.width);
+        }
         
         CTLineDraw(line, c);
         CFRelease(line);
+        
+        CGContextRestoreGState(c);
     }
 }
 

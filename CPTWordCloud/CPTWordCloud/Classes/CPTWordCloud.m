@@ -7,6 +7,7 @@
 //
 
 #import "CPTWordCloud.h"
+#import <GameplayKit/GameplayKit.h>
 
 @interface CPTWordCloud ()
 {
@@ -19,6 +20,7 @@
     
     //NSCharacterSet* nonLetterCharacterSet;
 }
+@property (nonatomic, strong) GKRandomSource *randomSource;
 
 - (void) incrementCount:(NSString*)word;
 - (void) decrementCount:(NSString*)word;
@@ -38,6 +40,7 @@
         // defaults
         _maxNumberOfWords = 0;
         _minimumWordLength = 1;
+        _probabilityOfWordVertical = 0.0f;
         
         _minFontSize = 10;
         _maxFontSize = 100;
@@ -190,6 +193,30 @@
     }
 }
 
+-(GKRandomSource *)randomSource;
+{
+    if (nil != _randomSource) {
+        return _randomSource;
+    }
+    
+    _randomSource = [[GKRandomSource alloc] init];
+    return _randomSource;
+}
+
+-(BOOL)nextRandomBoolWithProbabilityForYes:(CGFloat)probability;
+{
+    if (0.0f == probability) {
+        return NO;
+    }
+    
+    GKRandomDistribution *randomDistribution = [[GKRandomDistribution alloc] initWithRandomSource:self.randomSource lowestValue:1 highestValue:100];
+    float randomFloat = [randomDistribution nextUniform];
+    if (randomFloat <= probability) {
+        return YES;
+    }
+    return NO;
+}
+
 // sorts words if needed, and lays them out
 - (void) generateCloud
 {
@@ -248,6 +275,15 @@
         NSDictionary *textAttributes = @{ NSFontAttributeName : word.font,
                                           NSForegroundColorAttributeName : word.color };
         CGSize wordSize = [word.text sizeWithAttributes:textAttributes];
+
+        BOOL rotateWord = [self nextRandomBoolWithProbabilityForYes:self.probabilityOfWordVertical];
+        word.rotated = rotateWord;
+
+        if (word.rotated) {
+            // Reverse dimensions for wordsize to simulate vertical drawing of text
+            wordSize = CGSizeMake(wordSize.height, wordSize.width);
+        }
+        
         wordSize.height += (self.wordBorderSize * 2);
         wordSize.width += (self.wordBorderSize * 2);
         
@@ -255,6 +291,8 @@
         float vertCenter = (self.cloudSize.height - wordSize.height)/2;
         
         word.bounds = CGRectMake(arc4random_uniform(10) + horizCenter, arc4random_uniform(10) + vertCenter, wordSize.width, wordSize.height);
+
+        NSLog(@"Bounds for %@ word: %@ %@",word.isRotated ? @"ROTATED" : @"NONROTATED",word.text,NSStringFromCGRect(word.bounds));
         
         BOOL intersects = FALSE;
         double angleStep = (index % 2 == 0 ? 1 : -1) * step;
@@ -415,6 +453,13 @@
     [self rebuild:[wordCounts.allKeys copy]];
 }
 
+-(void)setProbabilityOfWordVertical:(CGFloat)probabilityOfWordVertical;
+{
+    if (probabilityOfWordVertical != _probabilityOfWordVertical) {
+        _probabilityOfWordVertical = probabilityOfWordVertical;
+        [self setNeedsGenerateCloud];
+    }
+}
 
 #pragma mark - util
 
