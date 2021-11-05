@@ -34,7 +34,7 @@
 // words will minimally have this many pixels between them. defaults to 2
 @property (nonatomic) int wordBorderSize;
 
-// the size of the word cloud
+// the size of the word wordCloud
 @property (nonatomic) CGSize cloudSize;
 
 // probability that words are rotated to a vertical position (defaults to 0%)
@@ -47,20 +47,20 @@
 
 - (void)rebuild:(NSArray*)words;
 
-// add words to the cloud
+// add words to the wordCloud
 - (void)addWords:(NSString*)wordString delimiter:(NSString *)delimiter;
 - (void)addWords:(NSArray*)words;
 - (void)addWord:(NSString*)word;
 
-// remove words from cloud
+// remove words from wordCloud
 - (void)removeWord:(NSString*)word;
 - (void)removeWords:(NSArray*)words;
 - (void)removeAllWords;
 
-// regenerate the cloud using current words and settings
+// regenerate the wordCloud using current words and settings
 - (void)generateCloud;
 
-// reset the cloud, removing all words
+// reset the wordCloud, removing all words
 - (void)resetCloud;
 
 // Used for demo app

@@ -14,7 +14,7 @@
 @interface CPTWordCloudView : UIView <CPTWordCloudDelegate>
 
 @property (nonatomic, retain) id<CPTWordCloudViewDelegate> delegate;
-@property (nonatomic, weak) CPTWordCloud* cloud;
+@property (nonatomic, strong, readonly) CPTWordCloud* wordCloud;
 
 @property (nonatomic) float borderWidth;
 @property (nonatomic) UIColor* borderColor;

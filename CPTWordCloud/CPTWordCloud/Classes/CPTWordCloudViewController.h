@@ -14,7 +14,7 @@
 @interface CPTWordCloudViewController : UIViewController <CPTWordCloudViewDelegate>
 
 @property (nonatomic, retain) id<CPTWordCloudViewControllerDelegate> delegate;
-@property (nonatomic, readonly) CPTWordCloud *wordCloud;
+@property (nonatomic, readonly, weak) CPTWordCloud *wordCloud;
 @property (nonatomic, readonly) CPTWordCloudView *wordCloudView;
 
 -(void)clearWordCloudView;

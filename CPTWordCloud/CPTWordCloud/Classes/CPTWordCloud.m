@@ -263,7 +263,7 @@
     double yShift = 0;
     
     if (!wordCounts.count) {
-        // No words in cloud, so pass empty array to the delegate
+        // No words in wordCloud, so pass empty array to the delegate
         if ([self.delegate respondsToSelector:@selector(wordCloudDidGenerateCloud:sortedWordArray:scalingFactor:xShift:yShift:)])
         {
             [self.delegate wordCloudDidGenerateCloud:self sortedWordArray:@[] scalingFactor:scalingFactor xShift:xShift yShift:yShift];

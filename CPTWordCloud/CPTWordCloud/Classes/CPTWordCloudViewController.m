@@ -15,14 +15,12 @@
 {
 
 }
-@property (nonatomic, readwrite) CPTWordCloud *wordCloud;
+@property (nonatomic, weak) CPTWordCloud *wordCloud;
 @property (nonatomic, readwrite) CPTWordCloudView *wordCloudView;
 
 @end
 
 @implementation CPTWordCloudViewController
-
-@synthesize wordCloud = _wordCloud;
 
 - (id)init
 {
@@ -55,14 +53,15 @@
 
 -(void)initializeWordCloudViewController;
 {
-    self.wordCloud = [[CPTWordCloud alloc] init];
-    self.wordCloud.cloudSize = self.view.bounds.size;
-    
-    self.wordCloudView = [[CPTWordCloudView alloc] initForWordCloud:self.wordCloud withFrame:self.view.bounds];
+    self.wordCloudView = [[CPTWordCloudView alloc] initForWordCloud:nil withFrame:self.view.bounds];
 
-    self.wordCloud.delegate = self.wordCloudView;
     self.wordCloudView.delegate = self;
     [self.view addSubview:self.wordCloudView];
+}
+
+-(CPTWordCloud *)wordCloud;
+{
+    return self.wordCloudView.wordCloud;
 }
 
 -(void)clearWordCloudView;

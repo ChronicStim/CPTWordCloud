@@ -20,6 +20,7 @@
     UIColor* highlightColor;
     NSArray* highlightedWords;
 }
+@property (nonatomic, strong, readwrite) CPTWordCloud* wordCloud;
 
 @end
 
@@ -30,7 +31,7 @@
     self.layer.masksToBounds = TRUE;
     //self.layer.shouldRasterize = YES; // test
     
-    //self.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor clearColor];
     _scalingFactor = 1;
 }
 
@@ -38,7 +39,11 @@
 {
     if (self = [super init])
     {
-        self.cloud = wordCloud;
+        if (nil == wordCloud) {
+            wordCloud = [[CPTWordCloud alloc] init];
+        }
+        self.wordCloud = wordCloud;
+        self.wordCloud.delegate = self;
         [self baseInit];
     }
     return self;
@@ -48,7 +53,12 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        self.cloud = wordCloud;
+        if (nil == wordCloud) {
+            wordCloud = [[CPTWordCloud alloc] init];
+            wordCloud.cloudSize = frame.size;
+        }
+        self.wordCloud = wordCloud;
+        self.wordCloud.delegate = self;
         [self baseInit];
     }    
     return self;
@@ -71,8 +81,8 @@
 {
     [super layoutSubviews];
     
-    if (true == CGSizeEqualToSize(self.frame.size, self.cloud.cloudSize)) return;
-    self.cloud.cloudSize = self.frame.size;
+    if (true == CGSizeEqualToSize(self.frame.size, self.wordCloud.cloudSize)) return;
+    self.wordCloud.cloudSize = self.frame.size;
 }
 
 #pragma mark - CPTWordCloudDelegate
@@ -189,7 +199,7 @@
     for (CPTWord* word in self.words)
     {
         UIColor* color = [highlightedWords containsObject:word] ? highlightColor : word.color;
-        UIColor *backColor = [UIColor clearColor];
+        UIColor *backColor = self.backgroundColor;
         
         UIFont *font = word.font;
         NSDictionary *attrsDictionary = @{ NSFontAttributeName : font,
