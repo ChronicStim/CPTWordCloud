@@ -1,5 +1,5 @@
 PODS:
-  - CPTWordCloud (0.1.0)
+  - CPTWordCloud (0.1.2)
 
 DEPENDENCIES:
   - CPTWordCloud (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CPTWordCloud: e281e42075d494e5a7b5e656993c30d56bdc121b
+  CPTWordCloud: 43019384dc8265cc547f82153a20e49a6ee935e8
 
 PODFILE CHECKSUM: de2ae189fb7bb2b80325e6b057780f97c5763ece
 

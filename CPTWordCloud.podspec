@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CPTWordCloud'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = 'Framework used to create a word cloud graphic from an input of string content.'
 
 # This description is used to generate tags and improve search results.
@@ -21,20 +21,20 @@ Pod::Spec.new do |s|
 
   s.homepage         = 'https://github.com/ChronicStim/CPTWordCloud'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'CPTWordCloud/LICENSE' }
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'ChronicStim' => 'support@chronicstimulation.com' }
   s.source           = { :git => 'https://github.com/ChronicStim/CPTWordCloud.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'CPTWordCloud/CPTWordCloud/Classes/**/*'
+  s.source_files = 'CPTWordCloud/Classes/**/*'
   
   # s.resource_bundles = {
   #   'CPTWordCloud' => ['CPTWordCloud/Assets/*.png']
   # }
 
-  s.public_header_files = 'CPTWordCloud/CPTWordCloud/Classes/**/*.h'
+  s.public_header_files = 'CPTWordCloud/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
