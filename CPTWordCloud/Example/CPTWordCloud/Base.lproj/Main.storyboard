@@ -44,7 +44,6 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="3z6-Q4-vKz" firstAttribute="width" secondItem="drq-4s-iCv" secondAttribute="width" multiplier="0.8" id="JeU-ct-ksb"/>
                                             <constraint firstAttribute="height" constant="50" id="Kgm-3A-gTx"/>
                                             <constraint firstItem="3z6-Q4-vKz" firstAttribute="centerY" secondItem="drq-4s-iCv" secondAttribute="centerY" id="Yqe-dR-Hpf"/>
                                             <constraint firstItem="3z6-Q4-vKz" firstAttribute="centerX" secondItem="drq-4s-iCv" secondAttribute="centerX" id="lt4-dn-Zre"/>
@@ -77,14 +76,14 @@
                                             <constraint firstAttribute="height" constant="50" id="ymY-Zh-2pr"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJR-jj-rgm">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xxv-Uv-2o0">
                                         <rect key="frame" x="0.0" y="100" width="375" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="agn-OS-cL2">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHF-hi-w1l">
                                                 <rect key="frame" x="37.5" y="3" width="300" height="44"/>
                                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="44" id="xiW-ym-HKV"/>
+                                                    <constraint firstAttribute="height" constant="44" id="JNy-ul-8pX"/>
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -92,27 +91,59 @@
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
+                                                    <action selector="clearCloudButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="mog-Oy-JTw"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="bHF-hi-w1l" firstAttribute="centerX" secondItem="Xxv-Uv-2o0" secondAttribute="centerX" id="2f1-rg-cQa"/>
+                                            <constraint firstItem="bHF-hi-w1l" firstAttribute="centerY" secondItem="Xxv-Uv-2o0" secondAttribute="centerY" id="FMZ-Zx-UWy"/>
+                                            <constraint firstAttribute="height" constant="50" id="Nr6-BC-swX"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJR-jj-rgm">
+                                        <rect key="frame" x="0.0" y="150" width="375" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="agn-OS-cL2">
+                                                <rect key="frame" x="37.5" y="3" width="300" height="44"/>
+                                                <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="xiW-ym-HKV"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Show Image">
+                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
                                                     <action selector="clearCloudButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="ZB1-WW-FZK"/>
+                                                    <action selector="showImageButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="uwX-dM-9GF"/>
+                                                    <segue destination="cJm-NH-TgF" kind="popoverPresentation" identifier="PopoverSegueCPTViewControllerToCPTPopoverViewController" popoverAnchorView="agn-OS-cL2" id="ZlS-fZ-V4O">
+                                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                    </segue>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="agn-OS-cL2" firstAttribute="centerX" secondItem="EJR-jj-rgm" secondAttribute="centerX" id="E2W-0v-s7D"/>
+                                            <constraint firstAttribute="height" constant="50" id="tQ1-mB-pT0"/>
                                             <constraint firstItem="agn-OS-cL2" firstAttribute="centerY" secondItem="EJR-jj-rgm" secondAttribute="centerY" id="zVp-ny-EYI"/>
                                         </constraints>
                                     </view>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6eE-CK-vVb">
-                                        <rect key="frame" x="0.0" y="150" width="375" height="517"/>
+                                        <rect key="frame" x="0.0" y="200" width="375" height="467"/>
                                         <connections>
                                             <segue destination="etU-LK-HXe" kind="embed" identifier="EmbedSegueCPTViewControllerToCPTWordCloudViewController" id="KxH-6R-wsn"/>
                                         </connections>
                                     </containerView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="EJR-jj-rgm" firstAttribute="height" secondItem="zCT-cv-pIV" secondAttribute="height" id="9kL-kW-TW4"/>
                                     <constraint firstItem="agn-OS-cL2" firstAttribute="width" secondItem="BHq-NP-KVM" secondAttribute="width" id="BRA-XN-Vai"/>
+                                    <constraint firstItem="3z6-Q4-vKz" firstAttribute="width" secondItem="BHq-NP-KVM" secondAttribute="width" id="c9S-rn-hOq"/>
                                     <constraint firstItem="zCT-cv-pIV" firstAttribute="width" secondItem="07F-kH-H98" secondAttribute="width" id="efc-pc-C2p"/>
+                                    <constraint firstItem="bHF-hi-w1l" firstAttribute="width" secondItem="BHq-NP-KVM" secondAttribute="width" id="jx1-ZR-ZW8"/>
                                     <constraint firstItem="EJR-jj-rgm" firstAttribute="width" secondItem="07F-kH-H98" secondAttribute="width" id="niw-Iv-fDe"/>
                                 </constraints>
                             </stackView>
@@ -130,19 +161,56 @@
             </objects>
             <point key="canvasLocation" x="-354" y="388"/>
         </scene>
+        <!--Popover View Controller-->
+        <scene sceneID="x6K-2Y-1jp">
+            <objects>
+                <viewController storyboardIdentifier="CPTPopoverViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cJm-NH-TgF" customClass="CPTPopoverViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jSg-Vg-B40"/>
+                        <viewControllerLayoutGuide type="bottom" id="qC5-UE-CBm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Kiw-Nc-wm8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="flL-rZ-Epj">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="flL-rZ-Epj" firstAttribute="width" secondItem="Kiw-Nc-wm8" secondAttribute="width" id="5GD-Y9-t0x"/>
+                            <constraint firstItem="flL-rZ-Epj" firstAttribute="centerX" secondItem="Kiw-Nc-wm8" secondAttribute="centerX" id="LVT-If-4XY"/>
+                            <constraint firstItem="flL-rZ-Epj" firstAttribute="centerY" secondItem="Kiw-Nc-wm8" secondAttribute="centerY" id="jnZ-fz-L6S"/>
+                            <constraint firstItem="flL-rZ-Epj" firstAttribute="height" secondItem="Kiw-Nc-wm8" secondAttribute="height" id="peS-AV-ps0"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="flL-rZ-Epj" id="c7E-ne-g0F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ziU-Pk-3Jn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="209" y="1083"/>
+        </scene>
         <!--Word Cloud View Controller-->
         <scene sceneID="Q6f-6Z-VDF">
             <objects>
                 <viewController storyboardIdentifier="CPTWordCloudViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="etU-LK-HXe" customClass="CPTWordCloudViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FfY-vh-Xpy"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fna-8p-htg"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="gHc-OY-uNj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="517"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="467"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IPA-sR-79b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="465" y="433"/>
+            <point key="canvasLocation" x="660" y="453"/>
         </scene>
     </scenes>
     <resources>
@@ -151,6 +219,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

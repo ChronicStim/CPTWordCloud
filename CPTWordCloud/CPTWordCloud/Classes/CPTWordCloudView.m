@@ -9,6 +9,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <CoreText/CoreText.h>
+#import <libkern/OSAtomic.h>
 
 #import "CPTWordCloudView.h"
 
@@ -264,6 +265,17 @@
         [self clearHighlights];
     }
     return nil;
+}
+
+#pragma mark - Draw to external image
+
+- (UIImage *)imageByRenderingView
+{
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
+    [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+    UIImage * snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return snapshotImage;
 }
 
 @end

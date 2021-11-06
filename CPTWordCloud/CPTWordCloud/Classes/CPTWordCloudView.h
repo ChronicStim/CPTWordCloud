@@ -30,6 +30,8 @@
 - (void) highlightWords:(NSArray*)stringWords color:(UIColor*)color;
 - (void) clearHighlights;
 
+- (UIImage *)imageByRenderingView;
+
 @end
 
 @protocol CPTWordCloudViewDelegate <NSObject>

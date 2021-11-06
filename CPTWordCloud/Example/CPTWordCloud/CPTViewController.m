@@ -9,14 +9,17 @@
 #import "CPTViewController.h"
 #import <CPTWordCloud/CPTWordCloud.h>
 #import <CPTWordCloud/CPTWordCloudViewController.h>
+#import "CPTPopoverViewController.h"
 
 @interface CPTViewController ()
 
 @property (nonatomic, weak) CPTWordCloudViewController *cptWCViewController;
+@property (nonatomic, strong) UIImage *capturedImage;
 
 - (IBAction)initializeCloudButtonPressed:(id)sender;
 - (IBAction)regenerateCloudButtonPressed:(id)sender;
 - (IBAction)clearCloudButtonPressed:(id)sender;
+- (IBAction)showImageButtonPressed:(id)sender;
 
 @end
 
@@ -38,6 +41,9 @@
     if (self.cptWCViewController) {
         [self initializeWordCloud];
     }
+}
+
+- (IBAction)showImageButtonPressed:(id)sender {
 }
 
 - (IBAction)clearCloudButtonPressed:(id)sender {
@@ -85,6 +91,13 @@
         self.cptWCViewController = wcViewController;
         
         [self initializeWordCloud];
+    }
+    else  if ([segue.identifier isEqualToString:kPopoverSegueCPTViewControllerToCPTPopoverViewController]) {
+        
+        CPTPopoverViewController *destinationController = (CPTPopoverViewController *)[segue destinationViewController];
+        self.capturedImage = [self.cptWCViewController.wordCloudView imageByRenderingView];
+        destinationController.wordCloudImage = self.capturedImage;
+        
     }
 }
 
