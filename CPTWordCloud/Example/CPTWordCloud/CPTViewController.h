@@ -8,7 +8,6 @@
 
 @import UIKit;
 
-#define kEmbedSegueCPTViewControllerToCPTWordCloudViewController @"EmbedSegueCPTViewControllerToCPTWordCloudViewController"
 #define kPopoverSegueCPTViewControllerToCPTPopoverViewController @"PopoverSegueCPTViewControllerToCPTPopoverViewController"
 
 @interface CPTViewController : UIViewController

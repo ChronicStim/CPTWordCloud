@@ -7,6 +7,7 @@
 //
 //
 
+#import <UIKit/UIKit.h>
 #import "CPTWordCloud.h"
 
 @protocol CPTWordCloudViewDelegate;
@@ -31,6 +32,7 @@
 - (void) clearHighlights;
 
 - (UIImage *)imageByRenderingView;
+-(void)createPDFSaveToDocumentsWithFileName:(NSString*)aFilename;
 
 @end
 

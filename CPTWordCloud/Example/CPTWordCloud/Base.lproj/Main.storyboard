@@ -117,7 +117,6 @@
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="clearCloudButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="ZB1-WW-FZK"/>
                                                     <action selector="showImageButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="uwX-dM-9GF"/>
                                                     <segue destination="cJm-NH-TgF" kind="popoverPresentation" identifier="PopoverSegueCPTViewControllerToCPTPopoverViewController" popoverAnchorView="agn-OS-cL2" id="ZlS-fZ-V4O">
                                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -132,12 +131,10 @@
                                             <constraint firstItem="agn-OS-cL2" firstAttribute="centerY" secondItem="EJR-jj-rgm" secondAttribute="centerY" id="zVp-ny-EYI"/>
                                         </constraints>
                                     </view>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6eE-CK-vVb">
+                                    <view contentMode="scaleToFill" restorationIdentifier="CPTWordCloudView" translatesAutoresizingMaskIntoConstraints="NO" id="Y2W-uC-oVE" userLabel="CPTWordCloudView" customClass="CPTWordCloudView">
                                         <rect key="frame" x="0.0" y="200" width="375" height="467"/>
-                                        <connections>
-                                            <segue destination="etU-LK-HXe" kind="embed" identifier="EmbedSegueCPTViewControllerToCPTWordCloudViewController" id="KxH-6R-wsn"/>
-                                        </connections>
-                                    </containerView>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="agn-OS-cL2" firstAttribute="width" secondItem="BHq-NP-KVM" secondAttribute="width" id="BRA-XN-Vai"/>
@@ -156,6 +153,9 @@
                             <constraint firstItem="07F-kH-H98" firstAttribute="width" secondItem="TpU-gO-2f1" secondAttribute="width" id="xHH-hU-Jsd"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="wordCloudView" destination="Y2W-uC-oVE" id="c31-ef-5Qc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -192,25 +192,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ziU-Pk-3Jn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="209" y="1083"/>
-        </scene>
-        <!--Word Cloud View Controller-->
-        <scene sceneID="Q6f-6Z-VDF">
-            <objects>
-                <viewController storyboardIdentifier="CPTWordCloudViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="etU-LK-HXe" customClass="CPTWordCloudViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="FfY-vh-Xpy"/>
-                        <viewControllerLayoutGuide type="bottom" id="Fna-8p-htg"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="gHc-OY-uNj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="467"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IPA-sR-79b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="660" y="453"/>
+            <point key="canvasLocation" x="455" y="387"/>
         </scene>
     </scenes>
     <resources>

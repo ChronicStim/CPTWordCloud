@@ -8,13 +8,13 @@
 
 #import "CPTViewController.h"
 #import <CPTWordCloud/CPTWordCloud.h>
-#import <CPTWordCloud/CPTWordCloudViewController.h>
+#import <CPTWordCloud/CPTWordCloudView.h>
 #import "CPTPopoverViewController.h"
 
 @interface CPTViewController ()
 
-@property (nonatomic, weak) CPTWordCloudViewController *cptWCViewController;
 @property (nonatomic, strong) UIImage *capturedImage;
+@property (weak, nonatomic) IBOutlet CPTWordCloudView *wordCloudView;
 
 - (IBAction)initializeCloudButtonPressed:(id)sender;
 - (IBAction)regenerateCloudButtonPressed:(id)sender;
@@ -29,6 +29,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    [self initializeWordCloud];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,36 +40,36 @@
 }
 
 - (IBAction)initializeCloudButtonPressed:(id)sender {
-    if (self.cptWCViewController) {
+    if (self.wordCloudView) {
         [self initializeWordCloud];
     }
 }
 
 - (IBAction)showImageButtonPressed:(id)sender {
+    [self.wordCloudView createPDFSaveToDocumentsWithFileName:@"SamplePDFWordCloud.pdf"];
 }
 
 - (IBAction)clearCloudButtonPressed:(id)sender {
     
-    if (self.cptWCViewController) {
-        [self.cptWCViewController clearWordCloudView];
+    if (self.wordCloudView) {
+        [self.wordCloudView.wordCloud resetCloud];
     }
 }
 
 - (IBAction)regenerateCloudButtonPressed:(id)sender {
-    if (self.cptWCViewController) {
-        [self.cptWCViewController regenerateWordCloudView];
+    if (self.wordCloudView) {
+        [self.wordCloudView.wordCloud generateCloud];
     }
 }
 
 -(void)initializeWordCloud;
 {
-    if (nil != self.cptWCViewController) {
+    if (nil != self.wordCloudView) {
         
-        CPTWordCloudView *wordCloudView = self.cptWCViewController.wordCloudView;
-        wordCloudView.backgroundColor = [UIColor whiteColor];
+        self.wordCloudView.backgroundColor = [UIColor whiteColor];
         
-        CPTWordCloud *wordCloud = self.cptWCViewController.wordCloud;
-        wordCloud.cloudSize = self.view.bounds.size;
+        CPTWordCloud *wordCloud = self.wordCloudView.wordCloud;
+        wordCloud.cloudSize = self.wordCloudView.bounds.size;
         wordCloud.lowCountColor = [UIColor blueColor];
         wordCloud.highCountColor = [UIColor redColor];
         wordCloud.probabilityOfWordVertical = 0.2f;
@@ -85,19 +87,11 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    if ([segue.identifier isEqualToString:kEmbedSegueCPTViewControllerToCPTWordCloudViewController]) {
-        
-        CPTWordCloudViewController *wcViewController = (CPTWordCloudViewController *)[segue destinationViewController];
-        self.cptWCViewController = wcViewController;
-        
-        [self initializeWordCloud];
-    }
-    else  if ([segue.identifier isEqualToString:kPopoverSegueCPTViewControllerToCPTPopoverViewController]) {
+    if ([segue.identifier isEqualToString:kPopoverSegueCPTViewControllerToCPTPopoverViewController]) {
         
         CPTPopoverViewController *destinationController = (CPTPopoverViewController *)[segue destinationViewController];
-        self.capturedImage = [self.cptWCViewController.wordCloudView imageByRenderingView];
+        self.capturedImage = [self.wordCloudView imageByRenderingView];
         destinationController.wordCloudImage = self.capturedImage;
-        
     }
 }
 

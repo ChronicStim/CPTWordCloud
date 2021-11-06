@@ -27,6 +27,31 @@
 
 @implementation CPTWordCloudView
 
+-(instancetype)initWithFrame:(CGRect)frame;
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        self.wordCloud = [[CPTWordCloud alloc] init];
+        self.wordCloud.cloudSize = frame.size;
+        self.wordCloud.delegate = self;
+        [self baseInit];
+    }
+    return self;
+}
+
+-(instancetype)initWithCoder:(NSCoder *)coder;
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.wordCloud = [[CPTWordCloud alloc] init];
+        self.wordCloud.cloudSize = self.bounds.size;
+        self.wordCloud.delegate = self;
+        [self baseInit];
+    }
+    return self;
+}
+
 - (void) baseInit
 {
     self.layer.masksToBounds = TRUE;
@@ -276,6 +301,33 @@
     UIImage * snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return snapshotImage;
+}
+
+-(void)createPDFSaveToDocumentsWithFileName:(NSString*)aFilename;
+{
+    // Creates a mutable data object for updating with binary data, like a byte array
+    NSMutableData *pdfData = [NSMutableData data];
+    
+    // Points the pdf converter to the mutable data object and to the UIView to be converted
+    UIGraphicsBeginPDFContextToData(pdfData, self.bounds, nil);
+    UIGraphicsBeginPDFPage();
+    CGContextRef pdfContext = UIGraphicsGetCurrentContext();
+    
+    // draws rect to the view and thus this is captured by UIGraphicsBeginPDFContextToData
+    [self.layer drawInContext:pdfContext];
+    
+    // remove PDF rendering context
+    UIGraphicsEndPDFContext();
+    
+    // Retrieves the document directories from the iOS device
+    NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+    
+    NSString* documentDirectory = [documentDirectories objectAtIndex:0];
+    NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:aFilename];
+    
+    // instructs the mutable data object to write its context to a file on disk
+    [pdfData writeToFile:documentDirectoryFilename atomically:YES];
+    NSLog(@"documentDirectoryFileName: %@",documentDirectoryFilename);
 }
 
 @end

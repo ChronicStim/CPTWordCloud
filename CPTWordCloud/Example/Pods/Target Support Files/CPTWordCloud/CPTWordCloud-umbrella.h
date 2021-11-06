@@ -13,7 +13,6 @@
 #import "CPTWord.h"
 #import "CPTWordCloud.h"
 #import "CPTWordCloudView.h"
-#import "CPTWordCloudViewController.h"
 
 FOUNDATION_EXPORT double CPTWordCloudVersionNumber;
 FOUNDATION_EXPORT const unsigned char CPTWordCloudVersionString[];
