@@ -20,6 +20,7 @@
 - (IBAction)regenerateCloudButtonPressed:(id)sender;
 - (IBAction)clearCloudButtonPressed:(id)sender;
 - (IBAction)showImageButtonPressed:(id)sender;
+- (IBAction)randomizeFontsButtonPressed:(id)sender;
 
 @end
 
@@ -43,6 +44,15 @@
     if (self.wordCloudView) {
         [self initializeWordCloud];
     }
+}
+
+- (IBAction)randomizeFontsButtonPressed:(id)sender {
+    CPTWordCloud *wordCloud = self.wordCloudView.wordCloud;
+    BOOL currentFontSetting = wordCloud.isUsingRandomFontPerWord;
+    BOOL newFontSetting = !currentFontSetting;
+    wordCloud.usingRandomFontPerWord = newFontSetting;
+    wordCloud.selectableFontNames = [wordCloud allSystemFontNames];
+    [wordCloud generateCloud];
 }
 
 - (IBAction)showImageButtonPressed:(id)sender {

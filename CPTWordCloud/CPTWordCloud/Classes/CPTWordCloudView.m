@@ -225,7 +225,7 @@
     for (CPTWord* word in self.words)
     {
         UIColor* color = [highlightedWords containsObject:word] ? highlightColor : word.color;
-        UIColor *backColor = self.backgroundColor;
+        UIColor *backColor = [UIColor clearColor];
         
         UIFont *font = word.font;
         NSDictionary *attrsDictionary = @{ NSFontAttributeName : font,

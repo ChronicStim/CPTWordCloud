@@ -102,8 +102,34 @@
                                             <constraint firstAttribute="height" constant="50" id="Nr6-BC-swX"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJR-jj-rgm">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VwZ-61-IV6">
                                         <rect key="frame" x="0.0" y="150" width="375" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Siy-2V-B7B">
+                                                <rect key="frame" x="37.5" y="3" width="300" height="44"/>
+                                                <color key="backgroundColor" systemColor="systemTealColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="nlF-mT-MTS"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Randomize Fonts">
+                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="randomizeFontsButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="PVk-He-1eG"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="Siy-2V-B7B" firstAttribute="centerY" secondItem="VwZ-61-IV6" secondAttribute="centerY" id="A5L-sv-j1E"/>
+                                            <constraint firstItem="Siy-2V-B7B" firstAttribute="centerX" secondItem="VwZ-61-IV6" secondAttribute="centerX" id="qWm-6o-nc4"/>
+                                            <constraint firstAttribute="height" constant="50" id="qjE-cs-w9o"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJR-jj-rgm">
+                                        <rect key="frame" x="0.0" y="200" width="375" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="agn-OS-cL2">
                                                 <rect key="frame" x="37.5" y="3" width="300" height="44"/>
@@ -132,12 +158,13 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" restorationIdentifier="CPTWordCloudView" translatesAutoresizingMaskIntoConstraints="NO" id="Y2W-uC-oVE" userLabel="CPTWordCloudView" customClass="CPTWordCloudView">
-                                        <rect key="frame" x="0.0" y="200" width="375" height="467"/>
+                                        <rect key="frame" x="0.0" y="250" width="375" height="417"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="agn-OS-cL2" firstAttribute="width" secondItem="BHq-NP-KVM" secondAttribute="width" id="BRA-XN-Vai"/>
+                                    <constraint firstItem="Siy-2V-B7B" firstAttribute="width" secondItem="BHq-NP-KVM" secondAttribute="width" id="F4N-Wg-wbY"/>
                                     <constraint firstItem="3z6-Q4-vKz" firstAttribute="width" secondItem="BHq-NP-KVM" secondAttribute="width" id="c9S-rn-hOq"/>
                                     <constraint firstItem="zCT-cv-pIV" firstAttribute="width" secondItem="07F-kH-H98" secondAttribute="width" id="efc-pc-C2p"/>
                                     <constraint firstItem="bHF-hi-w1l" firstAttribute="width" secondItem="BHq-NP-KVM" secondAttribute="width" id="jx1-ZR-ZW8"/>
@@ -207,6 +234,9 @@
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
