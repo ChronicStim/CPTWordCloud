@@ -25,6 +25,8 @@
 @property (nonatomic, readonly) double xShift;
 @property (nonatomic, readonly) double yShift;
 
+@property (nonatomic) UIColor *wordBackgroundColor;
+
 - (id) initForWordCloud:(CPTWordCloud *)wordCloud;
 - (id) initForWordCloud:(CPTWordCloud *)wordCloud withFrame:(CGRect)frame;
 -(void) highlightWord:(NSString *)stringWord;

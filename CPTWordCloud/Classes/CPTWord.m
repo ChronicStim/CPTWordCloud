@@ -19,7 +19,6 @@
         _color = [UIColor blackColor];
         _transform = CGAffineTransformIdentity;
         _rotated = NO;
-        //_countChanged = TRUE;
     }
     return self;
 }
@@ -34,19 +33,16 @@
 - (void) incrementCount
 {
     _count++;
-    //_countChanged = TRUE;
 }
 
 - (void) decrementCount
 {
-    _count++;
-    //_countChanged = TRUE;
+    _count--;
 }
 
 - (void)setCount:(int)count
 {
     _count = count;
-    //_countChanged = TRUE;
 }
 
 //

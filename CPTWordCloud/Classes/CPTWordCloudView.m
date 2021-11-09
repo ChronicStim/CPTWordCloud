@@ -26,6 +26,7 @@
 @end
 
 @implementation CPTWordCloudView
+@synthesize wordBackgroundColor = _wordBackgroundColor;
 
 -(instancetype)initWithFrame:(CGRect)frame;
 {
@@ -58,6 +59,8 @@
     //self.layer.shouldRasterize = YES; // test
     
     self.backgroundColor = [UIColor clearColor];
+    self.borderColor = [UIColor blackColor];
+    self.borderWidth = 0.0f;
     _scalingFactor = 1;
 }
 
@@ -165,6 +168,24 @@
     return self.layer.cornerRadius;
 }
 
+-(UIColor *)wordBackgroundColor;
+{
+    if (nil != _wordBackgroundColor) {
+        return _wordBackgroundColor;
+    }
+    
+    _wordBackgroundColor = [UIColor clearColor];
+    return _wordBackgroundColor;
+}
+
+-(void)setWordBackgroundColor:(UIColor *)wordBackgroundColor;
+{
+    if (wordBackgroundColor != _wordBackgroundColor) {
+        _wordBackgroundColor = wordBackgroundColor;
+        [self setNeedsDisplay];
+    }
+}
+
 -(void) highlightWord:(NSString *)stringWord;
 {
     if (nil != stringWord && 0 < stringWord.length) {
@@ -225,7 +246,7 @@
     for (CPTWord* word in self.words)
     {
         UIColor* color = [highlightedWords containsObject:word] ? highlightColor : word.color;
-        UIColor *backColor = [UIColor clearColor];
+        UIColor *backColor = self.wordBackgroundColor;
         
         UIFont *font = word.font;
         NSDictionary *attrsDictionary = @{ NSFontAttributeName : font,

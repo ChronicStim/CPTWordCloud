@@ -44,6 +44,8 @@
         _probabilityOfWordVertical = 0.0f;
         _usingRandomFontPerWord = NO;
         _selectableFontNames = [NSArray new];
+        _minimumWordCountAllowed = 1;
+        _convertingAllWordsToLowercase = YES;
         
         _minFontSize = 10;
         _maxFontSize = 100;
@@ -101,6 +103,16 @@
 - (void) addWord:(NSString*)word
 {
     [self incrementCount:word];
+}
+
+- (void)addWordsWithCounts:(NSDictionary <NSString *, NSNumber *> *)wordsWithCounts;
+{
+    if (nil != wordsWithCounts) {
+        for (NSString *word in wordsWithCounts.allKeys) {
+            NSInteger count = (NSInteger)[wordsWithCounts[word] integerValue];
+            [self processStringWord:word withCount:count];
+        }
+    }
 }
 
 - (void) removeWords:(NSArray*)words
@@ -167,54 +179,95 @@
 }
 
 // private
-- (void) incrementCount:(NSString*)word
+-(NSString *)cleanWordForWord:(NSString *)word;
 {
-    if (!word.length) return;
-    // trim non-letter characters and convert to lower case
-    NSString* cleanWord = [[word stringByTrimmingCharactersInSet:[NSCharacterSet letterCharacterSet].invertedSet] lowercaseString];
-    // ignore all words shorter than the minimum word length
-    if (cleanWord.length < self.minimumWordLength) return;
-        
-    CPTWord* cptword = [wordCounts valueForKey:cleanWord];    
+    NSString *cleanWord = nil;
+    if (nil != word) {
+        if (self.isConvertingAllWordsToLowercase) {
+            cleanWord = [[word stringByTrimmingCharactersInSet:[NSCharacterSet letterCharacterSet].invertedSet] lowercaseString];
+        } else {
+            cleanWord = [word stringByTrimmingCharactersInSet:[NSCharacterSet letterCharacterSet].invertedSet];
+        }
+    }
+    return cleanWord;
+}
+
+-(CPTWord *)wordForCleanWord:(NSString *)cleanWord;
+{
+    CPTWord* cptword = [wordCounts valueForKey:cleanWord];
     if (!cptword)
     {
         cptword = [[CPTWord alloc] initWithWord:cleanWord count:0];
         [wordCounts setValue:cptword forKey:cleanWord];
+        [sortedWords addObject:cptword];
     }
-    [cptword incrementCount];
-    
-    [self sortWords];
-    
-    if (!topWord || topWord.count < cptword.count)
-    {
-        topWord = cptword;
-    }
-    
-    [self setNeedsGenerateCloud];
+    return cptword;
+}
+
+- (void) incrementCount:(NSString*)word
+{
+    if (!word.length) return;
+    // trim non-letter characters and convert to lower case
+    NSString* cleanWord = [self cleanWordForWord:word];
+    // ignore all words shorter than the minimum word length
+    if (cleanWord.length < self.minimumWordLength) return;
+        
+    CPTWord* cptword = [self wordForCleanWord:cleanWord];
+    [self updateWord:cptword withCount:cptword.count+1];
 }
 
 - (void) decrementCount:(NSString*)word
 {
     if (!word.length) return;
     // trim non-letter characters and convert to lower case
-    NSString* cleanWord = [[word stringByTrimmingCharactersInSet:[NSCharacterSet letterCharacterSet].invertedSet] lowercaseString];
+    NSString* cleanWord = [self cleanWordForWord:word];
     
-    CPTWord* cptword = [wordCounts valueForKey:cleanWord];
-    if (!cptword) return;    
-    [cptword decrementCount];
+    CPTWord* cptword = [self wordForCleanWord:cleanWord];
+    [self updateWord:cptword withCount:cptword.count-1];
+}
+
+-(void)processStringWord:(NSString *)word withCount:(NSInteger)count;
+{
+    if (!word.length) return;
+    // trim non-letter characters and convert to lower case
+    NSString* cleanWord = [self cleanWordForWord:word];
+    // ignore all words shorter than the minimum word length
+    if (cleanWord.length < self.minimumWordLength) return;
     
-    [self sortWords];
-    
-    if (topWord == cptword)
-    {
-        // find new top word
-        for (CPTWord* word in wordCounts.allValues)
-        {
-            if (word.count > topWord.count) topWord = word;
+    CPTWord* cptword = [self wordForCleanWord:cleanWord];
+    [self updateWord:cptword withCount:count];
+}
+
+-(void)updateWord:(CPTWord *)cptWord withCount:(NSInteger)count;
+{
+    if (nil != cptWord) {
+        
+        if (count < self.minimumWordCountAllowed) {
+            // Remove the word from the cloud
+            [wordCounts removeObjectForKey:cptWord.text];
+            [sortedWords removeObject:cptWord];
         }
+        else {
+            cptWord.count = (int)count;
+        }
+        
+        [self sortWords];
+
+        if (!topWord || topWord.count < count)
+        {
+            topWord = cptWord;
+        }
+        else if (topWord == cptWord)
+        {
+            // find new top word
+            for (CPTWord* word in wordCounts.allValues)
+            {
+                if (word.count > topWord.count) topWord = word;
+            }
+        }
+        
+        [self setNeedsGenerateCloud];
     }
-    
-    [self setNeedsGenerateCloud];    
 }
 
 - (void) sortWords
@@ -511,6 +564,22 @@
 {
     if (selectableFontNames != _selectableFontNames) {
         _selectableFontNames = selectableFontNames;
+        [self setNeedsGenerateCloud];
+    }
+}
+
+-(void)setMinimumWordCountAllowed:(NSInteger)minimumWordCountAllowed;
+{
+    if (minimumWordCountAllowed != _minimumWordCountAllowed) {
+        _minimumWordCountAllowed = minimumWordCountAllowed;
+        [self setNeedsGenerateCloud];
+    }
+}
+
+-(void)setConvertingAllWordsToLowercase:(BOOL)convertingAllWordsToLowercase;
+{
+    if (convertingAllWordsToLowercase != _convertingAllWordsToLowercase) {
+        _convertingAllWordsToLowercase = convertingAllWordsToLowercase;
         [self setNeedsGenerateCloud];
     }
 }

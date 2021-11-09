@@ -45,12 +45,21 @@
 // An array of NSString fontNames that should be used when randomly assigning a font per word. This property is only used if usingRandomFontPerWord == YES
 @property (nonatomic, strong) NSArray *selectableFontNames;
 
+// Minimum count allowed in a word before it is removed from the word cloud (Default = 1); Used to allow zero count words
+@property (nonatomic) NSInteger minimumWordCountAllowed;
+
+///Convert all input words to be lowercase
+///Recommended to be left to (Default == YES) whenever using input text that includes capitalization from sentence structures which could result in duplicate words otherwise (e.g. "The" == "the")
+///Set property == NO when using input words that may include proper names or terms where you want to maintain capitalization of the input words.
+@property (nonatomic, getter=isConvertingAllWordsToLowercase) BOOL convertingAllWordsToLowercase;
+
 - (void)rebuild:(NSArray*)words;
 
 // add words to the wordCloud
 - (void)addWords:(NSString*)wordString delimiter:(NSString *)delimiter;
 - (void)addWords:(NSArray*)words;
 - (void)addWord:(NSString*)word;
+- (void)addWordsWithCounts:(NSDictionary <NSString *, NSNumber *> *)wordsWithCounts;
 
 // remove words from wordCloud
 - (void)removeWord:(NSString*)word;
