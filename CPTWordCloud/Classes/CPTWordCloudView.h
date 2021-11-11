@@ -25,6 +25,9 @@
 @property (nonatomic, readonly) double xShift;
 @property (nonatomic, readonly) double yShift;
 
+/// Used to adjust scaling of the final wordCloud to prevent cutting off glyphs that drop below the baseline or extend slightly past final margins. (Default = 10,10,10,10)
+@property (nonatomic) UIEdgeInsets cloudInsetMargins;
+
 @property (nonatomic) UIColor *wordBackgroundColor;
 
 - (id) initForWordCloud:(CPTWordCloud *)wordCloud;

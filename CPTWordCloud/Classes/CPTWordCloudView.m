@@ -61,6 +61,8 @@
     self.backgroundColor = [UIColor clearColor];
     self.borderColor = [UIColor blackColor];
     self.borderWidth = 0.0f;
+    self.cloudInsetMargins = UIEdgeInsetsMake(0, 20, 10, 10);
+    
     _scalingFactor = 1;
 }
 
@@ -104,14 +106,22 @@
     highlightedWords = nil;
 }
 
+-(void)setCloudInsetMargins:(UIEdgeInsets)cloudInsetMargins;
+{
+    if (!UIEdgeInsetsEqualToEdgeInsets(cloudInsetMargins, _cloudInsetMargins)) {
+        _cloudInsetMargins = cloudInsetMargins;
+        self.wordCloud.cloudSize = UIEdgeInsetsInsetRect(self.bounds, _cloudInsetMargins).size;
+    }
+}
+
 #pragma mark - view lifecycle
 
 - (void) layoutSubviews
 {
     [super layoutSubviews];
     
-    if (true == CGSizeEqualToSize(self.frame.size, self.wordCloud.cloudSize)) return;
-    self.wordCloud.cloudSize = self.frame.size;
+    if (true == CGSizeEqualToSize(UIEdgeInsetsInsetRect(self.bounds, self.cloudInsetMargins).size, self.wordCloud.cloudSize)) return;
+    self.wordCloud.cloudSize = UIEdgeInsetsInsetRect(self.bounds, self.cloudInsetMargins).size;
 }
 
 #pragma mark - CPTWordCloudDelegate
@@ -120,8 +130,8 @@
 {
     _words = words;
     _scalingFactor = scalingFactor;
-    _xShift = xShift;
-    _yShift = yShift;
+    _xShift = xShift + self.cloudInsetMargins.left;
+    _yShift = yShift + self.cloudInsetMargins.bottom;
     
     wordRects = [[NSMutableDictionary alloc] initWithCapacity:self.words.count];
     for (CPTWord* word in self.words)
@@ -231,8 +241,6 @@
 {
     CGContextRef c = UIGraphicsGetCurrentContext();
         
-    // set the coordinates for iOS, as seen here:
-    // https://developer.apple.com/library/mac/#documentation/graphicsimaging/conceptual/drawingwithquartz2d/dq_text/dq_text.html
     CGContextTranslateCTM(c, 0, self.bounds.size.height);
     CGContextScaleCTM(c, 1, -1);
     
@@ -267,7 +275,7 @@
         
         if (word.isRotated) {
             CGContextRotateCTM(c, M_PI / 2.0f);
-            CGContextTranslateCTM(c, 0, -word.bounds.size.width);
+            CGContextTranslateCTM(c, 0, -word.bounds.size.width * self.scalingFactor);
         }
         
         CTLineDraw(line, c);
