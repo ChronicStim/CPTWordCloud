@@ -248,7 +248,7 @@
         UIColor* color = [highlightedWords containsObject:word] ? highlightColor : word.color;
         UIColor *backColor = self.wordBackgroundColor;
         
-        UIFont *font = word.font;
+        UIFont *font = [word.font fontWithSize:word.font.pointSize*self.scalingFactor];
         NSDictionary *attrsDictionary = @{ NSFontAttributeName : font,
                                            NSForegroundColorAttributeName : color,
                                            NSBackgroundColorAttributeName : backColor

@@ -118,7 +118,8 @@
 
             wordCloud.lowCountColor = [UIColor blueColor];
             wordCloud.highCountColor = [UIColor redColor];
-
+            wordCloud.fontSizeMode = CPTWordFontSizeMode_N;
+            
             wordCloud.probabilityOfWordVertical = 0.2f;
             self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordVertical;
 
@@ -133,6 +134,7 @@
             
             wordCloud.lowCountColor = [UIColor greenColor];
             wordCloud.highCountColor = [UIColor orangeColor];
+            wordCloud.fontSizeMode = CPTWordFontSizeMode_N;
 
             wordCloud.probabilityOfWordVertical = 0.2f;
             self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordVertical;

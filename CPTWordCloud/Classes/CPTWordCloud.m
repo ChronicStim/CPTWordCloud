@@ -50,7 +50,7 @@
         _minFontSize = 10;
         _maxFontSize = 100;
         
-        _wordBorderSize = 2;
+        _wordBorderSize = CGSizeMake(2,2);
         
         _cloudSize = CGSizeZero;
                 
@@ -308,6 +308,31 @@
     return NO;
 }
 
+-(CGFloat)fontSizeForOccuranceCount:(NSInteger)count usingFontSizeMode:(CPTWordFontSizeMode)fontSizeMode;
+{
+    // Start with linear base case
+    CGFloat linearFontSizeForOccurance = self.minFontSize + ((self.maxFontSize-self.minFontSize)/(topWord.count-self.minimumWordCountAllowed))*(count-self.minimumWordCountAllowed);
+    CGFloat linearFontSizeAtTopCount = self.maxFontSize;
+    CGFloat finalFontSize = 0.0f;
+    switch (fontSizeMode) {
+        case CPTWordFontSizeMode_N: {
+            // Use linear case
+            finalFontSize = linearFontSizeForOccurance;
+        }   break;
+        case CPTWordFontSizeMode_sqrtN: {
+            CGFloat scaledFontSizeAtTopCount = sqrtf(linearFontSizeAtTopCount);
+            finalFontSize = sqrtf(linearFontSizeForOccurance) * (self.maxFontSize / scaledFontSizeAtTopCount);
+        }   break;
+        case CPTWordFontSizeMode_logN: {
+            CGFloat scaledFontSizeAtTopCount = logf(linearFontSizeAtTopCount);
+            finalFontSize = logf(linearFontSizeForOccurance) * (self.maxFontSize / scaledFontSizeAtTopCount);
+        }   break;
+        default:
+            break;
+    }
+    return finalFontSize;
+}
+
 // sorts words if needed, and lays them out
 - (void) generateCloud
 {
@@ -331,9 +356,6 @@
     double step = 2;
     double aspectRatio = self.cloudSize.width / self.cloudSize.height;
 
-    // normalize font sizes based on the word with the highest number of occurances
-    float fontSizePerOccurance = (self.maxFontSize - self.minFontSize) / topWord.count;
-    
     // prepare colors for interpolation
     float rColorPerOccurance = (highCountColorComponents[0] - lowCountColorComponents[0]) / topWord.count;
     float gColorPerOccurance = (highCountColorComponents[1] - lowCountColorComponents[1]) / topWord.count;
@@ -351,11 +373,12 @@
     {
         CPTWord* word = [sortedWords objectAtIndex:index];
         
+        CGFloat fontSize = [self fontSizeForOccuranceCount:word.count usingFontSizeMode:self.fontSizeMode];
         if (self.isUsingRandomFontPerWord) {
-            word.font = [self randomFontFromFontNames:self.selectableFontNames ofSize:(self.minFontSize + (fontSizePerOccurance * word.count))];
+            word.font = [self randomFontFromFontNames:self.selectableFontNames ofSize:fontSize];
         }
         else {
-            word.font = [self.font fontWithSize:self.minFontSize + (fontSizePerOccurance * word.count)];
+            word.font = [self.font fontWithSize:fontSize];
         }
                         
         word.color = [UIColor colorWithRed:lowCountColorComponents[0] + (rColorPerOccurance * word.count)
@@ -365,8 +388,14 @@
             
         NSDictionary *textAttributes = @{ NSFontAttributeName : word.font,
                                           NSForegroundColorAttributeName : word.color };
-        CGSize wordSize = [word.text sizeWithAttributes:textAttributes];
+        //CGSize wordSize = [word.text sizeWithAttributes:textAttributes];
 
+        CGSize wordSize = [word.text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
+                                                 options:(NSStringDrawingUsesDeviceMetrics | NSStringDrawingUsesFontLeading)
+                                              attributes:textAttributes
+                                                 context:nil].size;
+        //NSLog(@"Word: %@; sizeWithAttr: %@; boundingRect: %@",word.text,NSStringFromCGSize(wordSize),NSStringFromCGSize(textRect.size));
+        
         BOOL rotateWord = [self nextRandomBoolWithProbabilityForYes:self.probabilityOfWordVertical];
         word.rotated = rotateWord;
 
@@ -375,13 +404,14 @@
             wordSize = CGSizeMake(wordSize.height, wordSize.width);
         }
         
-        wordSize.height += (self.wordBorderSize * 2);
-        wordSize.width += (self.wordBorderSize * 2);
+        wordSize.height += (self.wordBorderSize.height * 2);
+        wordSize.width += (self.wordBorderSize.width * 2);
         
         float horizCenter = (self.cloudSize.width - wordSize.width)/2;
         float vertCenter = (self.cloudSize.height - wordSize.height)/2;
         
-        word.bounds = CGRectMake(arc4random_uniform(10) + horizCenter, arc4random_uniform(10) + vertCenter, wordSize.width, wordSize.height);
+//        word.bounds = CGRectMake(arc4random_uniform(10) + horizCenter, arc4random_uniform(10) + vertCenter, wordSize.width, wordSize.height);
+        word.bounds = CGRectMake(horizCenter, vertCenter, wordSize.width, wordSize.height);
 
         //NSLog(@"Bounds for %@ word: %@ %@",word.isRotated ? @"ROTATED" : @"NONROTATED",word.text,NSStringFromCGRect(word.bounds));
         
@@ -430,6 +460,10 @@
         if (minX < 0) xShift = minX * scalingFactor * -1;
         else xShift = (self.cloudSize.width - maxX) * scalingFactor;
     }
+    else if (maxX - minX < self.cloudSize.width) {
+        scalingFactor = self.cloudSize.width / (double)(maxX - minX);
+        xShift = minX * scalingFactor * - 1;
+    }
     
     if (maxY - minY > self.cloudSize.height)
     {
@@ -445,6 +479,13 @@
         // calculate the amount by which to shift all words so that they fit in the view.
         if (minY < 0) yShift = minY * scalingFactor * -1;
         else yShift = (self.cloudSize.height - maxY) * scalingFactor;
+    }
+    else if (maxY - minY < self.cloudSize.height) {
+        double newScalingFactor = self.cloudSize.height / (double)(maxY - minY);
+        if (scalingFactor > 1 && newScalingFactor < scalingFactor) {
+            scalingFactor = newScalingFactor;
+        }
+        yShift = minY * scalingFactor * -1;
     }
     
     if ([self.delegate respondsToSelector:@selector(wordCloudDidGenerateCloud:sortedWordArray:scalingFactor:xShift:yShift:)])
@@ -487,9 +528,9 @@
     [self setNeedsGenerateCloud];
 }
 
-- (void) setWordBorderSize:(int)wordBorderSize
+- (void) setWordBorderSize:(CGSize)wordBorderSize
 {
-    if (wordBorderSize == self.wordBorderSize) return;
+    if (CGSizeEqualToSize(wordBorderSize, _wordBorderSize)) return;
     _wordBorderSize = wordBorderSize;
     
     [self setNeedsGenerateCloud];
@@ -580,6 +621,14 @@
 {
     if (convertingAllWordsToLowercase != _convertingAllWordsToLowercase) {
         _convertingAllWordsToLowercase = convertingAllWordsToLowercase;
+        [self setNeedsGenerateCloud];
+    }
+}
+
+-(void)setFontSizeMode:(CPTWordFontSizeMode)fontSizeMode;
+{
+    if (fontSizeMode != _fontSizeMode) {
+        _fontSizeMode = fontSizeMode;
         [self setNeedsGenerateCloud];
     }
 }

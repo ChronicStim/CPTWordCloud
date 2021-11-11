@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "CPTWord.h"
 
+typedef NS_ENUM(NSUInteger, CPTWordFontSizeMode) {
+    CPTWordFontSizeMode_N = 0,
+    CPTWordFontSizeMode_sqrtN = 1,
+    CPTWordFontSizeMode_logN = 2
+};
+
 @protocol CPTWordCloudDelegate;
 
 @interface CPTWordCloud : NSObject
@@ -26,13 +32,15 @@
 @property (nonatomic) int minFontSize;
 // font size of the word with most occurances. defaults to 100
 @property (nonatomic) int maxFontSize;
+/// Method which will be used to calculate the font size for displaying the words in the cloud
+@property (nonatomic, assign) CPTWordFontSizeMode fontSizeMode;
 
 // both colors default to black
 @property (nonatomic, retain) UIColor* lowCountColor;
 @property (nonatomic, retain) UIColor* highCountColor;
 
-// words will minimally have this many pixels between them. defaults to 2
-@property (nonatomic) int wordBorderSize;
+// words will minimally have this many pixels between them. defaults to (2,0)
+@property (nonatomic) CGSize wordBorderSize;
 
 // the size of the word wordCloud
 @property (nonatomic) CGSize cloudSize;
