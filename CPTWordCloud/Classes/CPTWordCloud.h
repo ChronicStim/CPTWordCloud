@@ -61,6 +61,9 @@ typedef NS_ENUM(NSUInteger, CPTWordFontSizeMode) {
 ///Set property == NO when using input words that may include proper names or terms where you want to maintain capitalization of the input words.
 @property (nonatomic, getter=isConvertingAllWordsToLowercase) BOOL convertingAllWordsToLowercase;
 
+/// Flag used to trigger the removal of words from the input stream that don't typically add value or meaning to the word cloud (e.g. a, the, I, he, she, it) (Default == YES)
+@property (nonatomic, getter=isFilteringStopWords) BOOL filteringStopWords;
+
 - (void)rebuild:(NSArray*)words;
 
 // add words to the wordCloud

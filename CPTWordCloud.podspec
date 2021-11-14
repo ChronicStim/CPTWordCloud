@@ -30,9 +30,9 @@ Pod::Spec.new do |s|
 
   s.source_files = 'CPTWordCloud/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'CPTWordCloud' => ['CPTWordCloud/Assets/*.png']
-  # }
+  s.resource_bundles = {
+     'CPTWordCloud' => ['CPTWordCloud/Assets/*.csv']
+  }
 
   s.public_header_files = 'CPTWordCloud/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

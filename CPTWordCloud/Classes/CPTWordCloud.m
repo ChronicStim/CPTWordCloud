@@ -11,7 +11,7 @@
 
 @interface CPTWordCloud ()
 {
-    NSMutableArray* sortedWords;
+    NSArray* sortedWords;
     NSMutableDictionary* wordCounts;
     CPTWord* topWord;
     
@@ -21,6 +21,7 @@
     //NSCharacterSet* nonLetterCharacterSet;
 }
 @property (nonatomic, strong) GKRandomSource *randomSource;
+@property (nonatomic, strong) NSArray *arrayOfStopwords;
 
 - (void) incrementCount:(NSString*)word;
 - (void) decrementCount:(NSString*)word;
@@ -46,6 +47,7 @@
         _selectableFontNames = [NSArray new];
         _minimumWordCountAllowed = 1;
         _convertingAllWordsToLowercase = YES;
+        _filteringStopWords = NO;
         
         _minFontSize = 10;
         _maxFontSize = 100;
@@ -131,7 +133,7 @@
 - (void) removeAllWords
 {
     [wordCounts removeAllObjects];
-    [sortedWords removeAllObjects];
+    sortedWords = @[];
     topWord = nil;
     
     [self setNeedsGenerateCloud];
@@ -142,7 +144,46 @@
     [self removeAllWords];
 }
 
-// Fonts
+#pragma mark - Stopword Handling
+
+-(NSArray *)arrayOfStopwords;
+{
+    if (nil != _arrayOfStopwords) {
+        return _arrayOfStopwords;
+    }
+    
+    NSString *path = [[NSBundle bundleForClass:[CPTWordCloud class]] pathForResource:@"stopwords" ofType:@"csv" inDirectory:@"CPTWordCloud.bundle"];
+    NSError *error = nil;
+    NSString *contents = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+    if (nil != error) {
+        NSLog(@"Could not read contents of stopwords file at path %@. Error %li : %@; %@",path,(long)error.code,error.description,error.userInfo);
+    }
+    _arrayOfStopwords = [contents componentsSeparatedByString:@"\r\n"];
+    return _arrayOfStopwords;
+}
+
+-(BOOL)shouldFilterForStopwords;
+{
+    if (self.isFilteringStopWords) {
+        return YES;
+    }
+    return NO;
+}
+
+-(void)checkForStopwordInWord:(CPTWord *)word;
+{
+    if ([self.arrayOfStopwords containsObject:[word.text lowercaseString]]) {
+        word.stopword = YES;
+    }
+    else if (word.isStopword) {
+        // Set flag to NO if it was previously set to YES (shouldn't happen)
+        word.stopword = NO;
+    }
+}
+
+
+
+#pragma mark - Fonts
 
 -(UIFont *)font;
 {
@@ -198,8 +239,8 @@
     if (!cptword)
     {
         cptword = [[CPTWord alloc] initWithWord:cleanWord count:0];
+        [self checkForStopwordInWord:cptword];
         [wordCounts setValue:cptword forKey:cleanWord];
-        [sortedWords addObject:cptword];
     }
     return cptword;
 }
@@ -242,16 +283,9 @@
 {
     if (nil != cptWord) {
         
-        if (count < self.minimumWordCountAllowed) {
-            // Remove the word from the cloud
-            [wordCounts removeObjectForKey:cptWord.text];
-            [sortedWords removeObject:cptWord];
-        }
-        else {
-            cptWord.count = (int)count;
-        }
-        
-        [self sortWords];
+        cptWord.count = (int)count;
+
+        [self filterAndSortWords];
 
         if (!topWord || topWord.count < count)
         {
@@ -270,9 +304,18 @@
     }
 }
 
-- (void) sortWords
+-(void)filterAndSortWords;
 {
-    sortedWords = [NSMutableArray arrayWithArray:[[wordCounts allValues] sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"count" ascending:FALSE]]]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K >= %li",@"count",self.minimumWordCountAllowed];
+    if ([self shouldFilterForStopwords]) {
+        NSPredicate *stopwordsPredicate = [NSPredicate predicateWithFormat:@"%K == NO",@"stopword"];
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate,stopwordsPredicate]];
+    }
+    
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"count" ascending:FALSE];
+    sortedWords = [[wordCounts.allValues filteredArrayUsingPredicate:predicate] sortedArrayUsingDescriptors:@[sortDescriptor]];
+    
+    topWord = sortedWords[0];
 }
 
 - (void) setNeedsGenerateCloud
@@ -339,6 +382,8 @@
     double scalingFactor = 1;
     double xShift = 0;
     double yShift = 0;
+    
+    [self filterAndSortWords];
     
     if (!wordCounts.count) {
         // No words in wordCloud, so pass empty array to the delegate
@@ -629,6 +674,14 @@
 {
     if (fontSizeMode != _fontSizeMode) {
         _fontSizeMode = fontSizeMode;
+        [self setNeedsGenerateCloud];
+    }
+}
+
+-(void)setFilteringStopWords:(BOOL)filteringStopWords;
+{
+    if (filteringStopWords != _filteringStopWords) {
+        _filteringStopWords = filteringStopWords;
         [self setNeedsGenerateCloud];
     }
 }

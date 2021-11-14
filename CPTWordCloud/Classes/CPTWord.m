@@ -19,6 +19,7 @@
         _color = [UIColor blackColor];
         _transform = CGAffineTransformIdentity;
         _rotated = NO;
+        _stopword  = NO;
     }
     return self;
 }

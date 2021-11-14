@@ -17,6 +17,7 @@
 @property (nonatomic, retain) UIFont* font;
 @property (nonatomic, getter=isRotated) BOOL rotated;
 @property (nonatomic) CGAffineTransform transform;
+@property (nonatomic, getter=isStopword) BOOL stopword;
 
 - (id) initWithWord:(NSString*)word count:(int)count;
 

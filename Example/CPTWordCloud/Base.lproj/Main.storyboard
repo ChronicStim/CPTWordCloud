@@ -104,32 +104,81 @@
                                             <constraint firstAttribute="height" constant="50" id="ymY-Zh-2pr"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xxv-Uv-2o0">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hQ3-uL-Ip6">
                                         <rect key="frame" x="0.0" y="100" width="375" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHF-hi-w1l">
-                                                <rect key="frame" x="37.5" y="3" width="300" height="44"/>
-                                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BnH-bB-xVN">
+                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="50"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eC1-75-rhi">
+                                                        <rect key="frame" x="37.5" y="3" width="145" height="44"/>
+                                                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="44" id="ya5-J6-Y1g"/>
+                                                        </constraints>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Clear Cloud">
+                                                            <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="clearCloudButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="GZB-eQ-WzP"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="44" id="JNy-ul-8pX"/>
+                                                    <constraint firstAttribute="height" constant="50" id="7Aq-Dq-G7V"/>
+                                                    <constraint firstAttribute="trailing" secondItem="eC1-75-rhi" secondAttribute="trailing" constant="5" id="efX-yX-h8U"/>
+                                                    <constraint firstItem="eC1-75-rhi" firstAttribute="centerY" secondItem="BnH-bB-xVN" secondAttribute="centerY" id="kaP-3U-1uK"/>
                                                 </constraints>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Clear Cloud">
-                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="clearCloudButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="mog-Oy-JTw"/>
-                                                </connections>
-                                            </button>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xxv-Uv-2o0">
+                                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="50"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C1E-sV-FYn">
+                                                        <rect key="frame" x="5" y="3" width="145" height="44"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="HRG-3E-iNm">
+                                                                <rect key="frame" x="3.5" y="6.5" width="138" height="31"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter Stopwords" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WdH-kg-pNi">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="69" height="31"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Filter Stopwords" translatesAutoresizingMaskIntoConstraints="NO" id="MPH-hx-6KO">
+                                                                        <rect key="frame" x="69" y="0.0" width="71" height="31"/>
+                                                                        <connections>
+                                                                            <action selector="filterStopwordsSwitchChanged:" destination="whP-gf-Uak" eventType="valueChanged" id="R6r-wI-ypu"/>
+                                                                        </connections>
+                                                                    </switch>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="MPH-hx-6KO" firstAttribute="height" secondItem="HRG-3E-iNm" secondAttribute="height" id="6n3-cy-GwX"/>
+                                                                </constraints>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                                        <constraints>
+                                                            <constraint firstItem="HRG-3E-iNm" firstAttribute="height" secondItem="C1E-sV-FYn" secondAttribute="height" multiplier="0.7" id="8MW-cL-Bcp"/>
+                                                            <constraint firstItem="HRG-3E-iNm" firstAttribute="centerY" secondItem="C1E-sV-FYn" secondAttribute="centerY" id="C7E-3l-4NS"/>
+                                                            <constraint firstItem="HRG-3E-iNm" firstAttribute="centerX" secondItem="C1E-sV-FYn" secondAttribute="centerX" id="Ukx-Yg-MkK"/>
+                                                            <constraint firstAttribute="height" constant="44" id="tOn-MU-oWC"/>
+                                                            <constraint firstItem="HRG-3E-iNm" firstAttribute="width" secondItem="C1E-sV-FYn" secondAttribute="width" multiplier="0.95" id="tt7-yC-366"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="Nr6-BC-swX"/>
+                                                    <constraint firstItem="C1E-sV-FYn" firstAttribute="leading" secondItem="Xxv-Uv-2o0" secondAttribute="leading" constant="5" id="OEy-v5-wuw"/>
+                                                    <constraint firstItem="C1E-sV-FYn" firstAttribute="centerY" secondItem="Xxv-Uv-2o0" secondAttribute="centerY" id="abc-hg-W43"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="bHF-hi-w1l" firstAttribute="centerX" secondItem="Xxv-Uv-2o0" secondAttribute="centerX" id="2f1-rg-cQa"/>
-                                            <constraint firstItem="bHF-hi-w1l" firstAttribute="centerY" secondItem="Xxv-Uv-2o0" secondAttribute="centerY" id="FMZ-Zx-UWy"/>
-                                            <constraint firstAttribute="height" constant="50" id="Nr6-BC-swX"/>
-                                        </constraints>
-                                    </view>
+                                    </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="EgO-cO-7VB">
                                         <rect key="frame" x="0.0" y="150" width="375" height="50"/>
                                         <subviews>
@@ -298,11 +347,12 @@
                                     <constraint firstItem="agn-OS-cL2" firstAttribute="trailing" secondItem="BHq-NP-KVM" secondAttribute="trailing" id="4jC-OC-ZHu"/>
                                     <constraint firstItem="3z6-Q4-vKz" firstAttribute="trailing" secondItem="BHq-NP-KVM" secondAttribute="trailing" id="DeH-f2-fZe"/>
                                     <constraint firstItem="2nZ-0V-B4y" firstAttribute="leading" secondItem="BHq-NP-KVM" secondAttribute="leading" id="EnO-e1-k2o"/>
+                                    <constraint firstItem="eC1-75-rhi" firstAttribute="leading" secondItem="BHq-NP-KVM" secondAttribute="leading" id="d4Q-PP-ESH"/>
                                     <constraint firstItem="zCT-cv-pIV" firstAttribute="width" secondItem="07F-kH-H98" secondAttribute="width" id="efc-pc-C2p"/>
-                                    <constraint firstItem="bHF-hi-w1l" firstAttribute="width" secondItem="BHq-NP-KVM" secondAttribute="width" id="jx1-ZR-ZW8"/>
                                     <constraint firstItem="Siy-2V-B7B" firstAttribute="trailing" secondItem="BHq-NP-KVM" secondAttribute="trailing" id="mUb-op-QMC"/>
                                     <constraint firstItem="EeR-24-QWW" firstAttribute="leading" secondItem="BHq-NP-KVM" secondAttribute="leading" id="p4b-Qn-7i6"/>
                                     <constraint firstItem="nFJ-Tx-Vbb" firstAttribute="leading" secondItem="BHq-NP-KVM" secondAttribute="leading" id="pFa-za-2dx"/>
+                                    <constraint firstItem="C1E-sV-FYn" firstAttribute="trailing" secondItem="BHq-NP-KVM" secondAttribute="trailing" id="w5V-sz-OoZ"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -374,6 +424,9 @@
         </systemColor>
         <systemColor name="systemTealColor">
             <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

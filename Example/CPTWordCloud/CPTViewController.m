@@ -26,6 +26,7 @@
 - (IBAction)randomizeFontsButtonPressed:(id)sender;
 - (IBAction)showRectButtonPressed:(id)sender;
 - (IBAction)verticalWordSliderValueChanged:(id)sender;
+- (IBAction)filterStopwordsSwitchChanged:(id)sender;
 
 @end
 
@@ -55,6 +56,11 @@
     if (self.wordCloudView) {
         [self initializeWordCloud:@"Beta"];
     }
+}
+
+- (IBAction)filterStopwordsSwitchChanged:(id)sender {
+    BOOL isSwitchOn = [(UISwitch *)sender isOn];
+    self.wordCloudView.wordCloud.filteringStopWords = isSwitchOn;
 }
 
 - (IBAction)verticalWordSliderValueChanged:(id)sender {
