@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet CPTWordCloudView *wordCloudView;
 @property (weak, nonatomic) IBOutlet UISlider *verticalProbabilitySlider;
 @property (weak, nonatomic) IBOutlet UIButton *useRandomFontButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *fontSizingMethodSelector;
 
 - (IBAction)initializeAlphaButtonPressed:(id)sender;
 - (IBAction)initializeBetaButtonPressed:(id)sender;
@@ -27,6 +28,7 @@
 - (IBAction)showRectButtonPressed:(id)sender;
 - (IBAction)verticalWordSliderValueChanged:(id)sender;
 - (IBAction)filterStopwordsSwitchChanged:(id)sender;
+- (IBAction)fontSizingSegmentedSwitchSelected:(id)sender;
 
 @end
 
@@ -56,6 +58,29 @@
     if (self.wordCloudView) {
         [self initializeWordCloud:@"Beta"];
     }
+}
+
+- (IBAction)fontSizingSegmentedSwitchSelected:(id)sender {
+    NSInteger segmentSelected = [(UISegmentedControl *)sender selectedSegmentIndex];
+    CPTWordFontSizeMode fontSizingMode = CPTWordFontSizeMode_rank;
+    switch (segmentSelected) {
+        case 0:
+            fontSizingMode = CPTWordFontSizeMode_rank;
+            break;
+        case 1:
+            fontSizingMode = CPTWordFontSizeMode_linearN;
+            break;
+        case 2:
+            fontSizingMode = CPTWordFontSizeMode_expN;
+            break;
+        case 3:
+            fontSizingMode = CPTWordFontSizeMode_logN;
+            break;
+        default:
+            break;
+    }
+    
+    self.wordCloudView.wordCloud.fontSizeMode = fontSizingMode;
 }
 
 - (IBAction)filterStopwordsSwitchChanged:(id)sender {
@@ -124,7 +149,9 @@
 
             wordCloud.lowCountColor = [UIColor blueColor];
             wordCloud.highCountColor = [UIColor redColor];
-            wordCloud.fontSizeMode = CPTWordFontSizeMode_N;
+            
+            wordCloud.fontSizeMode = CPTWordFontSizeMode_rank;
+            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.fontSizeMode];
             
             wordCloud.probabilityOfWordVertical = 0.2f;
             self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordVertical;
@@ -140,7 +167,9 @@
             
             wordCloud.lowCountColor = [UIColor greenColor];
             wordCloud.highCountColor = [UIColor orangeColor];
-            wordCloud.fontSizeMode = CPTWordFontSizeMode_N;
+            
+            wordCloud.fontSizeMode = CPTWordFontSizeMode_rank;
+            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.fontSizeMode];
 
             wordCloud.probabilityOfWordVertical = 0.2f;
             self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordVertical;

@@ -10,9 +10,10 @@
 #import "CPTWord.h"
 
 typedef NS_ENUM(NSUInteger, CPTWordFontSizeMode) {
-    CPTWordFontSizeMode_N = 0,
-    CPTWordFontSizeMode_sqrtN = 1,
-    CPTWordFontSizeMode_logN = 2
+    CPTWordFontSizeMode_rank = 0,
+    CPTWordFontSizeMode_linearN = 1,
+    CPTWordFontSizeMode_expN = 2,
+    CPTWordFontSizeMode_logN = 3
 };
 
 @protocol CPTWordCloudDelegate;

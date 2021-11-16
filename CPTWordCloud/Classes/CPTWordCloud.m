@@ -8,17 +8,17 @@
 
 #import "CPTWordCloud.h"
 #import <GameplayKit/GameplayKit.h>
+#import <math.h>
 
 @interface CPTWordCloud ()
 {
     NSArray* sortedWords;
     NSMutableDictionary* wordCounts;
     CPTWord* topWord;
-    
+    CPTWord* bottomWord;
+
     CGFloat lowCountColorComponents[4];
     CGFloat highCountColorComponents[4];
-    
-    //NSCharacterSet* nonLetterCharacterSet;
 }
 @property (nonatomic, strong) GKRandomSource *randomSource;
 @property (nonatomic, strong) NSArray *arrayOfStopwords;
@@ -60,7 +60,6 @@
         self.highCountColor = [UIColor blackColor];
         
         wordCounts = [[NSMutableDictionary alloc] init];        
-        //nonLetterCharacterSet = [[NSCharacterSet letterCharacterSet] invertedSet];
     }
     return self;
 }
@@ -75,11 +74,10 @@
     sortedWords = nil;
     wordCounts = nil;
     topWord = nil;
+    bottomWord = nil;
     
     //delete(lowCountColorComponents);
     //delete(highCountColorComponents);
-    
-    //nonLetterCharacterSet = nil;
 }
 
 - (void) rebuild:(NSArray*)words
@@ -135,6 +133,7 @@
     [wordCounts removeAllObjects];
     sortedWords = @[];
     topWord = nil;
+    bottomWord = nil;
     
     [self setNeedsGenerateCloud];
 }
@@ -181,8 +180,6 @@
     }
 }
 
-
-
 #pragma mark - Fonts
 
 -(UIFont *)font;
@@ -219,7 +216,8 @@
     return [NSArray arrayWithArray:mutArray];
 }
 
-// private
+#pragma mark - Input Word Processing
+
 -(NSString *)cleanWordForWord:(NSString *)word;
 {
     NSString *cleanWord = nil;
@@ -287,20 +285,19 @@
 
         [self filterAndSortWords];
 
-        if (!topWord || topWord.count < count)
-        {
-            topWord = cptWord;
-        }
-        else if (topWord == cptWord)
-        {
-            // find new top word
-            for (CPTWord* word in wordCounts.allValues)
-            {
-                if (word.count > topWord.count) topWord = word;
-            }
-        }
-        
         [self setNeedsGenerateCloud];
+    }
+}
+
+-(void)selectBoundaryWords;
+{
+    if (nil != sortedWords && 0 < [sortedWords count]) {
+        topWord = sortedWords.firstObject;
+        bottomWord = sortedWords.lastObject;
+    }
+    else {
+        topWord = nil;
+        bottomWord = nil;
     }
 }
 
@@ -353,26 +350,58 @@
 
 -(CGFloat)fontSizeForOccuranceCount:(NSInteger)count usingFontSizeMode:(CPTWordFontSizeMode)fontSizeMode;
 {
-    // Start with linear base case
-    CGFloat linearFontSizeForOccurance = self.minFontSize + ((self.maxFontSize-self.minFontSize)/(topWord.count-self.minimumWordCountAllowed))*(count-self.minimumWordCountAllowed);
-    CGFloat linearFontSizeAtTopCount = self.maxFontSize;
     CGFloat finalFontSize = 0.0f;
     switch (fontSizeMode) {
-        case CPTWordFontSizeMode_N: {
-            // Use linear case
-            finalFontSize = linearFontSizeForOccurance;
+        case CPTWordFontSizeMode_rank: {
+            // Use rank order to determine font size from min to max (relative difference in count between words doesn't effect sizing)
+            NSSet *uniqueCountsInSortedWords = [NSSet setWithArray:[sortedWords valueForKeyPath:@"count"]];
+            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"intValue" ascending:YES comparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                if ([obj1 integerValue] > [obj2 integerValue]) {
+                    return (NSComparisonResult)NSOrderedDescending;
+                }
+                
+                if ([obj1 integerValue] < [obj2 integerValue]) {
+                    return (NSComparisonResult)NSOrderedAscending;
+                }
+                return (NSComparisonResult)NSOrderedSame;
+            }];
+            NSArray *orderedUniqueCountsInSortedWords = [uniqueCountsInSortedWords sortedArrayUsingDescriptors:@[sortDescriptor]];
+            NSInteger countOfRanks = orderedUniqueCountsInSortedWords.count;
+            NSInteger currentRank = [orderedUniqueCountsInSortedWords indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                return [obj integerValue] == count;
+            }];
+            if (1 < countOfRanks) {
+                finalFontSize = roundf(self.minFontSize + (float)(self.maxFontSize-self.minFontSize)*(float)currentRank/((float)countOfRanks-1.0f));
+            } else {
+                finalFontSize = self.maxFontSize;
+            }
         }   break;
-        case CPTWordFontSizeMode_sqrtN: {
-            CGFloat scaledFontSizeAtTopCount = sqrtf(linearFontSizeAtTopCount);
-            finalFontSize = sqrtf(linearFontSizeForOccurance) * (self.maxFontSize / scaledFontSizeAtTopCount);
+        case CPTWordFontSizeMode_linearN: {
+            // Use word frequency (count) to determine font sizing from min to max along a linear ramp
+            CGFloat maxCount = (float)topWord.count;
+            CGFloat minCount = (float)bottomWord.count;
+            finalFontSize = self.minFontSize + ((self.maxFontSize - self.minFontSize) / (maxCount - minCount)) * (count-minCount);
+        }   break;
+        case CPTWordFontSizeMode_expN: {
+            // Use word frequency (count) to determine font sizing from min to max based on an exponential ramp
+            CGFloat maxCount = (float)topWord.count;
+            CGFloat minCount = (float)bottomWord.count;
+            CGFloat b = (1/(minCount-maxCount))*log10f((float)self.minFontSize/(float)self.maxFontSize);
+            CGFloat a = (float)self.maxFontSize / powf(10,b * maxCount);
+            finalFontSize = a * powf(10,b * (float)count);
         }   break;
         case CPTWordFontSizeMode_logN: {
-            CGFloat scaledFontSizeAtTopCount = logf(linearFontSizeAtTopCount);
-            finalFontSize = logf(linearFontSizeForOccurance) * (self.maxFontSize / scaledFontSizeAtTopCount);
+            // Use word frequency (count) to determine font sizing from min to max based on an logarithmic ramp
+            CGFloat maxCount = (float)topWord.count;
+            CGFloat minCount = (float)bottomWord.count;
+            CGFloat a = ((float)self.minFontSize - (float)self.maxFontSize)/(log10f(minCount)-log10f(maxCount));
+            CGFloat b = powf(10, (float)self.minFontSize/a)/minCount;
+            finalFontSize = a * log10f(b * (float)count);
         }   break;
         default:
             break;
     }
+
     return finalFontSize;
 }
 
@@ -384,6 +413,7 @@
     double yShift = 0;
     
     [self filterAndSortWords];
+    [self selectBoundaryWords];
     
     if (!wordCounts.count) {
         // No words in wordCloud, so pass empty array to the delegate
