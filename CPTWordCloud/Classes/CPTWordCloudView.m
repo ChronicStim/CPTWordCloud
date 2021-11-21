@@ -332,7 +332,7 @@
     return snapshotImage;
 }
 
--(void)createPDFSaveToDocumentsWithFileName:(NSString*)aFilename;
+-(NSData *)createPDFSaveToDocuments:(BOOL)saveToDocuments withFileName:(NSString*)aFilename;
 {
     // Creates a mutable data object for updating with binary data, like a byte array
     NSMutableData *pdfData = [NSMutableData data];
@@ -348,15 +348,28 @@
     // remove PDF rendering context
     UIGraphicsEndPDFContext();
     
-    // Retrieves the document directories from the iOS device
-    NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+    if (saveToDocuments) {
+        // Retrieves the document directories from the iOS device
+        NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+        
+        NSString* documentDirectory = [documentDirectories objectAtIndex:0];
+        NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:aFilename];
+        
+        // instructs the mutable data object to write its context to a file on disk
+        [pdfData writeToFile:documentDirectoryFilename atomically:YES];
+        NSLog(@"documentDirectoryFileName: %@",documentDirectoryFilename);
+    }
+
+    return [NSData dataWithData:pdfData];
+}
+
+-(void)drawInPDFContext:(CGContextRef)pdfContext;
+{
+    CGContextSaveGState(pdfContext);
     
-    NSString* documentDirectory = [documentDirectories objectAtIndex:0];
-    NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:aFilename];
+    [self.layer drawInContext:pdfContext];
     
-    // instructs the mutable data object to write its context to a file on disk
-    [pdfData writeToFile:documentDirectoryFilename atomically:YES];
-    NSLog(@"documentDirectoryFileName: %@",documentDirectoryFilename);
+    CGContextRestoreGState(pdfContext);
 }
 
 @end

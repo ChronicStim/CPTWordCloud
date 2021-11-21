@@ -7,7 +7,6 @@
 //
 
 #import "CPTViewController.h"
-#import <CPTWordCloud/CPTWordCloud.h>
 #import <CPTWordCloud/CPTWordCloudView.h>
 #import "CPTPopoverViewController.h"
 
@@ -119,7 +118,7 @@
 }
 
 - (IBAction)showImageButtonPressed:(id)sender {
-    [self.wordCloudView createPDFSaveToDocumentsWithFileName:@"SamplePDFWordCloud.pdf"];
+    [self.wordCloudView createPDFSaveToDocuments:YES withFileName:@"SamplePDFWordCloud.pdf"];
 }
 
 - (IBAction)clearCloudButtonPressed:(id)sender {

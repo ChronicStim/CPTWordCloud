@@ -282,10 +282,6 @@
     if (nil != cptWord) {
         
         cptWord.count = (int)count;
-
-        [self filterAndSortWords];
-
-        [self setNeedsGenerateCloud];
     }
 }
 
@@ -312,7 +308,12 @@
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"count" ascending:FALSE];
     sortedWords = [[wordCounts.allValues filteredArrayUsingPredicate:predicate] sortedArrayUsingDescriptors:@[sortDescriptor]];
     
-    topWord = sortedWords[0];
+    if (0 < [sortedWords count]) {
+        topWord = sortedWords[0];
+    }
+    else {
+        topWord = nil;
+    }
 }
 
 - (void) setNeedsGenerateCloud
