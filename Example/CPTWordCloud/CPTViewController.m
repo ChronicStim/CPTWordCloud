@@ -193,7 +193,7 @@
     if ([segue.identifier isEqualToString:kPopoverSegueCPTViewControllerToCPTPopoverViewController]) {
         
         CPTPopoverViewController *destinationController = (CPTPopoverViewController *)[segue destinationViewController];
-        self.capturedImage = [self.wordCloudView imageByRenderingView];
+        self.capturedImage = [self.wordCloudView imageByDrawingView];
         destinationController.wordCloudImage = self.capturedImage;
     }
 }

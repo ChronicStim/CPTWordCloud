@@ -241,13 +241,18 @@
 {
     CGContextRef c = UIGraphicsGetCurrentContext();
         
-    CGContextTranslateCTM(c, 0, self.bounds.size.height);
-    CGContextScaleCTM(c, 1, -1);
+    [self drawWordCloudInContext:c];
+}
+
+-(void)drawWordCloudInContext:(CGContextRef)context;
+{
+    CGContextTranslateCTM(context, 0, self.bounds.size.height);
+    CGContextScaleCTM(context, 1, -1);
     
-    CGContextClearRect(c, self.bounds);
+    CGContextClearRect(context, self.bounds);
     
-    CGContextSetFillColorWithColor(c, self.backgroundColor.CGColor);
-    CGContextFillRect(c, self.bounds);
+    CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
+    CGContextFillRect(context, self.bounds);
     
     if (!self.words.count) return;
     
@@ -261,27 +266,27 @@
                                            NSForegroundColorAttributeName : color,
                                            NSBackgroundColorAttributeName : backColor
         };
-
+        
         NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:word.text attributes:attrsDictionary];
         CFAttributedStringRef cfAttrString  = (__bridge CFAttributedStringRef)attrString;
         
         CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
         
-        CGContextSetTextMatrix(c, CGAffineTransformIdentity);
+        CGContextSetTextMatrix(context, CGAffineTransformIdentity);
         
-        CGContextSaveGState(c);
+        CGContextSaveGState(context);
         
-        CGContextTranslateCTM(c, self.xShift + word.bounds.origin.x * self.scalingFactor, self.yShift + word.bounds.origin.y * self.scalingFactor);
+        CGContextTranslateCTM(context, self.xShift + word.bounds.origin.x * self.scalingFactor, self.yShift + word.bounds.origin.y * self.scalingFactor);
         
         if (word.isRotated) {
-            CGContextRotateCTM(c, M_PI / 2.0f);
-            CGContextTranslateCTM(c, 0, -word.bounds.size.width * self.scalingFactor);
+            CGContextRotateCTM(context, M_PI / 2.0f);
+            CGContextTranslateCTM(context, 0, -word.bounds.size.width * self.scalingFactor);
         }
         
-        CTLineDraw(line, c);
+        CTLineDraw(line, context);
         CFRelease(line);
         
-        CGContextRestoreGState(c);
+        CGContextRestoreGState(context);
     }
 }
 
@@ -323,13 +328,39 @@
 
 #pragma mark - Draw to external image
 
-- (UIImage *)imageByRenderingView
+- (UIImage *)imageByRenderingView;
 {
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
     [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
     UIImage * snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return snapshotImage;
+}
+
+-(UIImage *)imageByDrawingView;
+{
+    UIImage __block *graphImageCapture = nil;
+
+    if ([NSThread isMainThread])
+    {
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
+        CGContextRef c = UIGraphicsGetCurrentContext();
+        
+        [self drawWordCloudInContext:c];
+        
+        graphImageCapture = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    else
+    {
+        __weak __typeof__(self) weakSelf = self;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            __typeof__(self) strongSelf = weakSelf;
+            graphImageCapture = [strongSelf imageByDrawingView];
+        });
+    }
+    
+    return graphImageCapture;
 }
 
 -(NSData *)createPDFSaveToDocuments:(BOOL)saveToDocuments withFileName:(NSString*)aFilename;

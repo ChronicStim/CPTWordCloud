@@ -37,6 +37,7 @@
 - (void) clearHighlights;
 
 - (UIImage *)imageByRenderingView;
+-(UIImage *)imageByDrawingView;
 -(NSData *)createPDFSaveToDocuments:(BOOL)saveToDocuments withFileName:(NSString*)aFilename;
 -(void)drawInPDFContext:(CGContextRef)pdfContext;
 
