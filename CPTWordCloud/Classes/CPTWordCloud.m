@@ -58,6 +58,7 @@
                 
         self.lowCountColor = [UIColor blackColor];
         self.highCountColor = [UIColor blackColor];
+        self.zeroCountColor = [UIColor darkGrayColor];
         
         wordCounts = [[NSMutableDictionary alloc] init];        
     }
@@ -457,10 +458,15 @@
             word.font = [self.font fontWithSize:fontSize];
         }
                         
-        word.color = [UIColor colorWithRed:lowCountColorComponents[0] + (rColorPerOccurance * word.count)
+        if (0 >= word.count) {
+            word.color = self.zeroCountColor;
+        }
+        else {
+            word.color = [UIColor colorWithRed:lowCountColorComponents[0] + (rColorPerOccurance * word.count)
                                          green:lowCountColorComponents[1] + (gColorPerOccurance * word.count)
                                           blue:lowCountColorComponents[2] + (bColorPerOccurance * word.count)
                                          alpha:lowCountColorComponents[3] + (aColorPerOccurance * word.count)];
+        }
             
         NSDictionary *textAttributes = @{ NSFontAttributeName : word.font,
                                           NSForegroundColorAttributeName : word.color };
@@ -644,6 +650,13 @@
     [self setNeedsGenerateCloud];
 }
 
+- (void)setZeroCountColor:(UIColor *)zeroCountColor;
+{
+    if (zeroCountColor == self.zeroCountColor) return;
+    _zeroCountColor = zeroCountColor;
+    [self setNeedsGenerateCloud];
+}
+
 - (void) setMaxNumberOfWords:(int)maxNumberOfWords
 {
     if (maxNumberOfWords == self.maxNumberOfWords) return;
@@ -651,7 +664,6 @@
     _maxFontSize = maxNumberOfWords;
     [self setNeedsGenerateCloud];
 }
-
 
 - (void) setMinimumWordLength:(int)minimumWordLength
 {

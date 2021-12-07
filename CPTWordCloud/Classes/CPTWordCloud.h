@@ -37,8 +37,12 @@ typedef NS_ENUM(NSUInteger, CPTWordFontSizeMode) {
 @property (nonatomic, assign) CPTWordFontSizeMode fontSizeMode;
 
 // both colors default to black
+/// Word color for the lowest count word in the cloud. Higher count words will be a gradation of this color and highCountColor. Defaults to blackColor
 @property (nonatomic, retain) UIColor* lowCountColor;
+/// Word color for the highest count word in the cloud. Lower count words will be a gradation of this color and lowCountColor. Defaults to blackColor
 @property (nonatomic, retain) UIColor* highCountColor;
+/// When words with count==0 are included in the wordCloud (minimumWordCountAllowed == 0), then this color will be used for any word with a count <= 0. Defaults to darkGrayColor
+@property (nonatomic, retain) UIColor* zeroCountColor;
 
 // words will minimally have this many pixels between them. defaults to (2,0)
 @property (nonatomic) CGSize wordBorderSize;

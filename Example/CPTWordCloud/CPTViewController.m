@@ -167,6 +167,8 @@
             wordCloud.lowCountColor = [UIColor greenColor];
             wordCloud.highCountColor = [UIColor orangeColor];
             
+            wordCloud.minimumWordCountAllowed = 0;
+            
             wordCloud.fontSizeMode = CPTWordFontSizeMode_rank;
             [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.fontSizeMode];
 
@@ -178,7 +180,7 @@
 
             wordCloud.convertingAllWordsToLowercase = NO;
             
-            [wordCloud addWordsWithCounts:@{@"onto" : @(1),@"picture" : @(2),@"survive" : @(6), @"Gift" : @(5), @"size" : @(1), @"furthermore" : @(2), @"last" : @(4), @"male" : @(1), @"distant" : @(8), @"seed" : @(1), @"anyway" : @(1), @"weapon" : @(3), @"income" : @(5), @"especially" : @(2), @"steal" : @(3), @"whisper" : @(6), @"Offense" : @(3), @"its" : @(4), @"talent" : @(4), @"fresh" : @(8), @"remaining" : @(2), @"makeup" : @(1), @"effective" : @(2), @"thin" : @(1), @"tremendous" : @(5), @"Wisdom" : @(6), @"Worth" : @(7), @"roughly" : @(4), @"empty" : @(11), @"interpret" : @(2), @"engineer" : @(1), @"mad" : @(1), @"celebrity" : @(2), @"Gentleman" : @(10), @"lawn" : @(4), @"debt" : @(3), @"indeed" : @(4), @"feeling" : @(3), @"aside" : @(2), @"crisis" : @(5), @"across" : @(3), @"fall" : @(1), @"difference" : @(1), @"Nation" : @(5), @"floor" : @(11), @"useful" : @(3), @"Capital" : @(13), @"surprised" : @(4), @"include" : @(2)}];
+            [wordCloud addWordsWithCounts:@{@"onto" : @(1),@"picture" : @(0),@"survive" : @(6), @"Gift" : @(5), @"size" : @(1), @"furthermore" : @(2), @"last" : @(4), @"male" : @(1), @"distant" : @(8), @"seed" : @(1), @"anyway" : @(0), @"weapon" : @(3), @"income" : @(5), @"especially" : @(2), @"steal" : @(3), @"whisper" : @(6), @"Offense" : @(3), @"its" : @(4), @"talent" : @(4), @"fresh" : @(8), @"remaining" : @(2), @"makeup" : @(1), @"effective" : @(2), @"thin" : @(0), @"tremendous" : @(5), @"Wisdom" : @(6), @"Worth" : @(7), @"roughly" : @(4), @"empty" : @(11), @"interpret" : @(2), @"engineer" : @(1), @"mad" : @(0), @"celebrity" : @(2), @"Gentleman" : @(10), @"lawn" : @(4), @"debt" : @(3), @"indeed" : @(4), @"feeling" : @(3), @"aside" : @(2), @"crisis" : @(5), @"across" : @(3), @"fall" : @(1), @"difference" : @(1), @"Nation" : @(5), @"floor" : @(0), @"useful" : @(3), @"Capital" : @(13), @"surprised" : @(4), @"include" : @(0)}];
         }
     }
 }
