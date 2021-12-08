@@ -132,15 +132,19 @@
     _scalingFactor = scalingFactor;
     _xShift = xShift + self.cloudInsetMargins.left;
     _yShift = yShift + self.cloudInsetMargins.bottom;
+    CGAffineTransform scalingTransform = CGAffineTransformMakeScale(scalingFactor, scalingFactor);
     
     wordRects = [[NSMutableDictionary alloc] initWithCapacity:self.words.count];
     for (CPTWord* word in self.words)
     {
-        float w = word.bounds.size.width * self.scalingFactor;
-        float h = (word.bounds.size.height/2) * self.scalingFactor; // FIXME: not sure why word height is x2
-        float x = self.xShift + word.bounds.origin.x * self.scalingFactor;
-        float y =  self.bounds.size.height - (self.yShift + word.bounds.origin.y * self.scalingFactor) - h;
-        [wordRects setObject:[NSValue valueWithCGRect:CGRectMake(x, y, w, h)] forKey:word.text];
+        word.wordOrigin = CGPointMake(word.wordOrigin.x+self.xShift, word.wordOrigin.y+self.yShift);
+        word.scalingTransform = scalingTransform;
+//        float w = word.wordGlyphBounds.size.width * self.scalingFactor;
+//        float h = (word.wordGlyphBounds.size.height) * self.scalingFactor;
+//        float x = self.xShift + word.wordGlyphBounds.origin.x * self.scalingFactor;
+//        float y =  self.bounds.size.height - (self.yShift + word.wordGlyphBounds.origin.y * self.scalingFactor) - h;
+        CGRect wordRect = [word wordRectForCurrentOrigin];
+        [wordRects setObject:[NSValue valueWithCGRect:wordRect] forKey:word.text];
     }
     
     [self setNeedsDisplay];
@@ -253,7 +257,7 @@
     
     CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
     CGContextFillRect(context, self.bounds);
-    
+
     if (!self.words.count) return;
     
     for (CPTWord* word in self.words)
@@ -261,6 +265,10 @@
         UIColor* color = [highlightedWords containsObject:word] ? highlightColor : word.color;
         UIColor *backColor = self.wordBackgroundColor;
         
+        NSValue *wordRectValue = [wordRects objectForKey:word.text];
+        CGRect wordRect = wordRectValue.CGRectValue;
+        CGPathRef rectPath = CGPathCreateWithRect(wordRect, nil);
+
         UIFont *font = [word.font fontWithSize:word.font.pointSize*self.scalingFactor];
         NSDictionary *attrsDictionary = @{ NSFontAttributeName : font,
                                            NSForegroundColorAttributeName : color,
@@ -276,15 +284,26 @@
         
         CGContextSaveGState(context);
         
-        CGContextTranslateCTM(context, self.xShift + word.bounds.origin.x * self.scalingFactor, self.yShift + word.bounds.origin.y * self.scalingFactor);
+        CGContextTranslateCTM(context, wordRect.origin.x, wordRect.origin.y);
+        CGAffineTransform trans1 = CGAffineTransformMakeTranslation(wordRect.origin.x, wordRect.origin.y);
+        rectPath = CGPathCreateCopyByTransformingPath(rectPath, &trans1);
         
         if (word.isRotated) {
             CGContextRotateCTM(context, M_PI / 2.0f);
-            CGContextTranslateCTM(context, 0, -word.bounds.size.width * self.scalingFactor);
+            CGContextTranslateCTM(context, 0, -wordRect.size.width);
+            CGAffineTransform trans2 = CGAffineTransformMakeRotation(M_PI/2.0f);
+            CGAffineTransform trans3 = CGAffineTransformMakeTranslation(0, -wordRect.size.width);
+            rectPath = CGPathCreateCopyByTransformingPath(rectPath, &trans2);
+            rectPath = CGPathCreateCopyByTransformingPath(rectPath, &trans3);
+
         }
         
         CTLineDraw(line, context);
         CFRelease(line);
+        
+        CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+        CGContextAddPath(context,rectPath);
+        CGContextDrawPath(context, kCGPathStroke);
         
         CGContextRestoreGState(context);
     }

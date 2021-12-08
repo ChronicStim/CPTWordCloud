@@ -17,9 +17,11 @@
         _text = word;
         _count = count;
         _color = [UIColor blackColor];
-        _transform = CGAffineTransformIdentity;
+        _scalingTransform = CGAffineTransformIdentity;
         _rotated = NO;
         _stopword  = NO;
+        _wordGlyphBounds = CGRectZero;
+        _wordOrigin = CGPointZero;
     }
     return self;
 }
@@ -44,6 +46,19 @@
 - (void)setCount:(int)count
 {
     _count = count;
+}
+
+-(CGRect)wordRectForCurrentOrigin;
+{
+    CGRect wordRect = CGRectMake(self.wordOrigin.x+self.wordGlyphBounds.origin.x, self.wordOrigin.y+self.wordGlyphBounds.origin.y, self.wordGlyphBounds.size.width, self.wordGlyphBounds.size.height);
+
+    if (self.isRotated) {
+        CGAffineTransform rotateTransform = CGAffineTransformMakeTranslation(CGRectGetMinX(wordRect), CGRectGetMinY(wordRect));
+        rotateTransform = CGAffineTransformRotate(rotateTransform, 90);
+        rotateTransform = CGAffineTransformMakeTranslation(-CGRectGetMinX(wordRect), -CGRectGetMinY(wordRect));
+    }
+    
+    return CGRectApplyAffineTransform(wordRect, self.scalingTransform);
 }
 
 //
