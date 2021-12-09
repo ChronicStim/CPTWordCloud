@@ -519,8 +519,10 @@
         {
             for (int otherIndex=0; otherIndex < index; otherIndex++)
             {
-                CGRect wordRect = [word wordRectForCurrentOrigin];
-                intersects = CGRectIntersectsRect(wordRect, [((CPTWord*)[sortedWords objectAtIndex:otherIndex]) wordRectForCurrentOrigin]);
+                CGRect wordRect = [word wordRectForCurrentOriginWithScaling:NO];
+                CPTWord *otherWord = (CPTWord*)[sortedWords objectAtIndex:otherIndex];
+                CGRect otherRect =  [otherWord wordRectForCurrentOriginWithScaling:NO];
+                intersects = CGRectIntersectsRect(wordRect,otherRect) && (word != otherWord);
                 
                 // if the current word intersects with word that has already been placed, move the current word, and
                 // recheck against all already-placed words
@@ -538,7 +540,7 @@
             }
         } while (intersects);
         
-        CGRect wordRect = [word wordRectForCurrentOrigin];
+        CGRect wordRect = [word wordRectForCurrentOriginWithScaling:NO];
         if (minX > wordRect.origin.x) minX = wordRect.origin.x;
         if (minY > wordRect.origin.y) minY = wordRect.origin.y;
         if (maxX < wordRect.origin.x + wordRect.size.width) maxX = wordRect.origin.x + wordRect.size.width;

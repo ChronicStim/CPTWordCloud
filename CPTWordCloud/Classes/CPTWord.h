@@ -25,6 +25,7 @@
 - (void) incrementCount;
 - (void) decrementCount;
 
--(CGRect)wordRectForCurrentOrigin;
+-(CGPoint)wordOriginWithScaling:(BOOL)includeScaling;
+-(CGRect)wordRectForCurrentOriginWithScaling:(BOOL)includeScaling;
 
 @end

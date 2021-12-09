@@ -48,17 +48,35 @@
     _count = count;
 }
 
--(CGRect)wordRectForCurrentOrigin;
+-(CGPoint)wordOriginWithScaling:(BOOL)includeScaling;
+{
+    CGPoint wordOrigin = self.wordOrigin;
+    if (includeScaling) {
+        wordOrigin = CGPointApplyAffineTransform(wordOrigin, self.scalingTransform);
+    }
+    return wordOrigin;
+}
+
+-(CGRect)wordRectForCurrentOriginWithScaling:(BOOL)includeScaling;
 {
     CGRect wordRect = CGRectMake(self.wordOrigin.x+self.wordGlyphBounds.origin.x, self.wordOrigin.y+self.wordGlyphBounds.origin.y, self.wordGlyphBounds.size.width, self.wordGlyphBounds.size.height);
+//    CGRect wordRect = CGRectMake(self.wordOrigin.x, self.wordOrigin.y, self.wordGlyphBounds.size.width, self.wordGlyphBounds.size.height);
 
     if (self.isRotated) {
-        CGAffineTransform rotateTransform = CGAffineTransformMakeTranslation(CGRectGetMinX(wordRect), CGRectGetMinY(wordRect));
-        rotateTransform = CGAffineTransformRotate(rotateTransform, 90);
-        rotateTransform = CGAffineTransformMakeTranslation(-CGRectGetMinX(wordRect), -CGRectGetMinY(wordRect));
+        CGPoint rotationPoint = self.wordOrigin;
+       wordRect = CGRectApplyAffineTransform(wordRect, CGAffineTransformMakeTranslation(-rotationPoint.x,-rotationPoint.y));
+        wordRect = CGRectApplyAffineTransform(wordRect, CGAffineTransformMakeRotation(M_PI/2.0f));
+        wordRect = CGRectApplyAffineTransform(wordRect, CGAffineTransformMakeTranslation(rotationPoint.x, rotationPoint.y));
     }
     
-    return CGRectApplyAffineTransform(wordRect, self.scalingTransform);
+    if (includeScaling) {
+        CGPoint scalePoint = self.wordOrigin;
+        wordRect = CGRectApplyAffineTransform(wordRect, CGAffineTransformMakeTranslation(-scalePoint.x,-scalePoint.y));
+        wordRect = CGRectApplyAffineTransform(wordRect, self.scalingTransform);
+        wordRect = CGRectApplyAffineTransform(wordRect, CGAffineTransformMakeTranslation(scalePoint.x, scalePoint.y));
+    }
+    
+    return wordRect;
 }
 
 //

@@ -94,14 +94,14 @@
 }
 
 - (IBAction)showRectButtonPressed:(id)sender {
-    if (self.wordCloudView.wordBackgroundColor == [UIColor clearColor]) {
+    if (self.wordCloudView.wordOutlineColor == [UIColor clearColor]) {
         // Turn background display ON
-        self.wordCloudView.wordBackgroundColor = [UIColor lightGrayColor];
+        self.wordCloudView.wordOutlineColor = [UIColor lightGrayColor];
         [(UIButton *)sender setTitle:@"Hide RECTs" forState:UIControlStateNormal];
     }
     else {
         // Turn background display OFF
-        self.wordCloudView.wordBackgroundColor = [UIColor clearColor];
+        self.wordCloudView.wordOutlineColor = [UIColor clearColor];
         [(UIButton *)sender setTitle:@"Show RECTs" forState:UIControlStateNormal];
     }
 }
