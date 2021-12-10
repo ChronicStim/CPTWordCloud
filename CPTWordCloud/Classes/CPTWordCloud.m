@@ -459,6 +459,7 @@
     
     [self zeroExistingWordFrames];
     
+    CGRect unionRect = CGRectZero;
     int wordLimit = self.maxNumberOfWords ? self.maxNumberOfWords : (int)sortedWords.count;
     for (int index=0; index < wordLimit; index++)
     {
@@ -491,30 +492,23 @@
         CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
         proposedWordFrame = CTLineGetImageBounds(line, NULL);
         
-        NSLog(@"Word: %@; sizeWithCT: %@; boundingRect: %@",word.text,NSStringFromCGSize(proposedWordFrame.size),NSStringFromCGRect(proposedWordFrame));
+        //NSLog(@"Word: %@; sizeWithCT: %@; boundingRect: %@",word.text,NSStringFromCGSize(proposedWordFrame.size),NSStringFromCGRect(proposedWordFrame));
 
         BOOL rotateWord = [self nextRandomBoolWithProbabilityForYes:self.probabilityOfWordVertical];
         word.rotated = rotateWord;
 
-//        if (word.rotated) {
-//            // Reverse dimensions for wordsize to simulate vertical drawing of text
-//            proposedWordFrame = CGRectMake(proposedWordFrame.origin.x, proposedWordFrame.origin.y, proposedWordFrame.size.height, proposedWordFrame.size.width);
-//        }
-
         proposedWordFrame = CGRectInset(proposedWordFrame, -self.wordBorderSize.width*2, -self.wordBorderSize.height*2);
         word.wordGlyphBounds = proposedWordFrame;
 
-        CGPoint proposedWordOrigin = CGPointMake((self.cloudSize.width - proposedWordFrame.size.width)/2, (self.cloudSize.height - proposedWordFrame.size.height)/2);
+//        CGPoint proposedWordOrigin = CGPointMake((self.cloudSize.width - proposedWordFrame.size.width)/2, (self.cloudSize.height - proposedWordFrame.size.height)/2);
+        CGPoint proposedWordOrigin = CGPointMake((-proposedWordFrame.size.width)/2, (-proposedWordFrame.size.height)/2);
         word.wordOrigin = proposedWordOrigin;
-        
-        //NSLog(@"Bounds for %@ word: %@ %@",word.isRotated ? @"ROTATED" : @"NONROTATED",word.text,NSStringFromCGRect(word.bounds));
         
         BOOL intersects = FALSE;
         double angleStep = (index % 2 == 0 ? 1 : -1) * step;
         double radius = 0;
         double angle = 10 * random();
-        // move word until there are no collisions with previously placed words
-        // adapted from https://github.com/lucaong/jQCloud
+
         do
         {
             for (int otherIndex=0; otherIndex < index; otherIndex++)
@@ -541,25 +535,26 @@
         } while (intersects);
         
         CGRect wordRect = [word wordRectForCurrentOriginWithScaling:NO];
-        if (minX > wordRect.origin.x) minX = wordRect.origin.x;
-        if (minY > wordRect.origin.y) minY = wordRect.origin.y;
-        if (maxX < wordRect.origin.x + wordRect.size.width) maxX = wordRect.origin.x + wordRect.size.width;
-        if (maxY < wordRect.origin.y + wordRect.size.height) maxY = wordRect.origin.y + wordRect.size.height;
+        unionRect = CGRectUnion(unionRect,wordRect);
     }
-        
+
+    // Get min & max
+    NSLog(@"UnionRect = %@",NSStringFromCGRect(unionRect));
+    CGFloat midX = CGRectGetMidX(unionRect);
+    CGFloat midY = CGRectGetMidY(unionRect);
+    
     // scale down if necessary
     CGFloat scalingFactorX = 1.0f;
     CGFloat scalingFactorY = 1.0f;
     
-    if (maxX != minX) {
-        scalingFactorX = self.cloudSize.width / (double)(maxX - minX);
+    if (!CGRectEqualToRect(CGRectZero, unionRect)) {
+        scalingFactorX = self.cloudSize.width / unionRect.size.width;
+        scalingFactorY = self.cloudSize.height / unionRect.size.height;
     }
-    if (maxY != minY) {
-        scalingFactorY = self.cloudSize.height / (double)(maxY - minY);
-    }
+
     scalingFactor = fminf(scalingFactorX,scalingFactorY);
-    xShift = -minX;
-    yShift = -minY;
+    xShift = -midX;
+    yShift = -midY;
         
     if ([self.delegate respondsToSelector:@selector(wordCloudDidGenerateCloud:sortedWordArray:scalingFactor:xShift:yShift:)])
     {

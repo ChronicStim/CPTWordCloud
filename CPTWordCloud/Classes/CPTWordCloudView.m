@@ -61,7 +61,7 @@
     self.backgroundColor = [UIColor clearColor];
     self.borderColor = [UIColor blackColor];
     self.borderWidth = 0.0f;
-    self.cloudInsetMargins = UIEdgeInsetsMake(0, 20, 10, 10);
+    self.cloudInsetMargins = UIEdgeInsetsMake(20, 0, 0, 20);
     
     _scalingFactor = 1;
 }
@@ -132,6 +132,7 @@
     _scalingFactor = scalingFactor;
     _xShift = xShift + self.cloudInsetMargins.left;
     _yShift = yShift + self.cloudInsetMargins.bottom;
+    CGSize viewSize = self.bounds.size;
     CGAffineTransform scalingTransform = CGAffineTransformMakeScale(scalingFactor, scalingFactor);
     
     wordRects = [[NSMutableDictionary alloc] initWithCapacity:self.words.count];
@@ -139,7 +140,7 @@
     {
         word.scalingTransform = scalingTransform;
         CGPoint scaledWordOrigin = [word wordOriginWithScaling:YES];
-        word.wordOrigin = CGPointMake(scaledWordOrigin.x+self.xShift, scaledWordOrigin.y+self.yShift);
+        word.wordOrigin = CGPointMake(scaledWordOrigin.x+self.xShift+(viewSize.width/2), scaledWordOrigin.y+self.yShift+(viewSize.height/2));
         CGRect wordRect = [word wordRectForCurrentOriginWithScaling:YES];
         [wordRects setObject:[NSValue valueWithCGRect:wordRect] forKey:word.text];
     }
