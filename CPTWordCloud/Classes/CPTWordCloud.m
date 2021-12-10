@@ -451,12 +451,6 @@
     float bColorPerOccurance = (highCountColorComponents[2] - lowCountColorComponents[2]) / topWord.count;
     float aColorPerOccurance = (highCountColorComponents[3] - lowCountColorComponents[3]) / topWord.count;
 
-    // statistics for later calculation of scaling factor
-    int minX = INT_MAX;
-    int maxX = INT_MIN;
-    int minY = INT_MAX;
-    int maxY = INT_MIN;
-    
     [self zeroExistingWordFrames];
     
     CGRect unionRect = CGRectZero;
