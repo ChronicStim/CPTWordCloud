@@ -26,7 +26,7 @@
 @end
 
 @implementation CPTWordCloudView
-@synthesize wordBackgroundColor = _wordBackgroundColor;
+@synthesize wordOutlineColor = _wordOutlineColor;
 
 -(instancetype)initWithFrame:(CGRect)frame;
 {
@@ -61,7 +61,7 @@
     self.backgroundColor = [UIColor clearColor];
     self.borderColor = [UIColor blackColor];
     self.borderWidth = 0.0f;
-    self.cloudInsetMargins = UIEdgeInsetsMake(0, 20, 10, 10);
+    self.cloudInsetMargins = UIEdgeInsetsMake(20, 0, 0, 20);
     
     _scalingFactor = 1;
 }
@@ -132,15 +132,17 @@
     _scalingFactor = scalingFactor;
     _xShift = xShift + self.cloudInsetMargins.left;
     _yShift = yShift + self.cloudInsetMargins.bottom;
+    CGSize viewSize = self.bounds.size;
+    CGAffineTransform scalingTransform = CGAffineTransformMakeScale(scalingFactor, scalingFactor);
     
     wordRects = [[NSMutableDictionary alloc] initWithCapacity:self.words.count];
     for (CPTWord* word in self.words)
     {
-        float w = word.bounds.size.width * self.scalingFactor;
-        float h = (word.bounds.size.height/2) * self.scalingFactor; // FIXME: not sure why word height is x2
-        float x = self.xShift + word.bounds.origin.x * self.scalingFactor;
-        float y =  self.bounds.size.height - (self.yShift + word.bounds.origin.y * self.scalingFactor) - h;
-        [wordRects setObject:[NSValue valueWithCGRect:CGRectMake(x, y, w, h)] forKey:word.text];
+        word.scalingTransform = scalingTransform;
+        CGPoint scaledWordOrigin = [word wordOriginWithScaling:YES];
+        word.wordOrigin = CGPointMake(scaledWordOrigin.x+self.xShift+(viewSize.width/2), scaledWordOrigin.y+self.yShift+(viewSize.height/2));
+        CGRect wordRect = [word wordRectForCurrentOriginWithScaling:YES];
+        [wordRects setObject:[NSValue valueWithCGRect:wordRect] forKey:word.text];
     }
     
     [self setNeedsDisplay];
@@ -178,20 +180,20 @@
     return self.layer.cornerRadius;
 }
 
--(UIColor *)wordBackgroundColor;
+-(UIColor *)wordOutlineColor;
 {
-    if (nil != _wordBackgroundColor) {
-        return _wordBackgroundColor;
+    if (nil != _wordOutlineColor) {
+        return _wordOutlineColor;
     }
     
-    _wordBackgroundColor = [UIColor clearColor];
-    return _wordBackgroundColor;
+    _wordOutlineColor = [UIColor clearColor];
+    return _wordOutlineColor;
 }
 
--(void)setWordBackgroundColor:(UIColor *)wordBackgroundColor;
+-(void)setWordOutlineColor:(UIColor *)wordBackgroundColor;
 {
-    if (wordBackgroundColor != _wordBackgroundColor) {
-        _wordBackgroundColor = wordBackgroundColor;
+    if (wordBackgroundColor != _wordOutlineColor) {
+        _wordOutlineColor = wordBackgroundColor;
         [self setNeedsDisplay];
     }
 }
@@ -253,18 +255,19 @@
     
     CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
     CGContextFillRect(context, self.bounds);
-    
+
     if (!self.words.count) return;
     
     for (CPTWord* word in self.words)
     {
         UIColor* color = [highlightedWords containsObject:word] ? highlightColor : word.color;
-        UIColor *backColor = self.wordBackgroundColor;
         
-        UIFont *font = [word.font fontWithSize:word.font.pointSize*self.scalingFactor];
+        NSValue *wordRectValue = [wordRects objectForKey:word.text];
+        CGRect wordRect = wordRectValue.CGRectValue;
+
+        UIFont *font = [word.font fontWithSize:word.font.pointSize];
         NSDictionary *attrsDictionary = @{ NSFontAttributeName : font,
-                                           NSForegroundColorAttributeName : color,
-                                           NSBackgroundColorAttributeName : backColor
+                                           NSForegroundColorAttributeName : color
         };
         
         NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:word.text attributes:attrsDictionary];
@@ -276,18 +279,26 @@
         
         CGContextSaveGState(context);
         
-        CGContextTranslateCTM(context, self.xShift + word.bounds.origin.x * self.scalingFactor, self.yShift + word.bounds.origin.y * self.scalingFactor);
-        
+        CGContextTranslateCTM(context, word.wordOrigin.x, word.wordOrigin.y);
         if (word.isRotated) {
             CGContextRotateCTM(context, M_PI / 2.0f);
-            CGContextTranslateCTM(context, 0, -word.bounds.size.width * self.scalingFactor);
         }
+        CGContextScaleCTM(context, self.scalingFactor, self.scalingFactor);
+        
         
         CTLineDraw(line, context);
         CFRelease(line);
         
         CGContextRestoreGState(context);
-    }
+
+        CGContextSaveGState(context);
+        
+        CGContextSetStrokeColorWithColor(context, self.wordOutlineColor.CGColor);
+        CGContextStrokeRect(context, wordRect);
+
+        CGContextRestoreGState(context);
+        
+   }
 }
 
 // the hitTest selector below ensures that this will only be called when a word has been tapped

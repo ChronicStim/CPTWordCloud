@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CPTWordCloud'
-  s.version          = '0.1.7'
+  s.version          = '0.1.8'
   s.summary          = 'Framework used to create a word cloud graphic from an input of string content.'
 
 # This description is used to generate tags and improve search results.
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = 'Framework used to create a word cloud graphic from an input of string content. Includes options for word rotation and variable fonts per word. The color and size of the words will vary based on the count of the word in the input text string. Builds on some of the work originally done by Gal Niv https://github.com/galniv/WordCloud'
+  s.description      = 'Framework used to create a word cloud graphic from an input of string content. Includes options for word rotation. The color and size of the words will vary based on the count of the word in the input text string and offer multiple algorithms for determining font sizing per word. You can define a single font for the cloud or go crazy and define an array of fonts to use randomly across the cloud. This project builds on some of the work originally done by Gal Niv https://github.com/galniv/WordCloud'
 
   s.homepage         = 'https://github.com/ChronicStim/CPTWordCloud'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'

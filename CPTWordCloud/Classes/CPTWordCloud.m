@@ -9,6 +9,7 @@
 #import "CPTWordCloud.h"
 #import <GameplayKit/GameplayKit.h>
 #import <math.h>
+#import <CoreText/CoreText.h>
 
 @interface CPTWordCloud ()
 {
@@ -407,6 +408,17 @@
     return finalFontSize;
 }
 
+/// Returns all word objects to a wordFrame == CGRectZero prior to the generation process.
+-(void)zeroExistingWordFrames;
+{
+    for (CPTWord *word in sortedWords) {
+        word.wordGlyphBounds = CGRectZero;
+        word.wordOrigin = CGPointZero;
+        word.scalingTransform = CGAffineTransformIdentity;
+        word.rotated = NO;
+    }
+}
+
 // sorts words if needed, and lays them out
 - (void) generateCloud
 {
@@ -445,6 +457,9 @@
     int minY = INT_MAX;
     int maxY = INT_MIN;
     
+    [self zeroExistingWordFrames];
+    
+    CGRect unionRect = CGRectZero;
     int wordLimit = self.maxNumberOfWords ? self.maxNumberOfWords : (int)sortedWords.count;
     for (int index=0; index < wordLimit; index++)
     {
@@ -468,46 +483,40 @@
                                          alpha:lowCountColorComponents[3] + (aColorPerOccurance * word.count)];
         }
             
+        CGRect proposedWordFrame = CGRectZero;
         NSDictionary *textAttributes = @{ NSFontAttributeName : word.font,
                                           NSForegroundColorAttributeName : word.color };
-        //CGSize wordSize = [word.text sizeWithAttributes:textAttributes];
-
-        CGSize wordSize = [word.text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)
-                                                 options:(NSStringDrawingUsesDeviceMetrics | NSStringDrawingUsesFontLeading)
-                                              attributes:textAttributes
-                                                 context:nil].size;
-        //NSLog(@"Word: %@; sizeWithAttr: %@; boundingRect: %@",word.text,NSStringFromCGSize(wordSize),NSStringFromCGSize(textRect.size));
+        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:word.text attributes:textAttributes];
+        CFAttributedStringRef cfAttrString  = (__bridge CFAttributedStringRef)attrString;
         
+        CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
+        proposedWordFrame = CTLineGetImageBounds(line, NULL);
+        
+        //NSLog(@"Word: %@; sizeWithCT: %@; boundingRect: %@",word.text,NSStringFromCGSize(proposedWordFrame.size),NSStringFromCGRect(proposedWordFrame));
+
         BOOL rotateWord = [self nextRandomBoolWithProbabilityForYes:self.probabilityOfWordVertical];
         word.rotated = rotateWord;
 
-        if (word.rotated) {
-            // Reverse dimensions for wordsize to simulate vertical drawing of text
-            wordSize = CGSizeMake(wordSize.height, wordSize.width);
-        }
-        
-        wordSize.height += (self.wordBorderSize.height * 2);
-        wordSize.width += (self.wordBorderSize.width * 2);
-        
-        float horizCenter = (self.cloudSize.width - wordSize.width)/2;
-        float vertCenter = (self.cloudSize.height - wordSize.height)/2;
-        
-//        word.bounds = CGRectMake(arc4random_uniform(10) + horizCenter, arc4random_uniform(10) + vertCenter, wordSize.width, wordSize.height);
-        word.bounds = CGRectMake(horizCenter, vertCenter, wordSize.width, wordSize.height);
+        proposedWordFrame = CGRectInset(proposedWordFrame, -self.wordBorderSize.width*2, -self.wordBorderSize.height*2);
+        word.wordGlyphBounds = proposedWordFrame;
 
-        //NSLog(@"Bounds for %@ word: %@ %@",word.isRotated ? @"ROTATED" : @"NONROTATED",word.text,NSStringFromCGRect(word.bounds));
+//        CGPoint proposedWordOrigin = CGPointMake((self.cloudSize.width - proposedWordFrame.size.width)/2, (self.cloudSize.height - proposedWordFrame.size.height)/2);
+        CGPoint proposedWordOrigin = CGPointMake((-proposedWordFrame.size.width)/2, (-proposedWordFrame.size.height)/2);
+        word.wordOrigin = proposedWordOrigin;
         
         BOOL intersects = FALSE;
         double angleStep = (index % 2 == 0 ? 1 : -1) * step;
         double radius = 0;
         double angle = 10 * random();
-        // move word until there are no collisions with previously placed words
-        // adapted from https://github.com/lucaong/jQCloud
+
         do
         {
             for (int otherIndex=0; otherIndex < index; otherIndex++)
             {
-                intersects = CGRectIntersectsRect(word.bounds, ((CPTWord*)[sortedWords objectAtIndex:otherIndex]).bounds);
+                CGRect wordRect = [word wordRectForCurrentOriginWithScaling:NO];
+                CPTWord *otherWord = (CPTWord*)[sortedWords objectAtIndex:otherIndex];
+                CGRect otherRect =  [otherWord wordRectForCurrentOriginWithScaling:NO];
+                intersects = CGRectIntersectsRect(wordRect,otherRect) && (word != otherWord);
                 
                 // if the current word intersects with word that has already been placed, move the current word, and
                 // recheck against all already-placed words
@@ -516,60 +525,37 @@
                     radius += step;
                     angle += angleStep;
                     
-                    int xPos = horizCenter + (radius * cos(angle)) * aspectRatio;
-                    int yPos = vertCenter + radius * sin(angle);
+                    int xPos = word.wordOrigin.x + (radius * cos(angle)) * aspectRatio;
+                    int yPos = word.wordOrigin.y + radius * sin(angle);
                     
-                    word.bounds = CGRectMake(xPos, yPos, wordSize.width, wordSize.height);
-                    
+                    word.wordOrigin = CGPointMake(xPos, yPos);
                     break;
                 }
             }
         } while (intersects);
         
-        if (minX > word.bounds.origin.x) minX = word.bounds.origin.x;
-        if (minY > word.bounds.origin.y) minY = word.bounds.origin.y;
-        if (maxX < word.bounds.origin.x + wordSize.width) maxX = word.bounds.origin.x + wordSize.width;
-        if (maxY < word.bounds.origin.y + wordSize.height) maxY = word.bounds.origin.y + wordSize.height;
+        CGRect wordRect = [word wordRectForCurrentOriginWithScaling:NO];
+        unionRect = CGRectUnion(unionRect,wordRect);
     }
-        
+
+    // Get min & max
+    NSLog(@"UnionRect = %@",NSStringFromCGRect(unionRect));
+    CGFloat midX = CGRectGetMidX(unionRect);
+    CGFloat midY = CGRectGetMidY(unionRect);
+    
     // scale down if necessary
-    if (maxX - minX > self.cloudSize.width)
-    {
-        scalingFactor = self.cloudSize.width / (double)(maxX - minX);
-        
-        // if we are here, then words are larger than the view, and either minX is negative or maxX is larger than the width.
-        // calculate the amount by which to shift all words so that they fit in the view.
-        if (minX < 0) xShift = minX * scalingFactor * -1;
-        else xShift = (self.cloudSize.width - maxX) * scalingFactor;
-    }
-    else if (maxX - minX < self.cloudSize.width) {
-        scalingFactor = self.cloudSize.width / (double)(maxX - minX);
-        xShift = minX * scalingFactor * - 1;
-    }
+    CGFloat scalingFactorX = 1.0f;
+    CGFloat scalingFactorY = 1.0f;
     
-    if (maxY - minY > self.cloudSize.height)
-    {
-        double newScalingFactor = self.cloudSize.height / (double)(maxY - minY);
-        
-        // if we've already scaled down in the X dimension, only apply the new scale if it is smaller
-        if (scalingFactor < 1 && newScalingFactor < scalingFactor)
-        {
-            scalingFactor = newScalingFactor;
-        }
-        
-        // if we are here, then words are larger than the view, and either minX is negative or maxX is larger than the width.
-        // calculate the amount by which to shift all words so that they fit in the view.
-        if (minY < 0) yShift = minY * scalingFactor * -1;
-        else yShift = (self.cloudSize.height - maxY) * scalingFactor;
+    if (!CGRectEqualToRect(CGRectZero, unionRect)) {
+        scalingFactorX = self.cloudSize.width / unionRect.size.width;
+        scalingFactorY = self.cloudSize.height / unionRect.size.height;
     }
-    else if (maxY - minY < self.cloudSize.height) {
-        double newScalingFactor = self.cloudSize.height / (double)(maxY - minY);
-        if (scalingFactor > 1 && newScalingFactor < scalingFactor) {
-            scalingFactor = newScalingFactor;
-        }
-        yShift = minY * scalingFactor * -1;
-    }
-    
+
+    scalingFactor = fminf(scalingFactorX,scalingFactorY);
+    xShift = -midX;
+    yShift = -midY;
+        
     if ([self.delegate respondsToSelector:@selector(wordCloudDidGenerateCloud:sortedWordArray:scalingFactor:xShift:yShift:)])
     {
         [self.delegate wordCloudDidGenerateCloud:self sortedWordArray:sortedWords scalingFactor:scalingFactor xShift:xShift yShift:yShift];
