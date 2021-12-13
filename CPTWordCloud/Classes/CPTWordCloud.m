@@ -397,7 +397,7 @@
         case CPTWordFontSizeMode_logN: {
             // Use word frequency (count) to determine font sizing from min to max based on an logarithmic ramp
             CGFloat maxCount = (float)topWord.count;
-            CGFloat minCount = (float)bottomWord.count;
+            CGFloat minCount = (bottomWord.count > 0) ? (float)bottomWord.count : 1.0f;
             CGFloat a = ((float)self.minFontSize - (float)self.maxFontSize)/(log10f(minCount)-log10f(maxCount));
             CGFloat b = powf(10, (float)self.minFontSize/a)/minCount;
             finalFontSize = a * log10f(b * (float)count);
