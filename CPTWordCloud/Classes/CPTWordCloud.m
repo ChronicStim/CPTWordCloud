@@ -18,8 +18,6 @@
     CPTWord* topWord;
     CPTWord* bottomWord;
 
-    CGFloat lowCountColorComponents[4];
-    CGFloat highCountColorComponents[4];
 }
 @property (nonatomic, strong) GKRandomSource *randomSource;
 @property (nonatomic, strong) NSArray *arrayOfStopwords;
@@ -28,8 +26,6 @@
 - (void) decrementCount:(NSString*)word;
 - (void) setNeedsGenerateCloud;
 - (void) generateCloud;
-
-- (CGColorRef) CGColorRefFromUIColor:(UIColor*)color CF_RETURNS_RETAINED;
 
 @end
 
@@ -49,6 +45,7 @@
         _wordWithCountOfZeroDisplayed = NO;
         _convertingAllWordsToLowercase = YES;
         _filteringStopWords = NO;
+        _colorMappingHSBBased = NO;
         
         _minFontSize = 10;
         _maxFontSize = 100;
@@ -352,61 +349,114 @@
     return NO;
 }
 
--(CGFloat)fontSizeForOccuranceCount:(NSInteger)count usingFontSizeMode:(CPTWordFontSizeMode)fontSizeMode;
+-(CGFloat)scaledValueForOccuranceCount:(NSUInteger)count minValue:(CGFloat)minValue maxValue:(CGFloat)maxValue usingScalingMode:(CPTWordScalingMode)scalingMode;
 {
-    CGFloat finalFontSize = 0.0f;
-    switch (fontSizeMode) {
-        case CPTWordFontSizeMode_rank: {
-            // Use rank order to determine font size from min to max (relative difference in count between words doesn't effect sizing)
-            NSSet *uniqueCountsInSortedWords = [NSSet setWithArray:[sortedWords valueForKeyPath:@"count"]];
-            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"intValue" ascending:YES comparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-                if ([obj1 integerValue] > [obj2 integerValue]) {
-                    return (NSComparisonResult)NSOrderedDescending;
-                }
-                
-                if ([obj1 integerValue] < [obj2 integerValue]) {
-                    return (NSComparisonResult)NSOrderedAscending;
-                }
-                return (NSComparisonResult)NSOrderedSame;
-            }];
-            NSArray *orderedUniqueCountsInSortedWords = [uniqueCountsInSortedWords sortedArrayUsingDescriptors:@[sortDescriptor]];
-            NSInteger countOfRanks = orderedUniqueCountsInSortedWords.count;
-            NSInteger currentRank = [orderedUniqueCountsInSortedWords indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                return [obj integerValue] == count;
-            }];
-            if (1 < countOfRanks) {
-                finalFontSize = roundf(self.minFontSize + (float)(self.maxFontSize-self.minFontSize)*(float)currentRank/((float)countOfRanks-1.0f));
-            } else {
-                finalFontSize = self.maxFontSize;
-            }
-        }   break;
-        case CPTWordFontSizeMode_linearN: {
-            // Use word frequency (count) to determine font sizing from min to max along a linear ramp
-            CGFloat maxCount = (float)topWord.count;
-            CGFloat minCount = (float)bottomWord.count;
-            finalFontSize = self.minFontSize + ((self.maxFontSize - self.minFontSize) / (maxCount - minCount)) * (count-minCount);
-        }   break;
-        case CPTWordFontSizeMode_expN: {
-            // Use word frequency (count) to determine font sizing from min to max based on an exponential ramp
-            CGFloat maxCount = (float)topWord.count;
-            CGFloat minCount = (float)bottomWord.count;
-            CGFloat b = (1/(minCount-maxCount))*log10f((float)self.minFontSize/(float)self.maxFontSize);
-            CGFloat a = (float)self.maxFontSize / powf(10,b * maxCount);
-            finalFontSize = a * powf(10,b * (float)count);
-        }   break;
-        case CPTWordFontSizeMode_logN: {
-            // Use word frequency (count) to determine font sizing from min to max based on an logarithmic ramp
-            CGFloat maxCount = (float)topWord.count;
-            CGFloat minCount = (bottomWord.count > 0) ? (float)bottomWord.count : 1.0f;
-            CGFloat a = ((float)self.minFontSize - (float)self.maxFontSize)/(log10f(minCount)-log10f(maxCount));
-            CGFloat b = powf(10, (float)self.minFontSize/a)/minCount;
-            finalFontSize = a * log10f(b * (float)count);
-        }   break;
-        default:
-            break;
+    CGFloat scaledValue = 0.0f;
+    if (minValue == maxValue) {
+        scaledValue = minValue;
     }
+    else {
+        switch (scalingMode) {
+            case CPTWordScalingMode_rank: {
+                // Use rank order to determine font size from min to max (relative difference in count between words doesn't effect sizing)
+                NSSet *uniqueCountsInSortedWords = [NSSet setWithArray:[sortedWords valueForKeyPath:@"count"]];
+                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"intValue" ascending:YES comparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                    if ([obj1 integerValue] > [obj2 integerValue]) {
+                        return (NSComparisonResult)NSOrderedDescending;
+                    }
+                    
+                    if ([obj1 integerValue] < [obj2 integerValue]) {
+                        return (NSComparisonResult)NSOrderedAscending;
+                    }
+                    return (NSComparisonResult)NSOrderedSame;
+                }];
+                NSArray *orderedUniqueCountsInSortedWords = [uniqueCountsInSortedWords sortedArrayUsingDescriptors:@[sortDescriptor]];
+                NSInteger countOfRanks = orderedUniqueCountsInSortedWords.count;
+                NSInteger currentRank = [orderedUniqueCountsInSortedWords indexOfObjectPassingTest:^BOOL(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    return [obj integerValue] == count;
+                }];
+                if (1 < countOfRanks) {
+                    scaledValue = (minValue + (float)(maxValue-minValue)*(float)currentRank/((float)countOfRanks-1.0f));
+                } else {
+                    scaledValue = maxValue;
+                }
+            }   break;
+            case CPTWordScalingMode_linearN: {
+                // Use word frequency (count) to determine font sizing from min to max along a linear ramp
+                CGFloat maxCount = (float)topWord.count;
+                CGFloat minCount = (float)bottomWord.count;
+                scaledValue = minValue + ((maxValue - minValue) / (maxCount - minCount)) * (count-minCount);
+            }   break;
+            case CPTWordScalingMode_expN: {
+                // Use word frequency (count) to determine font sizing from min to max based on an exponential ramp
+                CGFloat maxCount = (float)topWord.count;
+                CGFloat minCount = (float)bottomWord.count;
+                CGFloat b = (1/(minCount-maxCount))*log10f((float)minValue/(float)maxValue);
+                CGFloat a = (float)maxValue / powf(10,b * maxCount);
+                scaledValue = a * powf(10,b * (float)count);
+            }   break;
+            case CPTWordScalingMode_logN: {
+                // Use word frequency (count) to determine font sizing from min to max based on an logarithmic ramp
+                CGFloat maxCount = (float)topWord.count;
+                CGFloat minCount = (bottomWord.count > 0) ? (float)bottomWord.count : 1.0f;
+                CGFloat a = ((float)minValue - (float)maxValue)/(log10f(minCount)-log10f(maxCount));
+                CGFloat b = powf(10, (float)minValue/a)/minCount;
+                scaledValue = a * log10f(b * (float)count);
+            }   break;
+            default:
+                break;
+        }
+    }
+    return scaledValue;
+}
+
+-(CGFloat)fontSizeForOccuranceCount:(NSInteger)count usingScalingMode:(CPTWordScalingMode)fontSizeMode;
+{
+    CGFloat finalFontSize = [self scaledValueForOccuranceCount:count minValue:self.minFontSize maxValue:self.maxFontSize usingScalingMode:fontSizeMode];
 
     return finalFontSize;
+}
+
+-(UIColor *)wordColorForOccuranceCount:(NSUInteger)count usingScalingMode:(CPTWordScalingMode)sizingMode;
+{
+    CGFloat red1 = 0.0f;
+    CGFloat green1 = 0.0f;
+    CGFloat blue1 = 0.0f;
+    CGFloat alpha1 = 0.0f;
+    CGFloat red2 = 0.0f;
+    CGFloat green2 = 0.0f;
+    CGFloat blue2 = 0.0f;
+    CGFloat alpha2 = 0.0f;
+    CGFloat red3 = 0.0f;
+    CGFloat green3 = 0.0f;
+    CGFloat blue3 = 0.0f;
+    CGFloat alpha3 = 0.0f;
+
+    if (self.isColorMappingHSBBased) {
+        [self.lowCountColor getHue:&red1 saturation:&green1 brightness:&blue1 alpha:&alpha1];
+        [self.highCountColor getHue:&red2 saturation:&green2 brightness:&blue2 alpha:&alpha2];
+    }
+    else {
+        [self.lowCountColor getRed:&red1 green:&green1 blue:&blue1 alpha:&alpha1];
+        [self.highCountColor getRed:&red2 green:&green2 blue:&blue2 alpha:&alpha2];
+    }
+    
+    red3 = [self scaledValueForOccuranceCount:count minValue:red1*255.0f+1.0f maxValue:red2*255.0f+1.0f usingScalingMode:sizingMode];
+    green3 = [self scaledValueForOccuranceCount:count minValue:green1*255.0f+1.0f maxValue:green2*255.0f+1.0f usingScalingMode:sizingMode];
+    blue3 = [self scaledValueForOccuranceCount:count minValue:blue1*255.0f+1.0f maxValue:blue2*255.0f+1.0f usingScalingMode:sizingMode];
+    alpha3 = [self scaledValueForOccuranceCount:count minValue:alpha1*255.0f+1.0f maxValue:alpha2*255.0f+1.0f usingScalingMode:sizingMode];
+
+    UIColor *finalColor = nil;
+    if (self.isColorMappingHSBBased) {
+        finalColor = [UIColor colorWithHue:(red3-1.0f)/255.0f saturation:(green3-1.0f)/255.0f brightness:(blue3-1.0f)/255.0f alpha:(alpha3-1.0f)/255.0f];
+    }
+    else {
+        finalColor = [UIColor colorWithRed:(red3-1.0f)/255.0f green:(green3-1.0f)/255.0f blue:(blue3-1.0f)/255.0f alpha:(alpha3-1.0f)/255.0f];
+    }
+    
+    NSLog(@"Mode: %i; Count: %i; Color: %@",(int)sizingMode,(int)count,finalColor.debugDescription);
+    
+    return finalColor;
 }
 
 /// Returns all word objects to a wordFrame == CGRectZero prior to the generation process.
@@ -446,11 +496,11 @@
     double step = 2;
     double aspectRatio = self.cloudSize.width / self.cloudSize.height;
 
-    // prepare colors for interpolation
-    float rColorPerOccurance = (highCountColorComponents[0] - lowCountColorComponents[0]) / topWord.count;
-    float gColorPerOccurance = (highCountColorComponents[1] - lowCountColorComponents[1]) / topWord.count;
-    float bColorPerOccurance = (highCountColorComponents[2] - lowCountColorComponents[2]) / topWord.count;
-    float aColorPerOccurance = (highCountColorComponents[3] - lowCountColorComponents[3]) / topWord.count;
+//    // prepare colors for interpolation
+//    float rColorPerOccurance = (highCountColorComponents[0] - lowCountColorComponents[0]) / topWord.count;
+//    float gColorPerOccurance = (highCountColorComponents[1] - lowCountColorComponents[1]) / topWord.count;
+//    float bColorPerOccurance = (highCountColorComponents[2] - lowCountColorComponents[2]) / topWord.count;
+//    float aColorPerOccurance = (highCountColorComponents[3] - lowCountColorComponents[3]) / topWord.count;
 
     [self zeroExistingWordFrames];
     
@@ -460,7 +510,7 @@
     {
         CPTWord* word = [sortedWords objectAtIndex:index];
         
-        CGFloat fontSize = [self fontSizeForOccuranceCount:word.count usingFontSizeMode:self.fontSizeMode];
+        CGFloat fontSize = [self fontSizeForOccuranceCount:word.count usingScalingMode:self.scalingMode];
         if (self.isUsingRandomFontPerWord) {
             word.font = [self randomFontFromFontNames:self.selectableFontNames ofSize:fontSize];
         }
@@ -472,10 +522,7 @@
             word.color = self.zeroCountColor;
         }
         else {
-            word.color = [UIColor colorWithRed:lowCountColorComponents[0] + (rColorPerOccurance * word.count)
-                                         green:lowCountColorComponents[1] + (gColorPerOccurance * word.count)
-                                          blue:lowCountColorComponents[2] + (bColorPerOccurance * word.count)
-                                         alpha:lowCountColorComponents[3] + (aColorPerOccurance * word.count)];
+            word.color = [self wordColorForOccuranceCount:word.count usingScalingMode:self.scalingMode];
         }
             
         CGRect proposedWordFrame = CGRectZero;
@@ -487,8 +534,6 @@
         CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
         proposedWordFrame = CTLineGetImageBounds(line, NULL);
         
-        //NSLog(@"Word: %@; sizeWithCT: %@; boundingRect: %@",word.text,NSStringFromCGSize(proposedWordFrame.size),NSStringFromCGRect(proposedWordFrame));
-
         BOOL rotateWord = [self nextRandomBoolWithProbabilityForYes:self.probabilityOfWordVertical];
         if (rotateWord) {
             word.rotationTransform = CGAffineTransformMakeRotation(M_PI_2);
@@ -497,7 +542,6 @@
         proposedWordFrame = CGRectInset(proposedWordFrame, -self.wordBorderSize.width*2, -self.wordBorderSize.height*2);
         word.wordGlyphBounds = proposedWordFrame;
 
-//        CGPoint proposedWordOrigin = CGPointMake((self.cloudSize.width - proposedWordFrame.size.width)/2, (self.cloudSize.height - proposedWordFrame.size.height)/2);
         CGPoint proposedWordOrigin = CGPointMake((-proposedWordFrame.size.width)/2, (-proposedWordFrame.size.height)/2);
         word.wordOrigin = proposedWordOrigin;
         
@@ -605,15 +649,6 @@
 {
     if (color == self.lowCountColor) return;
     _lowCountColor = color;
-        
-    CGColorRef colorRef = [self CGColorRefFromUIColor:color];
-    const CGFloat* components = CGColorGetComponents(colorRef);
-    lowCountColorComponents[0] = components[0];
-    lowCountColorComponents[1] = components[1];
-    lowCountColorComponents[2] = components[2];
-    lowCountColorComponents[3] = CGColorGetAlpha(color.CGColor);
-    CGColorRelease(colorRef);
-    
     [self setNeedsGenerateCloud];
 }
 
@@ -621,15 +656,6 @@
 {
     if (color == self.highCountColor) return;
     _highCountColor = color;
-        
-    CGColorRef colorRef = [self CGColorRefFromUIColor:color];
-    const CGFloat* components = CGColorGetComponents(colorRef);
-    highCountColorComponents[0] = components[0];
-    highCountColorComponents[1] = components[1];
-    highCountColorComponents[2] = components[2];
-    highCountColorComponents[3] = CGColorGetAlpha(color.CGColor);
-    CGColorRelease(colorRef);
-    
     [self setNeedsGenerateCloud];
 }
 
@@ -696,10 +722,10 @@
     }
 }
 
--(void)setFontSizeMode:(CPTWordFontSizeMode)fontSizeMode;
+-(void)setScalingMode:(CPTWordScalingMode)fontSizeMode;
 {
-    if (fontSizeMode != _fontSizeMode) {
-        _fontSizeMode = fontSizeMode;
+    if (fontSizeMode != _scalingMode) {
+        _scalingMode = fontSizeMode;
         [self setNeedsGenerateCloud];
     }
 }
@@ -712,18 +738,12 @@
     }
 }
 
-#pragma mark - util
-
-// hack to get the correct CGColors from ANY UIColor, even in a non-RGB color space (greyscale, etc)
-// borrowed from http://stackoverflow.com/questions/4155642/how-to-get-color-components-of-a-cgcolor-correctly
-- (CGColorRef) CGColorRefFromUIColor:(UIColor*)color
+-(void)setColorMappingHSBBased:(BOOL)colorMappingHSBBased;
 {
-    CGFloat components[4] = {0.0, 0.0, 0.0, 0.0};
-    [color getRed:&components[0] green:&components[1] blue:&components[2] alpha:&components[3]];
-    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-    CGColorRef colorRef = CGColorCreate(colorSpaceRef, components);    
-    CGColorSpaceRelease(colorSpaceRef);
-    return colorRef;
+    if (colorMappingHSBBased != _colorMappingHSBBased) {
+        _colorMappingHSBBased = colorMappingHSBBased;
+        [self setNeedsGenerateCloud];
+    }
 }
 
 @end

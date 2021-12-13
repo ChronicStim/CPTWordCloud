@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CPTWord.h"
 
-typedef NS_ENUM(NSUInteger, CPTWordFontSizeMode) {
-    CPTWordFontSizeMode_rank = 0,
-    CPTWordFontSizeMode_linearN = 1,
-    CPTWordFontSizeMode_expN = 2,
-    CPTWordFontSizeMode_logN = 3
+typedef NS_ENUM(NSUInteger, CPTWordScalingMode) {
+    CPTWordScalingMode_rank = 0,
+    CPTWordScalingMode_linearN = 1,
+    CPTWordScalingMode_expN = 2,
+    CPTWordScalingMode_logN = 3
 };
 
 @protocol CPTWordCloudDelegate;
@@ -33,14 +33,19 @@ typedef NS_ENUM(NSUInteger, CPTWordFontSizeMode) {
 @property (nonatomic) int minFontSize;
 // font size of the word with most occurances. defaults to 100
 @property (nonatomic) int maxFontSize;
-/// Method which will be used to calculate the font size for displaying the words in the cloud
-@property (nonatomic, assign) CPTWordFontSizeMode fontSizeMode;
+/// Method which will be used to calculate the font size and color for displaying the words in the cloud
+@property (nonatomic, assign) CPTWordScalingMode scalingMode;
 
 // both colors default to black
 /// Word color for the lowest count word in the cloud. Higher count words will be a gradation of this color and highCountColor. Defaults to blackColor
 @property (nonatomic, retain) UIColor* lowCountColor;
 /// Word color for the highest count word in the cloud. Lower count words will be a gradation of this color and lowCountColor. Defaults to blackColor
 @property (nonatomic, retain) UIColor* highCountColor;
+/// Determines if the algorithm calculating word color uses a blending of RGB values or HSB values. Default == NO which means RGB values are used. If YES, then HSB values are used. The algorithm relies on the sizingMode for scaling between the two end colors.
+/// HSB mode will give a much more colorful wordcloud, while the RGB mode will produce more consistently colored tones.
+/// RGB mode combined with the EXP sizingMode may produce darker colors for mid-count words and may be a less desirable combination. In this situation, switch to the HSB mode.
+@property (nonatomic, getter=isColorMappingHSBBased) BOOL colorMappingHSBBased;
+
 /// When words with count==0 are included in the wordCloud (minimumWordCountAllowed == 0), then this color will be used for any word with a count <= 0. Defaults to darkGrayColor
 @property (nonatomic, retain) UIColor* zeroCountColor;
 

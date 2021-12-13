@@ -61,25 +61,25 @@
 
 - (IBAction)fontSizingSegmentedSwitchSelected:(id)sender {
     NSInteger segmentSelected = [(UISegmentedControl *)sender selectedSegmentIndex];
-    CPTWordFontSizeMode fontSizingMode = CPTWordFontSizeMode_rank;
+    CPTWordScalingMode fontSizingMode = CPTWordScalingMode_rank;
     switch (segmentSelected) {
         case 0:
-            fontSizingMode = CPTWordFontSizeMode_rank;
+            fontSizingMode = CPTWordScalingMode_rank;
             break;
         case 1:
-            fontSizingMode = CPTWordFontSizeMode_linearN;
+            fontSizingMode = CPTWordScalingMode_linearN;
             break;
         case 2:
-            fontSizingMode = CPTWordFontSizeMode_expN;
+            fontSizingMode = CPTWordScalingMode_expN;
             break;
         case 3:
-            fontSizingMode = CPTWordFontSizeMode_logN;
+            fontSizingMode = CPTWordScalingMode_logN;
             break;
         default:
             break;
     }
     
-    self.wordCloudView.wordCloud.fontSizeMode = fontSizingMode;
+    self.wordCloudView.wordCloud.scalingMode = fontSizingMode;
 }
 
 - (IBAction)filterStopwordsSwitchChanged:(id)sender {
@@ -149,8 +149,8 @@
             wordCloud.lowCountColor = [UIColor blueColor];
             wordCloud.highCountColor = [UIColor redColor];
             
-            wordCloud.fontSizeMode = CPTWordFontSizeMode_rank;
-            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.fontSizeMode];
+            wordCloud.scalingMode = CPTWordScalingMode_rank;
+            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.scalingMode];
             
             wordCloud.probabilityOfWordVertical = 0.2f;
             self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordVertical;
@@ -169,8 +169,8 @@
             
             wordCloud.wordWithCountOfZeroDisplayed = YES;
             
-            wordCloud.fontSizeMode = CPTWordFontSizeMode_rank;
-            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.fontSizeMode];
+            wordCloud.scalingMode = CPTWordScalingMode_rank;
+            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.scalingMode];
 
             wordCloud.probabilityOfWordVertical = 0.2f;
             self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordVertical;
