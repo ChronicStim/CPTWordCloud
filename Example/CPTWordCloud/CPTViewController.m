@@ -167,7 +167,7 @@
             wordCloud.lowCountColor = [UIColor greenColor];
             wordCloud.highCountColor = [UIColor orangeColor];
             
-            wordCloud.minimumWordCountAllowed = 0;
+            wordCloud.wordWithCountOfZeroDisplayed = YES;
             
             wordCloud.fontSizeMode = CPTWordFontSizeMode_rank;
             [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.fontSizeMode];

@@ -17,8 +17,8 @@
         _text = word;
         _count = count;
         _color = [UIColor blackColor];
+        _rotationTransform = CGAffineTransformIdentity;
         _scalingTransform = CGAffineTransformIdentity;
-        _rotated = NO;
         _stopword  = NO;
         _wordGlyphBounds = CGRectZero;
         _wordOrigin = CGPointZero;
@@ -48,6 +48,11 @@
     _count = count;
 }
 
+-(BOOL)isRotated;
+{
+    return !CGAffineTransformIsIdentity(self.rotationTransform);
+}
+
 -(CGPoint)wordOriginWithScaling:(BOOL)includeScaling;
 {
     CGPoint wordOrigin = self.wordOrigin;
@@ -62,14 +67,14 @@
     CGRect wordRect = CGRectMake(self.wordOrigin.x+self.wordGlyphBounds.origin.x, self.wordOrigin.y+self.wordGlyphBounds.origin.y, self.wordGlyphBounds.size.width, self.wordGlyphBounds.size.height);
 //    CGRect wordRect = CGRectMake(self.wordOrigin.x, self.wordOrigin.y, self.wordGlyphBounds.size.width, self.wordGlyphBounds.size.height);
 
-    if (self.isRotated) {
+    if (!CGAffineTransformIsIdentity(self.rotationTransform)) {
         CGPoint rotationPoint = self.wordOrigin;
        wordRect = CGRectApplyAffineTransform(wordRect, CGAffineTransformMakeTranslation(-rotationPoint.x,-rotationPoint.y));
-        wordRect = CGRectApplyAffineTransform(wordRect, CGAffineTransformMakeRotation(M_PI/2.0f));
+        wordRect = CGRectApplyAffineTransform(wordRect, self.rotationTransform);
         wordRect = CGRectApplyAffineTransform(wordRect, CGAffineTransformMakeTranslation(rotationPoint.x, rotationPoint.y));
     }
     
-    if (includeScaling) {
+    if (includeScaling && !CGAffineTransformIsIdentity(self.scalingTransform)) {
         CGPoint scalePoint = self.wordOrigin;
         wordRect = CGRectApplyAffineTransform(wordRect, CGAffineTransformMakeTranslation(-scalePoint.x,-scalePoint.y));
         wordRect = CGRectApplyAffineTransform(wordRect, self.scalingTransform);

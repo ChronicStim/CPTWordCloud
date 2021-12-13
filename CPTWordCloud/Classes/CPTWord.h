@@ -16,7 +16,8 @@
 @property (nonatomic) CGRect wordGlyphBounds;
 @property (nonatomic, retain) UIColor* color;
 @property (nonatomic, retain) UIFont* font;
-@property (nonatomic, getter=isRotated) BOOL rotated;
+@property (nonatomic, getter=isRotated, readonly) BOOL rotated;
+@property (nonatomic) CGAffineTransform rotationTransform;
 @property (nonatomic) CGAffineTransform scalingTransform;
 @property (nonatomic, getter=isStopword) BOOL stopword;
 

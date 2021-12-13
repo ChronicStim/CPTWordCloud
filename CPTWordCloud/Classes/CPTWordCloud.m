@@ -46,7 +46,7 @@
         _probabilityOfWordVertical = 0.0f;
         _usingRandomFontPerWord = NO;
         _selectableFontNames = [NSArray new];
-        _minimumWordCountAllowed = 1;
+        _wordWithCountOfZeroDisplayed = NO;
         _convertingAllWordsToLowercase = YES;
         _filteringStopWords = NO;
         
@@ -301,7 +301,8 @@
 
 -(void)filterAndSortWords;
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K >= %li",@"count",self.minimumWordCountAllowed];
+    NSUInteger minCountAllowed = (self.isWordWithCountOfZeroDisplayed ? 0 : 1);
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K >= %li",@"count",minCountAllowed];
     if ([self shouldFilterForStopwords]) {
         NSPredicate *stopwordsPredicate = [NSPredicate predicateWithFormat:@"%K == NO",@"stopword"];
         predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate,stopwordsPredicate]];
@@ -415,7 +416,7 @@
         word.wordGlyphBounds = CGRectZero;
         word.wordOrigin = CGPointZero;
         word.scalingTransform = CGAffineTransformIdentity;
-        word.rotated = NO;
+        word.rotationTransform = CGAffineTransformIdentity;
     }
 }
 
@@ -489,7 +490,9 @@
         //NSLog(@"Word: %@; sizeWithCT: %@; boundingRect: %@",word.text,NSStringFromCGSize(proposedWordFrame.size),NSStringFromCGRect(proposedWordFrame));
 
         BOOL rotateWord = [self nextRandomBoolWithProbabilityForYes:self.probabilityOfWordVertical];
-        word.rotated = rotateWord;
+        if (rotateWord) {
+            word.rotationTransform = CGAffineTransformMakeRotation(M_PI_2);
+        }
 
         proposedWordFrame = CGRectInset(proposedWordFrame, -self.wordBorderSize.width*2, -self.wordBorderSize.height*2);
         word.wordGlyphBounds = proposedWordFrame;
@@ -677,10 +680,10 @@
     }
 }
 
--(void)setMinimumWordCountAllowed:(NSInteger)minimumWordCountAllowed;
+-(void)setWordWithCountOfZeroDisplayed:(BOOL)wordWithCountOfZeroDisplayed;
 {
-    if (minimumWordCountAllowed != _minimumWordCountAllowed) {
-        _minimumWordCountAllowed = minimumWordCountAllowed;
+    if (wordWithCountOfZeroDisplayed != _wordWithCountOfZeroDisplayed) {
+        _wordWithCountOfZeroDisplayed = wordWithCountOfZeroDisplayed;
         [self setNeedsGenerateCloud];
     }
 }

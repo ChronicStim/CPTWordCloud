@@ -280,12 +280,11 @@
         CGContextSaveGState(context);
         
         CGContextTranslateCTM(context, word.wordOrigin.x, word.wordOrigin.y);
-        if (word.isRotated) {
-            CGContextRotateCTM(context, M_PI / 2.0f);
+        if (!CGAffineTransformIsIdentity(word.rotationTransform)) {
+            CGContextConcatCTM(context, word.rotationTransform);
         }
         CGContextScaleCTM(context, self.scalingFactor, self.scalingFactor);
-        
-        
+                
         CTLineDraw(line, context);
         CFRelease(line);
         
