@@ -28,6 +28,7 @@
 - (IBAction)verticalWordSliderValueChanged:(id)sender;
 - (IBAction)filterStopwordsSwitchChanged:(id)sender;
 - (IBAction)fontSizingSegmentedSwitchSelected:(id)sender;
+- (IBAction)blendColorModeSwitchValueChanged:(id)sender;
 
 @end
 
@@ -57,6 +58,11 @@
     if (self.wordCloudView) {
         [self initializeWordCloud:@"Beta"];
     }
+}
+
+- (IBAction)blendColorModeSwitchValueChanged:(id)sender {
+    BOOL blendColorUsingHSB = [(UISwitch *)sender isOn];
+    self.wordCloudView.wordCloud.colorMappingHSBBased = blendColorUsingHSB;
 }
 
 - (IBAction)fontSizingSegmentedSwitchSelected:(id)sender {
