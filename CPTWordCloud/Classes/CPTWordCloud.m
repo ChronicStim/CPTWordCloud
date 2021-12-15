@@ -529,6 +529,36 @@
         CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
         proposedWordFrame = CTLineGetImageBounds(line, NULL);
         
+        NSMutableArray *glyphRectArray = [NSMutableArray new];
+        CFArrayRef runs = CTLineGetGlyphRuns((CTLineRef)line);
+        CFIndex runCount = CFArrayGetCount(runs);
+        CFIndex runIndex;
+        for (runIndex = 0; runIndex < runCount; ++runIndex) {
+            
+            CTRunRef run = (CTRunRef)CFArrayGetValueAtIndex(runs, runIndex);
+            CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
+            CFIndex glyphCount = CTRunGetGlyphCount(run);
+            CGGlyph glyphs[glyphCount];
+            CGPoint positions[glyphCount];
+            CGRect boundingRects[glyphCount];
+            CFRange everything = CFRangeMake(0, 0);
+            CTRunGetGlyphs(run, everything, glyphs);
+            CTRunGetPositions(run, everything, positions);
+
+            CTFontGetBoundingRectsForGlyphs(runFont, kCTFontOrientationDefault, glyphs, boundingRects, glyphCount);
+            for (int i=0; i<glyphCount; i++) {
+                CGRect boundingRect = boundingRects[i];
+                CGPoint position = positions[i];
+                CGRect glyphRect = CGRectMake(position.x+boundingRect.origin.x, position.y+boundingRect.origin.y, boundingRect.size.width, boundingRect.size.height);
+                [glyphRectArray addObject:[NSValue valueWithCGRect:glyphRect]];
+            }
+        }
+        NSLog(@"String: %@; GlyphRect: %@",attrString,glyphRectArray);
+        word.wordGlyphRects = glyphRectArray;
+        
+
+        
+        
         word.rotationTransform = [self getRotationTransformationForProbabilityOfRotation:self.probabilityOfWordRotation rotationMode:self.rotationMode];
 
         proposedWordFrame = CGRectInset(proposedWordFrame, -self.wordBorderSize.width*2, -self.wordBorderSize.height*2);

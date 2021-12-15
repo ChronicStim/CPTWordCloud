@@ -14,6 +14,7 @@
 @property (nonatomic) int count;
 @property (nonatomic) CGPoint wordOrigin;
 @property (nonatomic) CGRect wordGlyphBounds;
+@property (nonatomic, strong) NSArray *wordGlyphRects;
 @property (nonatomic, retain) UIColor* color;
 @property (nonatomic, retain) UIFont* font;
 @property (nonatomic, getter=isRotated, readonly) BOOL rotated;
@@ -28,5 +29,6 @@
 
 -(CGPoint)wordOriginWithScaling:(BOOL)includeScaling;
 -(CGRect)wordRectForCurrentOriginWithScaling:(BOOL)includeScaling;
+-(NSArray *)wordGlyphRectsForCurrentOriginWithScaling:(BOOL)includeScaling;
 
 @end
