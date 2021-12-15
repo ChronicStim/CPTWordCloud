@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *verticalProbabilitySlider;
 @property (weak, nonatomic) IBOutlet UIButton *useRandomFontButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *fontSizingMethodSelector;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *rotationMethodSegmentedControl;
 
 - (IBAction)initializeAlphaButtonPressed:(id)sender;
 - (IBAction)initializeBetaButtonPressed:(id)sender;
@@ -29,6 +30,7 @@
 - (IBAction)filterStopwordsSwitchChanged:(id)sender;
 - (IBAction)fontSizingSegmentedSwitchSelected:(id)sender;
 - (IBAction)blendColorModeSwitchValueChanged:(id)sender;
+- (IBAction)rotationMethodSegmentedControlValueChanged:(id)sender;
 
 @end
 
@@ -58,6 +60,11 @@
     if (self.wordCloudView) {
         [self initializeWordCloud:@"Beta"];
     }
+}
+
+- (IBAction)rotationMethodSegmentedControlValueChanged:(id)sender {
+    int selection = (int)[(UISegmentedControl *)sender selectedSegmentIndex];
+    self.wordCloudView.wordCloud.rotationMode = (CPTWordRotationMode)selection;
 }
 
 - (IBAction)blendColorModeSwitchValueChanged:(id)sender {
@@ -96,7 +103,7 @@
 - (IBAction)verticalWordSliderValueChanged:(id)sender {
     CGFloat verticalProbability = [(UISlider *)sender value];
     CPTWordCloud *wordCloud = self.wordCloudView.wordCloud;
-    wordCloud.probabilityOfWordVertical = verticalProbability;
+    wordCloud.probabilityOfWordRotation = verticalProbability;
 }
 
 - (IBAction)showRectButtonPressed:(id)sender {
@@ -158,8 +165,10 @@
             wordCloud.scalingMode = CPTWordScalingMode_rank;
             [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.scalingMode];
             
-            wordCloud.probabilityOfWordVertical = 0.2f;
-            self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordVertical;
+            wordCloud.probabilityOfWordRotation = 0.8f;
+            wordCloud.rotationMode = CPTWordRotationMode_Deg30;
+            self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordRotation;
+            self.rotationMethodSegmentedControl.selectedSegmentIndex = (int)wordCloud.rotationMode;
 
             wordCloud.usingRandomFontPerWord = NO;
             [self.useRandomFontButton setTitle:(wordCloud.isUsingRandomFontPerWord ? @"Use Single Font" : @"Use Random Fonts") forState:UIControlStateNormal];
@@ -178,8 +187,10 @@
             wordCloud.scalingMode = CPTWordScalingMode_rank;
             [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.scalingMode];
 
-            wordCloud.probabilityOfWordVertical = 0.2f;
-            self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordVertical;
+            wordCloud.rotationMode = CPTWordRotationMode_HorizVertOnly;
+            wordCloud.probabilityOfWordRotation = 0.2f;
+            self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordRotation;
+            self.rotationMethodSegmentedControl.selectedSegmentIndex = (int)wordCloud.rotationMode;
 
             wordCloud.usingRandomFontPerWord = NO;
             [self.useRandomFontButton setTitle:(wordCloud.isUsingRandomFontPerWord ? @"Use Single Font" : @"Use Random Fonts") forState:UIControlStateNormal];
