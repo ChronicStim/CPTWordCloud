@@ -22,6 +22,7 @@
         _stopword  = NO;
         _wordGlyphBounds = CGRectZero;
         _wordOrigin = CGPointZero;
+        _rotationAngle = 0.0f;
     }
     return self;
 }

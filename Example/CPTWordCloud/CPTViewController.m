@@ -7,13 +7,13 @@
 //
 
 #import "CPTViewController.h"
-#import <CPTWordCloud/CPTWordCloudView.h>
+#import <CPTWordCloud/CPTWordCloudSKView.h>
 #import "CPTPopoverViewController.h"
 
 @interface CPTViewController ()
 
 @property (nonatomic, strong) UIImage *capturedImage;
-@property (weak, nonatomic) IBOutlet CPTWordCloudView *wordCloudView;
+@property (weak, nonatomic) IBOutlet CPTWordCloudSKView *wordCloudView;
 @property (weak, nonatomic) IBOutlet UISlider *verticalProbabilitySlider;
 @property (weak, nonatomic) IBOutlet UIButton *useRandomFontButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *fontSizingMethodSelector;
@@ -107,14 +107,14 @@
 }
 
 - (IBAction)showRectButtonPressed:(id)sender {
-    if (self.wordCloudView.wordOutlineColor == [UIColor clearColor]) {
+    if ([self.wordCloudView currentWordOutlineColor] == [UIColor clearColor]) {
         // Turn background display ON
-        self.wordCloudView.wordOutlineColor = [UIColor lightGrayColor];
+        [self.wordCloudView changeWordOutlineColor:[UIColor lightGrayColor]];
         [(UIButton *)sender setTitle:@"Hide RECTs" forState:UIControlStateNormal];
     }
     else {
         // Turn background display OFF
-        self.wordCloudView.wordOutlineColor = [UIColor clearColor];
+        [self.wordCloudView changeWordOutlineColor:[UIColor clearColor]];
         [(UIButton *)sender setTitle:@"Show RECTs" forState:UIControlStateNormal];
     }
 }

@@ -50,6 +50,7 @@
         
         _minFontSize = 10;
         _maxFontSize = 100;
+        _font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:_minFontSize];
         
         _wordBorderSize = CGSizeMake(2,2);
         
@@ -126,6 +127,11 @@
 - (void) removeWord:(NSString*)word
 {
     [self decrementCount:word];
+}
+
+-(NSArray *)sortedWords;
+{
+    return sortedWords;
 }
 
 - (void) removeAllWords
@@ -455,7 +461,7 @@
         finalColor = [UIColor colorWithRed:(red3-1.0f)/255.0f green:(green3-1.0f)/255.0f blue:(blue3-1.0f)/255.0f alpha:(alpha3-1.0f)/255.0f];
     }
     
-    NSLog(@"Mode: %i; Count: %i; Color: %@",(int)sizingMode,(int)count,finalColor.debugDescription);
+    //NSLog(@"Mode: %i; Count: %i; Color: %@",(int)sizingMode,(int)count,finalColor.debugDescription);
     
     return finalColor;
 }
@@ -483,10 +489,18 @@
     
     if (!wordCounts.count) {
         // No words in wordCloud, so pass empty array to the delegate
+        if ([self.delegate respondsToSelector:@selector(wordCloudDidRequestGenerationOfCloud:withSortedWordArray:)]) {
+            [self.delegate wordCloudDidRequestGenerationOfCloud:self withSortedWordArray:@[]];
+        }
+        
         if ([self.delegate respondsToSelector:@selector(wordCloudDidGenerateCloud:sortedWordArray:scalingFactor:xShift:yShift:)])
         {
             [self.delegate wordCloudDidGenerateCloud:self sortedWordArray:@[] scalingFactor:scalingFactor xShift:xShift yShift:yShift];
         }
+        return;
+    }
+    else if ([self.delegate respondsToSelector:@selector(wordCloudDidRequestGenerationOfCloud:withSortedWordArray:)]) {
+        [self.delegate wordCloudDidRequestGenerationOfCloud:self withSortedWordArray:sortedWords];
         return;
     }
     
@@ -556,9 +570,6 @@
         NSLog(@"String: %@; GlyphRect: %@",attrString,glyphRectArray);
         word.wordGlyphRects = glyphRectArray;
         
-
-        
-        
         word.rotationTransform = [self getRotationTransformationForProbabilityOfRotation:self.probabilityOfWordRotation rotationMode:self.rotationMode];
 
         proposedWordFrame = CGRectInset(proposedWordFrame, -self.wordBorderSize.width*2, -self.wordBorderSize.height*2);
@@ -627,7 +638,13 @@
 
 -(CGAffineTransform)getRotationTransformationForProbabilityOfRotation:(CGFloat)probabilityOfRoation rotationMode:(CPTWordRotationMode)rotationMode;
 {
-    CGAffineTransform rotationTransform = CGAffineTransformIdentity;
+    CGAffineTransform rotationTransform = CGAffineTransformMakeRotation([self getRotationAngleInRadiansForProbabilityOfRotation:probabilityOfRoation rotationMode:rotationMode]);
+    return rotationTransform;
+}
+
+-(CGFloat)getRotationAngleInRadiansForProbabilityOfRotation:(CGFloat)probabilityOfRoation rotationMode:(CPTWordRotationMode)rotationMode;
+{
+    CGFloat rotationAngle = 0.0f;
     BOOL rotateWord = [self nextRandomBoolWithProbabilityForYes:probabilityOfRoation];
     if (rotateWord) {
         switch (rotationMode) {
@@ -639,8 +656,7 @@
                 do {
                     option = 1-arc4random()%3;  //(-1, 0, 1)
                 } while (option == 0); // We don't want the zero case since we already predicted a non-horizontal word.
-                CGFloat rotationAngle = (M_PI_2 * option);
-                rotationTransform = CGAffineTransformMakeRotation(rotationAngle);
+                rotationAngle = (M_PI_2 * option);
             }   break;
             case CPTWordRotationMode_Deg45: {
                 // 4 options: vert-right, vert-left, 45-up, 45-down; (no upside down options)
@@ -648,8 +664,7 @@
                 do {
                     option = 2-arc4random()%5;  //(-2, -1, 0, 1, 2)
                 } while (option == 0); // We don't want the zero case since we already predicted a non-horizontal word.
-                CGFloat rotationAngle = (M_PI_4 * option);
-                rotationTransform = CGAffineTransformMakeRotation(rotationAngle);
+                rotationAngle = (M_PI_4 * option);
             }   break;
             case CPTWordRotationMode_Deg30: {
                 // 6 options: vert-right, vert-left, 30-up, 30-down, 60-up, 60-down; (no upside down options)
@@ -657,15 +672,14 @@
                 do {
                     option = 3-arc4random()%7; //(3, 2, 1, 0, -1, -2, -3)
                 } while (option == 0); // We don't want the zero case since we already predicted a non-horizontal word.
-                CGFloat rotationAngle = (M_PI_2/3.0f * option);
-                rotationTransform = CGAffineTransformMakeRotation(rotationAngle);
+                rotationAngle = (M_PI_2/3.0f * option);
             }   break;
             default:
                 break;
         }
     }
     
-    return rotationTransform;
+    return rotationAngle;
 }
 
 #pragma mark - accessors

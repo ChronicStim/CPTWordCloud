@@ -444,7 +444,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zvO-8r-b89">
                                         <rect key="frame" x="0.0" y="250" width="834" height="900"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" restorationIdentifier="CPTWordCloudView" translatesAutoresizingMaskIntoConstraints="NO" id="Y2W-uC-oVE" userLabel="CPTWordCloudView" customClass="CPTWordCloudView">
+                                            <view contentMode="scaleToFill" restorationIdentifier="CPTWordCloudView" translatesAutoresizingMaskIntoConstraints="NO" id="Y2W-uC-oVE" userLabel="CPTWordCloudView" customClass="CPTWordCloudSKView">
                                                 <rect key="frame" x="10" y="10" width="814" height="880"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
@@ -485,7 +485,7 @@
                         <outlet property="rotationMethodSegmentedControl" destination="Fwi-5j-Xk7" id="nXC-qg-3WL"/>
                         <outlet property="useRandomFontButton" destination="Siy-2V-B7B" id="prx-Wz-yDf"/>
                         <outlet property="verticalProbabilitySlider" destination="wAC-OA-6Fw" id="dRa-EW-pGq"/>
-                        <outlet property="wordCloudView" destination="Y2W-uC-oVE" id="c31-ef-5Qc"/>
+                        <outlet property="wordCloudView" destination="Y2W-uC-oVE" id="fqi-Jx-I1X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>

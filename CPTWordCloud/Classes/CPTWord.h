@@ -21,6 +21,7 @@
 @property (nonatomic) CGAffineTransform rotationTransform;
 @property (nonatomic) CGAffineTransform scalingTransform;
 @property (nonatomic, getter=isStopword) BOOL stopword;
+@property (nonatomic) CGFloat rotationAngle;
 
 - (id) initWithWord:(NSString*)word count:(int)count;
 
@@ -29,6 +30,5 @@
 
 -(CGPoint)wordOriginWithScaling:(BOOL)includeScaling;
 -(CGRect)wordRectForCurrentOriginWithScaling:(BOOL)includeScaling;
--(NSArray *)wordGlyphRectsForCurrentOriginWithScaling:(BOOL)includeScaling;
 
 @end

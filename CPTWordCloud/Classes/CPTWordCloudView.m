@@ -291,6 +291,16 @@
         CGContextRestoreGState(context);
 
         CGContextSaveGState(context);
+        CGContextTranslateCTM(context, word.wordOrigin.x, word.wordOrigin.y);
+        if (!CGAffineTransformIsIdentity(word.rotationTransform)) {
+            CGContextConcatCTM(context, word.rotationTransform);
+        }
+        CGContextScaleCTM(context, self.scalingFactor, self.scalingFactor);
+        CGContextSetStrokeColorWithColor(context, [UIColor greenColor].CGColor);
+        CGContextStrokeRect(context, word.wordGlyphBounds);
+        CGContextRestoreGState(context);
+        
+        CGContextSaveGState(context);
         
         CGContextSetStrokeColorWithColor(context, self.wordOutlineColor.CGColor);
         CGContextStrokeRect(context, wordRect);

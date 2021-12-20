@@ -35,6 +35,6 @@ Pod::Spec.new do |s|
   }
 
   s.public_header_files = 'CPTWordCloud/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
+  s.frameworks = 'UIKit', 'SpriteKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end

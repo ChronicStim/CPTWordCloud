@@ -98,7 +98,12 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 - (void)removeAllWords;
 
 // regenerate the wordCloud using current words and settings
+-(NSArray *)sortedWords;
 - (void)generateCloud;
+-(CGFloat)fontSizeForOccuranceCount:(NSInteger)count usingScalingMode:(CPTWordScalingMode)fontSizeMode;
+-(UIColor *)wordColorForOccuranceCount:(NSUInteger)count usingScalingMode:(CPTWordScalingMode)sizingMode;
+-(CGFloat)getRotationAngleInRadiansForProbabilityOfRotation:(CGFloat)probabilityOfRoation rotationMode:(CPTWordRotationMode)rotationMode;
+-(UIFont *)randomFontFromFontNames:(NSArray *)fontNames ofSize:(CGFloat)size;
 
 // reset the wordCloud, removing all words
 - (void)resetCloud;
@@ -112,7 +117,7 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 @protocol CPTWordCloudDelegate <NSObject>
 
 @optional
-
+- (void)wordCloudDidRequestGenerationOfCloud:(CPTWordCloud *)wc withSortedWordArray:(NSArray *)words;
 - (void)wordCloudDidGenerateCloud:(CPTWordCloud *)wc sortedWordArray:(NSArray *)words scalingFactor:(double)scalingFactor xShift:(double)xShift yShift:(double)yShift;
 
 @end
