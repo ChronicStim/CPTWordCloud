@@ -161,11 +161,11 @@ double lerp(double a, double b, double fraction) {
             wordLabel.fontColor = word.color;
         }
         wordLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        //wordLabel.position = CGPointMake(wordBorder.frame.size.width/2.0f, 0);
+        //wordLabel.position = CGPointMake(proposedWordFrame.origin.x, proposedWordFrame.origin.y);
         wordLabel.name = word.text;
         [wordBorder addChild:wordLabel];
         
-        [self.cloudNode addChild:wordBorder];
+        [unionNode addChild:wordBorder];
 
         BOOL intersects = FALSE;
         double angleStep = (index % 2 == 0 ? 1 : -1) * step;
@@ -206,27 +206,26 @@ double lerp(double a, double b, double fraction) {
     CGFloat unionRectAR = unionRect.size.width / unionRect.size.height;
     CGPoint unionCenter = CGPointMake(CGRectGetMidX(unionRect), CGRectGetMidY(unionRect));
     CGSize cloudNodeNewSize;
-    CGPoint cloudNodeNewPos;
     CGFloat cloudNodeScaleFactor;
     if (unionRectAR > aspectRatio) {
         // Dominant width
         cloudNodeNewSize = CGSizeMake(unionRect.size.width, unionRect.size.width / aspectRatio);
-        cloudNodeNewPos = CGPointMake(-unionCenter.x, -unionCenter.y);
         cloudNodeScaleFactor = self.wordCloud.cloudSize.width / unionRect.size.width;
     }
     else {
         // Dominant Height
         cloudNodeNewSize = CGSizeMake(unionRect.size.height * aspectRatio, unionRect.size.height);
-        cloudNodeNewPos = CGPointMake(-unionCenter.x, -unionCenter.y);
         cloudNodeScaleFactor = self.wordCloud.cloudSize.height / unionRect.size.height;
     }
-    //cloudNodeNewSize = CGSizeMake(cloudNodeNewSize.width*1.1, cloudNodeNewSize.height*1.1);
+
     self.cloudNode.size = cloudNodeNewSize;
-    self.cloudNode.position = CGPointZero;
     [self.cloudNode setScale:cloudNodeScaleFactor];
     
-    NSLog(@"UnionRect: %@; UnionCenter: %@; CloudNode: Size: %@ Pos: %@ Scale: %.2f ",NSStringFromCGRect(unionRect),NSStringFromCGPoint(unionCenter),NSStringFromCGSize(cloudNodeNewSize),NSStringFromCGPoint(cloudNodeNewPos),cloudNodeScaleFactor);
+    unionNode.position = CGPointMake(-unionCenter.x, -unionCenter.y);
     
+    NSLog(@"UnionRect: %@; UnionCenter: %@; CloudNode: Size: %@ Scale: %.2f ",NSStringFromCGRect(unionRect),NSStringFromCGPoint(unionCenter),NSStringFromCGSize(cloudNodeNewSize),cloudNodeScaleFactor);
+    
+    NSLog(@"UnionNode.center in SKScene space: %@",NSStringFromCGPoint([unionNode convertPoint:CGPointMake(CGRectGetMidX(unionNode.frame), CGRectGetMidY(unionNode.frame)) toNode:self]));
     /*
     CGPoint center = CGPointMake(-CGRectGetMidX(unionRect),-CGRectGetMidY(unionRect));
     CGSize newSize = CGSizeMake(unionRect.size.width, unionRect.size.height);
