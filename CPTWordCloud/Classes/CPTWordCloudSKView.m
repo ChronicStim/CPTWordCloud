@@ -124,7 +124,6 @@
     for (CPTWord* word in words)
     {
         UIColor* color = word.color;
-        CGRect wordRect = word.wordGlyphBounds;
         UIFont *font = [word.font fontWithSize:word.font.pointSize];
         NSDictionary *attrsDictionary = @{ NSFontAttributeName : font,
                                            NSForegroundColorAttributeName : color
