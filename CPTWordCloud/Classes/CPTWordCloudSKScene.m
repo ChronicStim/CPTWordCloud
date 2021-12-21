@@ -19,6 +19,8 @@ double lerp(double a, double b, double fraction) {
 
 @property (nonatomic) NSMutableArray *currentWordNodes;
 @property (nonatomic) SKSpriteNode *cloudNode;
+@property (nonatomic, readwrite) CGFloat scalingFactor;
+@property (nonatomic, readwrite) CGPoint cloudOriginShift;
 
 @end
 
@@ -93,7 +95,7 @@ double lerp(double a, double b, double fraction) {
 -(void)generateSceneWithSortedWords:(NSArray *)sortedWords;
 {
     self.anchorPoint = CGPointMake(0.5, 0.5);
-    self.scaleMode = SKSceneScaleModeAspectFit;
+    self.scaleMode = SKSceneScaleModeResizeFill;
     [self.cloudNode removeChildrenInArray:self.currentWordNodes];
     [self removeAllChildren];
     [self.currentWordNodes removeAllObjects];
@@ -107,7 +109,7 @@ double lerp(double a, double b, double fraction) {
     [self addChild:self.cloudNode];
     
     SKShapeNode *unionNode = [SKShapeNode shapeNodeWithRect:unionRect];
-    [unionNode setStrokeColor:[UIColor greenColor]];
+    [unionNode setStrokeColor:[UIColor clearColor]];
     [self.cloudNode addChild:unionNode];
     
     int wordLimit = self.wordCloud.maxNumberOfWords ? self.wordCloud.maxNumberOfWords : (int)sortedWords.count;
@@ -141,6 +143,9 @@ double lerp(double a, double b, double fraction) {
         
         CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
         proposedWordFrame = CGRectInset(CTLineGetImageBounds(line, NULL), -self.wordCloud.wordBorderSize.width*2, -self.wordCloud.wordBorderSize.height*2);
+        
+        // Store wordFrame with CPTWord object
+        word.wordGlyphBounds = proposedWordFrame;
 
         // Build SKNode & SKLabel
         SKShapeNode *wordBorder = [SKShapeNode shapeNodeWithRect:proposedWordFrame];
@@ -161,7 +166,6 @@ double lerp(double a, double b, double fraction) {
             wordLabel.fontColor = word.color;
         }
         wordLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        //wordLabel.position = CGPointMake(proposedWordFrame.origin.x, proposedWordFrame.origin.y);
         wordLabel.name = word.text;
         [wordBorder addChild:wordLabel];
         
@@ -195,56 +199,41 @@ double lerp(double a, double b, double fraction) {
             }
         } while (intersects);
         
+        // Store the position & rotation info with the word object
+        word.wordOrigin = wordBorder.position;
+        word.rotationAngle = wordBorder.zRotation;
+        word.rotationTransform = CGAffineTransformMakeRotation(word.rotationAngle);
+        
+        // Store the shapeNode to the scene's collection
         [self.currentWordNodes addObject:wordBorder];
+        
+        // Update the unionNode tracking size of the cloud
         unionRect = CGRectUnion(unionRect,[wordBorder calculateAccumulatedFrame]);
-        //[unionNode setPosition:CGPointMake(unionRect.origin.x, unionRect.origin.y)];
         [unionNode setPath:CGPathCreateWithRect(unionRect, NULL)];
-       // NSLog(@"UnionRect = %@", NSStringFromCGRect(unionRect));
     }
     
-    // Resize cloudNode to fit placement of shapeNodes
+    // Use the unionNode to resize cloudNode to fit placement of shapeNodes
     CGFloat unionRectAR = unionRect.size.width / unionRect.size.height;
     CGPoint unionCenter = CGPointMake(CGRectGetMidX(unionRect), CGRectGetMidY(unionRect));
     CGSize cloudNodeNewSize;
-    CGFloat cloudNodeScaleFactor;
     if (unionRectAR > aspectRatio) {
         // Dominant width
         cloudNodeNewSize = CGSizeMake(unionRect.size.width, unionRect.size.width / aspectRatio);
-        cloudNodeScaleFactor = self.wordCloud.cloudSize.width / unionRect.size.width;
+        self.scalingFactor = self.wordCloud.cloudSize.width / unionRect.size.width;
     }
     else {
         // Dominant Height
         cloudNodeNewSize = CGSizeMake(unionRect.size.height * aspectRatio, unionRect.size.height);
-        cloudNodeScaleFactor = self.wordCloud.cloudSize.height / unionRect.size.height;
+        self.scalingFactor = self.wordCloud.cloudSize.height / unionRect.size.height;
     }
 
     self.cloudNode.size = cloudNodeNewSize;
-    [self.cloudNode setScale:cloudNodeScaleFactor];
+    [self.cloudNode setScale:self.scalingFactor];
     
-    unionNode.position = CGPointMake(-unionCenter.x, -unionCenter.y);
     
-    NSLog(@"UnionRect: %@; UnionCenter: %@; CloudNode: Size: %@ Scale: %.2f ",NSStringFromCGRect(unionRect),NSStringFromCGPoint(unionCenter),NSStringFromCGSize(cloudNodeNewSize),cloudNodeScaleFactor);
-    
-    NSLog(@"UnionNode.center in SKScene space: %@",NSStringFromCGPoint([unionNode convertPoint:CGPointMake(CGRectGetMidX(unionNode.frame), CGRectGetMidY(unionNode.frame)) toNode:self]));
-    /*
-    CGPoint center = CGPointMake(-CGRectGetMidX(unionRect),-CGRectGetMidY(unionRect));
-    CGSize newSize = CGSizeMake(unionRect.size.width, unionRect.size.height);
-    if (aspectRatio * unionRect.size.height > newSize.width ) {
-        // Need to increase width to match AR
-        newSize.width = aspectRatio * unionRect.size.height;
-    }
-    else {
-        newSize.height = unionRect.size.width / aspectRatio;
-    }
-    [self.cloudNode setSize:newSize];
-    [self.cloudNode setPosition:center];
-    
-    // Scale to fit wordCloud size
-    CGFloat scaleFactor = self.wordCloud.cloudSize.width / self.cloudNode.size.width;
-    [self.cloudNode setScale:scaleFactor];
-    
-    NSLog(@"UnionRect: %@; CloudNode: Size: %@ Pos: %@ Scale: %.2f Frame: %@",NSStringFromCGRect(unionRect),NSStringFromCGSize(newSize),NSStringFromCGPoint(center),scaleFactor,NSStringFromCGRect(self.cloudNode.frame));
-     */
+    // Finally, recenter the unionNode to align the wordCloud
+    self.cloudOriginShift = CGPointMake(-unionCenter.x, -unionCenter.y);
+    unionNode.position = self.cloudOriginShift;
 }
 
 @end

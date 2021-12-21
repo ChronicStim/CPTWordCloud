@@ -500,6 +500,7 @@
         return;
     }
     else if ([self.delegate respondsToSelector:@selector(wordCloudDidRequestGenerationOfCloud:withSortedWordArray:)]) {
+        // If using SpriteKit, follow the delegate method to complete cloud generation in the SKScene class
         [self.delegate wordCloudDidRequestGenerationOfCloud:self withSortedWordArray:sortedWords];
         return;
     }
@@ -543,6 +544,7 @@
         CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
         proposedWordFrame = CTLineGetImageBounds(line, NULL);
         
+        /*
         NSMutableArray *glyphRectArray = [NSMutableArray new];
         CFArrayRef runs = CTLineGetGlyphRuns((CTLineRef)line);
         CFIndex runCount = CFArrayGetCount(runs);
@@ -569,6 +571,7 @@
         }
         NSLog(@"String: %@; GlyphRect: %@",attrString,glyphRectArray);
         word.wordGlyphRects = glyphRectArray;
+        */
         
         word.rotationTransform = [self getRotationTransformationForProbabilityOfRotation:self.probabilityOfWordRotation rotationMode:self.rotationMode];
 

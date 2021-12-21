@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong, readonly) CPTWordCloud* wordCloud;
 @property (nonatomic) UIColor *wordOutlineColor;
+@property (nonatomic, readonly) CGFloat scalingFactor;
+@property (nonatomic, readonly) CGPoint cloudOriginShift;
 
 -(instancetype)initWordCloudSKSceneForWordCloud:(CPTWordCloud *)wordCloud withSize:(CGSize)size;
 -(void)generateSceneWithSortedWords:(NSArray *)sortedWords;

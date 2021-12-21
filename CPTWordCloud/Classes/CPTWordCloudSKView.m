@@ -7,6 +7,7 @@
 
 #import "CPTWordCloudSKView.h"
 #import "CPTWordCloudSKScene.h"
+#import <CoreText/CoreText.h>
 
 @interface CPTWordCloudSKView ()
 
@@ -38,8 +39,10 @@
 -(void)startupSKViewDisplay;
 {
     self.ignoresSiblingOrder = YES;
-    self.showsFPS = YES;
-    self.showsNodeCount = YES;
+
+    // For Debugging
+//    self.showsFPS = YES;
+//    self.showsNodeCount = YES;
 
     self.wordCloud = [[CPTWordCloud alloc] init];
     self.wordCloud.cloudSize = self.frame.size;
@@ -97,9 +100,15 @@
 
 #pragma mark - Drawing Code
 
+- (void) drawRect:(CGRect)rect
+{
+    CGContextRef c = UIGraphicsGetCurrentContext();
+    
+    [self drawWordCloudInContext:c];
+}
+
 -(void)drawWordCloudInContext:(CGContextRef)context;
 {
-    /*
     CGContextTranslateCTM(context, 0, self.bounds.size.height);
     CGContextScaleCTM(context, 1, -1);
     
@@ -108,15 +117,14 @@
     CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
     CGContextFillRect(context, self.bounds);
     
-    if (!self.words.count) return;
+    NSArray *words = [self.wordCloud sortedWords];
     
-    for (CPTWord* word in self.words)
+    if (!words.count) return;
+    
+    for (CPTWord* word in words)
     {
-        UIColor* color = [highlightedWords containsObject:word] ? highlightColor : word.color;
-        
-        NSValue *wordRectValue = [wordRects objectForKey:word.text];
-        CGRect wordRect = wordRectValue.CGRectValue;
-        
+        UIColor* color = word.color;
+        CGRect wordRect = word.wordGlyphBounds;
         UIFont *font = [word.font fontWithSize:word.font.pointSize];
         NSDictionary *attrsDictionary = @{ NSFontAttributeName : font,
                                            NSForegroundColorAttributeName : color
@@ -131,11 +139,13 @@
         
         CGContextSaveGState(context);
         
-        CGContextTranslateCTM(context, word.wordOrigin.x, word.wordOrigin.y);
+        CGPoint scaledShiftedOrigin = CGPointMake((self.wordCloudSKScene.scalingFactor*word.wordOrigin.x)+(self.bounds.size.width/2.0f)+self.wordCloudSKScene.cloudOriginShift.x, (self.wordCloudSKScene.scalingFactor*word.wordOrigin.y)+(self.bounds.size.height/2.0f)+self.wordCloudSKScene.cloudOriginShift.y);
+        
+        CGContextTranslateCTM(context, scaledShiftedOrigin.x, scaledShiftedOrigin.y);
         if (!CGAffineTransformIsIdentity(word.rotationTransform)) {
             CGContextConcatCTM(context, word.rotationTransform);
         }
-        CGContextScaleCTM(context, self.scalingFactor, self.scalingFactor);
+        CGContextScaleCTM(context, self.wordCloudSKScene.scalingFactor, self.wordCloudSKScene.scalingFactor);
         
         CTLineDraw(line, context);
         CFRelease(line);
@@ -143,54 +153,26 @@
         CGContextRestoreGState(context);
         
         CGContextSaveGState(context);
-        CGContextTranslateCTM(context, word.wordOrigin.x, word.wordOrigin.y);
+        CGContextTranslateCTM(context, scaledShiftedOrigin.x, scaledShiftedOrigin.y);
         if (!CGAffineTransformIsIdentity(word.rotationTransform)) {
             CGContextConcatCTM(context, word.rotationTransform);
         }
-        CGContextScaleCTM(context, self.scalingFactor, self.scalingFactor);
-        CGContextSetStrokeColorWithColor(context, [UIColor greenColor].CGColor);
+        CGContextScaleCTM(context, self.wordCloudSKScene.scalingFactor, self.wordCloudSKScene.scalingFactor);
+        CGContextSetStrokeColorWithColor(context, self.wordCloudSKScene.wordOutlineColor.CGColor);
         CGContextStrokeRect(context, word.wordGlyphBounds);
         CGContextRestoreGState(context);
-        
-        CGContextSaveGState(context);
-        
-        CGContextSetStrokeColorWithColor(context, self.wordOutlineColor.CGColor);
-        CGContextStrokeRect(context, wordRect);
-        
-        CGContextRestoreGState(context);
-        
-        if (![self.wordOutlineColor isEqual:[UIColor clearColor]]) {
-            // Draw other outline marks
-            
-            CGContextSaveGState(context);
-            CGContextTranslateCTM(context, word.wordOrigin.x, word.wordOrigin.y);
-            CGContextSetFillColorWithColor(context, self.wordOutlineColor.CGColor);
-            CGContextFillEllipseInRect(context, CGRectMake(0, 0, 5, 5));
-            CGContextConcatCTM(context, word.rotationTransform);
-            CGContextSetStrokeColorWithColor(context, [UIColor darkGrayColor].CGColor);
-            CGContextMoveToPoint(context, 0, 0);
-            CGContextAddLineToPoint(context, 50, 0);
-            CGContextDrawPath(context, kCGPathStroke);
-            CGContextMoveToPoint(context, 0, 0);
-            CGContextAddLineToPoint(context, 0, 10);
-            CGContextDrawPath(context, kCGPathStroke);
-            CGContextRestoreGState(context);
-            
-            CGContextSaveGState(context);
-            CGContextTranslateCTM(context, word.wordOrigin.x, word.wordOrigin.y);
-            CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
-            CGContextConcatCTM(context, word.rotationTransform);
-            CGContextScaleCTM(context, self.scalingFactor, self.scalingFactor);
-            for (NSValue *rectValue in word.wordGlyphRects) {
-                CGRect rect = [rectValue CGRectValue];
-                CGContextStrokeRect(context, rect);
-            }
-            CGContextRestoreGState(context);
-            
-            
-        }
     }
-     */
+}
+
+#pragma mark - Draw to external image
+
+- (UIImage *)imageByRenderingView;
+{
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
+    [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+    UIImage * snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return snapshotImage;
 }
 
 -(UIImage *)imageByDrawingView;
@@ -250,5 +232,13 @@
     return [NSData dataWithData:pdfData];
 }
 
+-(void)drawInPDFContext:(CGContextRef)pdfContext;
+{
+    CGContextSaveGState(pdfContext);
+    
+    [self.layer drawInContext:pdfContext];
+    
+    CGContextRestoreGState(pdfContext);
+}
 
 @end
