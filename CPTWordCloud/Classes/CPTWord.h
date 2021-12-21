@@ -14,12 +14,14 @@
 @property (nonatomic) int count;
 @property (nonatomic) CGPoint wordOrigin;
 @property (nonatomic) CGRect wordGlyphBounds;
+@property (nonatomic, strong) NSArray *wordGlyphRects;
 @property (nonatomic, retain) UIColor* color;
 @property (nonatomic, retain) UIFont* font;
 @property (nonatomic, getter=isRotated, readonly) BOOL rotated;
 @property (nonatomic) CGAffineTransform rotationTransform;
 @property (nonatomic) CGAffineTransform scalingTransform;
 @property (nonatomic, getter=isStopword) BOOL stopword;
+@property (nonatomic) CGFloat rotationAngle;
 
 - (id) initWithWord:(NSString*)word count:(int)count;
 

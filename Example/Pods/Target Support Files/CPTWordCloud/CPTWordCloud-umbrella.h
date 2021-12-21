@@ -12,6 +12,8 @@
 
 #import "CPTWord.h"
 #import "CPTWordCloud.h"
+#import "CPTWordCloudSKScene.h"
+#import "CPTWordCloudSKView.h"
 #import "CPTWordCloudView.h"
 
 FOUNDATION_EXPORT double CPTWordCloudVersionNumber;

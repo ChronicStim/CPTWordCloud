@@ -284,12 +284,22 @@
             CGContextConcatCTM(context, word.rotationTransform);
         }
         CGContextScaleCTM(context, self.scalingFactor, self.scalingFactor);
-                
+
         CTLineDraw(line, context);
         CFRelease(line);
         
         CGContextRestoreGState(context);
 
+        CGContextSaveGState(context);
+        CGContextTranslateCTM(context, word.wordOrigin.x, word.wordOrigin.y);
+        if (!CGAffineTransformIsIdentity(word.rotationTransform)) {
+            CGContextConcatCTM(context, word.rotationTransform);
+        }
+        CGContextScaleCTM(context, self.scalingFactor, self.scalingFactor);
+        CGContextSetStrokeColorWithColor(context, [UIColor greenColor].CGColor);
+        CGContextStrokeRect(context, word.wordGlyphBounds);
+        CGContextRestoreGState(context);
+        
         CGContextSaveGState(context);
         
         CGContextSetStrokeColorWithColor(context, self.wordOutlineColor.CGColor);
@@ -297,6 +307,36 @@
 
         CGContextRestoreGState(context);
         
+        if (![self.wordOutlineColor isEqual:[UIColor clearColor]]) {
+            // Draw other outline marks
+            
+            CGContextSaveGState(context);
+            CGContextTranslateCTM(context, word.wordOrigin.x, word.wordOrigin.y);
+            CGContextSetFillColorWithColor(context, self.wordOutlineColor.CGColor);
+            CGContextFillEllipseInRect(context, CGRectMake(0, 0, 5, 5));
+            CGContextConcatCTM(context, word.rotationTransform);
+            CGContextSetStrokeColorWithColor(context, [UIColor darkGrayColor].CGColor);
+            CGContextMoveToPoint(context, 0, 0);
+            CGContextAddLineToPoint(context, 50, 0);
+            CGContextDrawPath(context, kCGPathStroke);
+            CGContextMoveToPoint(context, 0, 0);
+            CGContextAddLineToPoint(context, 0, 10);
+            CGContextDrawPath(context, kCGPathStroke);
+            CGContextRestoreGState(context);
+            
+            CGContextSaveGState(context);
+            CGContextTranslateCTM(context, word.wordOrigin.x, word.wordOrigin.y);
+            CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
+            CGContextConcatCTM(context, word.rotationTransform);
+            CGContextScaleCTM(context, self.scalingFactor, self.scalingFactor);
+            for (NSValue *rectValue in word.wordGlyphRects) {
+                CGRect rect = [rectValue CGRectValue];
+                CGContextStrokeRect(context, rect);
+            }
+            CGContextRestoreGState(context);
+            
+
+        }
    }
 }
 

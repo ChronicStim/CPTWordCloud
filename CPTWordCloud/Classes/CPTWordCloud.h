@@ -16,6 +16,13 @@ typedef NS_ENUM(NSUInteger, CPTWordScalingMode) {
     CPTWordScalingMode_logN = 3
 };
 
+typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
+    CPTWordRotationMode_NoRotation = 0,
+    CPTWordRotationMode_HorizVertOnly = 1,
+    CPTWordRotationMode_Deg45 = 2,
+    CPTWordRotationMode_Deg30 = 3
+};
+
 @protocol CPTWordCloudDelegate;
 
 @interface CPTWordCloud : NSObject
@@ -35,6 +42,8 @@ typedef NS_ENUM(NSUInteger, CPTWordScalingMode) {
 @property (nonatomic) int maxFontSize;
 /// Method which will be used to calculate the font size and color for displaying the words in the cloud
 @property (nonatomic, assign) CPTWordScalingMode scalingMode;
+/// Determines which rotation options are available to the wordCloud algorithm. Default == CPTWordRotationMode_HorizVertOnly
+@property (nonatomic, assign) CPTWordRotationMode rotationMode;
 
 // both colors default to black
 /// Word color for the lowest count word in the cloud. Higher count words will be a gradation of this color and highCountColor. Defaults to blackColor
@@ -56,7 +65,7 @@ typedef NS_ENUM(NSUInteger, CPTWordScalingMode) {
 @property (nonatomic) CGSize cloudSize;
 
 // probability that words are rotated to a vertical position (defaults to 0%)
-@property (nonatomic) CGFloat probabilityOfWordVertical;
+@property (nonatomic) CGFloat probabilityOfWordRotation;
 
 // Use random fonts from system for each word. (defaults to NO)
 @property (nonatomic, getter=isUsingRandomFontPerWord) BOOL usingRandomFontPerWord;
@@ -89,7 +98,12 @@ typedef NS_ENUM(NSUInteger, CPTWordScalingMode) {
 - (void)removeAllWords;
 
 // regenerate the wordCloud using current words and settings
+-(NSArray *)sortedWords;
 - (void)generateCloud;
+-(CGFloat)fontSizeForOccuranceCount:(NSInteger)count usingScalingMode:(CPTWordScalingMode)fontSizeMode;
+-(UIColor *)wordColorForOccuranceCount:(NSUInteger)count usingScalingMode:(CPTWordScalingMode)sizingMode;
+-(CGFloat)getRotationAngleInRadiansForProbabilityOfRotation:(CGFloat)probabilityOfRoation rotationMode:(CPTWordRotationMode)rotationMode;
+-(UIFont *)randomFontFromFontNames:(NSArray *)fontNames ofSize:(CGFloat)size;
 
 // reset the wordCloud, removing all words
 - (void)resetCloud;
@@ -103,7 +117,7 @@ typedef NS_ENUM(NSUInteger, CPTWordScalingMode) {
 @protocol CPTWordCloudDelegate <NSObject>
 
 @optional
-
+- (void)wordCloudDidRequestGenerationOfCloud:(CPTWordCloud *)wc withSortedWordArray:(NSArray *)words;
 - (void)wordCloudDidGenerateCloud:(CPTWordCloud *)wc sortedWordArray:(NSArray *)words scalingFactor:(double)scalingFactor xShift:(double)xShift yShift:(double)yShift;
 
 @end
