@@ -78,10 +78,7 @@
     sortedWords = nil;
     wordCounts = nil;
     topWord = nil;
-    bottomWord = nil;
-    
-    //delete(lowCountColorComponents);
-    //delete(highCountColorComponents);
+    bottomWord = nil;    
 }
 
 - (void) rebuild:(NSArray*)words

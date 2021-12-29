@@ -124,7 +124,5 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 
 @optional
 - (void)wordCloud:(CPTWordCloud *)wc readyToPresentScene:(CPTWordCloudSKScene *)scene;
-- (void)wordCloudDidRequestGenerationOfCloud:(CPTWordCloud *)wc withSortedWordArray:(NSArray *)words;
-- (void)wordCloudDidGenerateCloud:(CPTWordCloud *)wc sortedWordArray:(NSArray *)words scalingFactor:(double)scalingFactor xShift:(double)xShift yShift:(double)yShift;
 
 @end

@@ -69,11 +69,6 @@
 
 #pragma mark - CPTWordCloudDelegate
 
-- (void)wordCloudDidRequestGenerationOfCloud:(CPTWordCloud *)wc withSortedWordArray:(NSArray *)words;
-{
-
-}
-
 - (void)wordCloud:(CPTWordCloud *)wc readyToPresentScene:(CPTWordCloudSKScene *)scene;
 {
     [self presentScene:scene transition:[SKTransition fadeWithDuration:0.5]];

@@ -213,9 +213,9 @@ double lerp(double a, double b, double fraction) {
         
         // Update the unionNode tracking size of the cloud
         unionRect = CGRectUnion(unionRect,[wordBorder calculateAccumulatedFrame]);
-        [self.unionNode setPath:CGPathCreateWithRect(unionRect, NULL)];
     }
-    
+    [self.unionNode setPath:CGPathCreateWithRect(unionRect, NULL)];
+
     // Use the unionNode to resize cloudNode to fit placement of shapeNodes
     CGFloat unionRectAR = unionRect.size.width / unionRect.size.height;
     CGPoint unionCenter = CGPointMake(CGRectGetMidX(unionRect), CGRectGetMidY(unionRect));
@@ -243,6 +243,7 @@ double lerp(double a, double b, double fraction) {
 -(void)updateExistingScene;
 {
     // Use existing SKNodes and only change aspects that don't effect size/position (e.g. color)
+    CGRect unionRect = CGRectZero;
     for (SKShapeNode *shapeNode in self.currentWordNodes) {
         
         shapeNode.strokeColor = self.wordOutlineColor;
@@ -255,11 +256,13 @@ double lerp(double a, double b, double fraction) {
         else {
             labelNode.fontColor = [self.wordCloud wordColorForOccuranceCount:wordCount usingScalingMode:self.wordCloud.scalingMode];
         }
+        
+        // Update the unionNode tracking size of the cloud
+        unionRect = CGRectUnion(unionRect,[shapeNode calculateAccumulatedFrame]);
     }
- /*
+
     // Use the unionNode to resize cloudNode to fit placement of shapeNodes
     double aspectRatio = self.wordCloud.cloudSize.width / self.wordCloud.cloudSize.height;
-    CGRect unionRect = CGPathGetPathBoundingBox(self.unionNode.path);
     CGFloat unionRectAR = unionRect.size.width / unionRect.size.height;
     CGPoint unionCenter = CGPointMake(CGRectGetMidX(unionRect), CGRectGetMidY(unionRect));
     CGSize cloudNodeNewSize;
@@ -274,13 +277,16 @@ double lerp(double a, double b, double fraction) {
         self.scalingFactor = self.wordCloud.cloudSize.height / unionRect.size.height;
     }
     
+    // Reset the cloudNode values before setting the new ones
+    self.cloudNode.size = CGSizeZero;
+    [self.cloudNode setScale:1.0f];
+    
     self.cloudNode.size = cloudNodeNewSize;
     [self.cloudNode setScale:self.scalingFactor];
     
     // Finally, recenter the unionNode to align the wordCloud
     self.cloudOriginShift = CGPointMake(-unionCenter.x, -unionCenter.y);
     self.unionNode.position = self.cloudOriginShift;
-  */
 }
 
 @end
