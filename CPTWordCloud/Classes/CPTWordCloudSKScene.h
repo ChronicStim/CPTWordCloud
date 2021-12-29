@@ -17,5 +17,7 @@
 
 -(instancetype)initWordCloudSKSceneForWordCloud:(CPTWordCloud *)wordCloud withSize:(CGSize)size;
 -(void)generateSceneWithSortedWords:(NSArray *)sortedWords;
+-(void)updateExistingScene;
+-(BOOL)hasExistingNodes;
 
 @end

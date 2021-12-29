@@ -26,7 +26,7 @@
 
 - (void) incrementCount:(NSString*)word;
 - (void) decrementCount:(NSString*)word;
-- (void) setNeedsGenerateCloud;
+-(void)setNeedsUpdateCloudSceneWithRegenerateNodes:(BOOL)regenerateNodes;
 - (void) generateCloud;
 
 @end
@@ -144,7 +144,7 @@
     topWord = nil;
     bottomWord = nil;
     
-    [self setNeedsGenerateCloud];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
 }
 
 -(void)resetCloud;
@@ -319,6 +319,7 @@
         bottomWord = sortedWords.lastObject;
     }
     else {
+        sortedWords = @[];
         topWord = nil;
         bottomWord = nil;
     }
@@ -335,22 +336,6 @@
     
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"count" ascending:FALSE];
     sortedWords = [[wordCounts.allValues filteredArrayUsingPredicate:predicate] sortedArrayUsingDescriptors:@[sortDescriptor]];
-    
-    if (0 < [sortedWords count]) {
-        topWord = sortedWords[0];
-    }
-    else {
-        topWord = nil;
-    }
-}
-
-- (void) setNeedsGenerateCloud
-{
-    @synchronized(self)
-    {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(generateCloud) object:nil];
-        [self performSelector:@selector(generateCloud) withObject:nil afterDelay:0.1f];
-    }
 }
 
 -(GKRandomSource *)randomSource;
@@ -498,6 +483,33 @@
     }
 }
 
+-(void)setNeedsUpdateCloudSceneWithRegenerateNodes:(BOOL)regenerateNodes;
+{
+    @synchronized(self)
+    {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(generateCloud) object:nil];
+        [self performSelector:@selector(updateCloudSceneWithRegenerateNodes:) withObject:@(regenerateNodes) afterDelay:0.1f];
+    }
+}
+
+/// Triggers an update of the SKScene for the wordCloud in order to either adjust properties (e.g. colors, word outlines) or generate a new cloud
+/// @param regenerateNodes Determines whether to use the existing SKScene nodes or to regenerate all new nodes. In most cases, this parameter will be YES, but in situations where something like font color has changed, the same nodes can be utilized so that the word positions do not change - only the word colors are altered.
+-(void)updateCloudSceneWithRegenerateNodes:(NSNumber *)regenerateNodes;
+{
+    BOOL regenerate = [regenerateNodes boolValue];
+    if (!regenerate && [self.wordCloudSKScene hasExistingNodes]) {
+        // If SKScene has been generated previously and regeneration is NOT desired
+        [self.wordCloudSKScene updateExistingScene];
+    }
+    else {
+        // Generate a new scene
+        [self filterAndSortWords];
+        [self selectBoundaryWords];
+        
+        [self.wordCloudSKScene generateSceneWithSortedWords:sortedWords];
+    }
+}
+
 // sorts words if needed, and lays them out
 - (void) generateCloud
 {
@@ -565,7 +577,7 @@
     if (true == CGSizeEqualToSize(cloudSize, self.cloudSize)) return;
     _cloudSize = cloudSize;
     
-    [self setNeedsGenerateCloud];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:NO];
 }
 
 - (void) setFont:(UIFont*)font
@@ -573,7 +585,7 @@
     if (font == self.font) return;    
     _font = font;
     
-    [self setNeedsGenerateCloud];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
 }
 
 - (void) setMinFontSize:(int)minFontSize
@@ -581,7 +593,7 @@
     if (minFontSize == self.minFontSize) return;
     _minFontSize = minFontSize;
     
-    [self setNeedsGenerateCloud];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
 }
 
 - (void) setMaxFontSize:(int)maxFontSize
@@ -589,7 +601,7 @@
     if (maxFontSize == self.maxFontSize) return;
     _maxFontSize = maxFontSize;
     
-    [self setNeedsGenerateCloud];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
 }
 
 - (void) setWordBorderSize:(CGSize)wordBorderSize
@@ -597,28 +609,28 @@
     if (CGSizeEqualToSize(wordBorderSize, _wordBorderSize)) return;
     _wordBorderSize = wordBorderSize;
     
-    [self setNeedsGenerateCloud];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
 }
 
 - (void) setLowCountColor:(UIColor*)color
 {
     if (color == self.lowCountColor) return;
     _lowCountColor = color;
-    [self setNeedsGenerateCloud];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:NO];
 }
 
 - (void) setHighCountColor:(UIColor*)color
 {
     if (color == self.highCountColor) return;
     _highCountColor = color;
-    [self setNeedsGenerateCloud];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:NO];
 }
 
 - (void)setZeroCountColor:(UIColor *)zeroCountColor;
 {
     if (zeroCountColor == self.zeroCountColor) return;
     _zeroCountColor = zeroCountColor;
-    [self setNeedsGenerateCloud];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:NO];
 }
 
 - (void) setMaxNumberOfWords:(int)maxNumberOfWords
@@ -626,7 +638,7 @@
     if (maxNumberOfWords == self.maxNumberOfWords) return;
     
     _maxFontSize = maxNumberOfWords;
-    [self setNeedsGenerateCloud];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
 }
 
 - (void) setMinimumWordLength:(int)minimumWordLength
@@ -641,7 +653,7 @@
 {
     if (probabilityOfWordRotation != _probabilityOfWordRotation) {
         _probabilityOfWordRotation = probabilityOfWordRotation;
-        [self setNeedsGenerateCloud];
+        [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
     }
 }
 
@@ -649,7 +661,7 @@
 {
     if (usingRandomFontPerWord != _usingRandomFontPerWord) {
         _usingRandomFontPerWord = usingRandomFontPerWord;
-        [self setNeedsGenerateCloud];
+        [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
     }
 }
 
@@ -657,7 +669,7 @@
 {
     if (selectableFontNames != _selectableFontNames) {
         _selectableFontNames = selectableFontNames;
-        [self setNeedsGenerateCloud];
+        [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
     }
 }
 
@@ -665,7 +677,7 @@
 {
     if (wordWithCountOfZeroDisplayed != _wordWithCountOfZeroDisplayed) {
         _wordWithCountOfZeroDisplayed = wordWithCountOfZeroDisplayed;
-        [self setNeedsGenerateCloud];
+        [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
     }
 }
 
@@ -673,7 +685,7 @@
 {
     if (convertingAllWordsToLowercase != _convertingAllWordsToLowercase) {
         _convertingAllWordsToLowercase = convertingAllWordsToLowercase;
-        [self setNeedsGenerateCloud];
+        [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
     }
 }
 
@@ -681,7 +693,7 @@
 {
     if (fontSizeMode != _scalingMode) {
         _scalingMode = fontSizeMode;
-        [self setNeedsGenerateCloud];
+        [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
     }
 }
 
@@ -689,7 +701,7 @@
 {
     if (rotationMode != _rotationMode) {
         _rotationMode = rotationMode;
-        [self setNeedsGenerateCloud];
+        [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
     }
 }
 
@@ -697,7 +709,7 @@
 {
     if (filteringStopWords != _filteringStopWords) {
         _filteringStopWords = filteringStopWords;
-        [self setNeedsGenerateCloud];
+        [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
     }
 }
 
@@ -705,7 +717,7 @@
 {
     if (colorMappingHSBBased != _colorMappingHSBBased) {
         _colorMappingHSBBased = colorMappingHSBBased;
-        [self setNeedsGenerateCloud];
+        [self setNeedsUpdateCloudSceneWithRegenerateNodes:NO];
     }
 }
 
