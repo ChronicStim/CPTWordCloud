@@ -14,10 +14,10 @@
 
 @interface CPTWordCloud ()
 {
-    NSArray* sortedWords;
-    NSMutableDictionary* wordCounts;
-    CPTWord* topWord;
-    CPTWord* bottomWord;
+    NSArray* _sortedWords;
+    NSMutableDictionary* _wordCounts;
+    CPTWord* _topWord;
+    CPTWord* _bottomWord;
 
 }
 @property (nonatomic, strong) GKRandomSource *randomSource;
@@ -59,11 +59,11 @@
         
         _cloudSize = CGSizeZero;
                 
-        self.lowCountColor = [UIColor blackColor];
-        self.highCountColor = [UIColor blackColor];
+        self.lowCountColor = [UIColor colorWithRed:0.022 green:0.000 blue:0.751 alpha:1.000];
+        self.highCountColor = [UIColor colorWithRed:0.751 green:0.000 blue:0.052 alpha:1.000];
         self.zeroCountColor = [UIColor darkGrayColor];
         
-        wordCounts = [[NSMutableDictionary alloc] init];        
+        _wordCounts = [[NSMutableDictionary alloc] init];        
     }
     return self;
 }
@@ -75,10 +75,10 @@
     _lowCountColor = nil;
     _highCountColor = nil;
     
-    sortedWords = nil;
-    wordCounts = nil;
-    topWord = nil;
-    bottomWord = nil;    
+    _sortedWords = nil;
+    _wordCounts = nil;
+    _topWord = nil;
+    _bottomWord = nil;    
 }
 
 - (void) rebuild:(NSArray*)words
@@ -131,15 +131,15 @@
 
 -(NSArray *)sortedWords;
 {
-    return sortedWords;
+    return _sortedWords;
 }
 
 - (void) removeAllWords
 {
-    [wordCounts removeAllObjects];
-    sortedWords = @[];
-    topWord = nil;
-    bottomWord = nil;
+    [_wordCounts removeAllObjects];
+    _sortedWords = @[];
+    _topWord = nil;
+    _bottomWord = nil;
     
     [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
 }
@@ -257,12 +257,12 @@
 
 -(CPTWord *)wordForCleanWord:(NSString *)cleanWord;
 {
-    CPTWord* cptword = [wordCounts valueForKey:cleanWord];
+    CPTWord* cptword = [_wordCounts valueForKey:cleanWord];
     if (!cptword)
     {
         cptword = [[CPTWord alloc] initWithWord:cleanWord count:0];
         [self checkForStopwordInWord:cptword];
-        [wordCounts setValue:cptword forKey:cleanWord];
+        [_wordCounts setValue:cptword forKey:cleanWord];
     }
     return cptword;
 }
@@ -311,14 +311,14 @@
 
 -(void)selectBoundaryWords;
 {
-    if (nil != sortedWords && 0 < [sortedWords count]) {
-        topWord = sortedWords.firstObject;
-        bottomWord = sortedWords.lastObject;
+    if (nil != _sortedWords && 0 < [_sortedWords count]) {
+        _topWord = _sortedWords.firstObject;
+        _bottomWord = _sortedWords.lastObject;
     }
     else {
-        sortedWords = @[];
-        topWord = nil;
-        bottomWord = nil;
+        _sortedWords = @[];
+        _topWord = nil;
+        _bottomWord = nil;
     }
 }
 
@@ -332,7 +332,7 @@
     }
     
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"count" ascending:FALSE];
-    sortedWords = [[wordCounts.allValues filteredArrayUsingPredicate:predicate] sortedArrayUsingDescriptors:@[sortDescriptor]];
+    _sortedWords = [[_wordCounts.allValues filteredArrayUsingPredicate:predicate] sortedArrayUsingDescriptors:@[sortDescriptor]];
 }
 
 -(GKRandomSource *)randomSource;
@@ -369,7 +369,7 @@
         switch (scalingMode) {
             case CPTWordScalingMode_rank: {
                 // Use rank order to determine font size from min to max (relative difference in count between words doesn't effect sizing)
-                NSSet *uniqueCountsInSortedWords = [NSSet setWithArray:[sortedWords valueForKeyPath:@"count"]];
+                NSSet *uniqueCountsInSortedWords = [NSSet setWithArray:[_sortedWords valueForKeyPath:@"count"]];
                 NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"intValue" ascending:YES comparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
                     if ([obj1 integerValue] > [obj2 integerValue]) {
                         return (NSComparisonResult)NSOrderedDescending;
@@ -393,22 +393,22 @@
             }   break;
             case CPTWordScalingMode_linearN: {
                 // Use word frequency (count) to determine font sizing from min to max along a linear ramp
-                CGFloat maxCount = (float)topWord.count;
-                CGFloat minCount = (float)bottomWord.count;
+                CGFloat maxCount = (float)_topWord.count;
+                CGFloat minCount = (float)_bottomWord.count;
                 scaledValue = minValue + ((maxValue - minValue) / (maxCount - minCount)) * (count-minCount);
             }   break;
             case CPTWordScalingMode_expN: {
                 // Use word frequency (count) to determine font sizing from min to max based on an exponential ramp
-                CGFloat maxCount = (float)topWord.count;
-                CGFloat minCount = (float)bottomWord.count;
+                CGFloat maxCount = (float)_topWord.count;
+                CGFloat minCount = (float)_bottomWord.count;
                 CGFloat b = (1/(minCount-maxCount))*log10f((float)minValue/(float)maxValue);
                 CGFloat a = (float)maxValue / powf(10,b * maxCount);
                 scaledValue = a * powf(10,b * (float)count);
             }   break;
             case CPTWordScalingMode_logN: {
                 // Use word frequency (count) to determine font sizing from min to max based on an logarithmic ramp
-                CGFloat maxCount = (float)topWord.count;
-                CGFloat minCount = (bottomWord.count > 0) ? (float)bottomWord.count : 1.0f;
+                CGFloat maxCount = (float)_topWord.count;
+                CGFloat minCount = (_bottomWord.count > 0) ? (float)_bottomWord.count : 1.0f;
                 CGFloat a = ((float)minValue - (float)maxValue)/(log10f(minCount)-log10f(maxCount));
                 CGFloat b = powf(10, (float)minValue/a)/minCount;
                 scaledValue = a * log10f(b * (float)count);
@@ -472,7 +472,7 @@
 /// Returns all word objects to a wordFrame == CGRectZero prior to the generation process.
 -(void)zeroExistingWordFrames;
 {
-    for (CPTWord *word in sortedWords) {
+    for (CPTWord *word in _sortedWords) {
         word.wordGlyphBounds = CGRectZero;
         word.wordOrigin = CGPointZero;
         word.scalingTransform = CGAffineTransformIdentity;
@@ -503,7 +503,7 @@
         [self filterAndSortWords];
         [self selectBoundaryWords];
         
-        [self.wordCloudSKScene generateSceneWithSortedWords:sortedWords];
+        [self.wordCloudSKScene generateSceneWithSortedWords:_sortedWords];
     }
 }
 
@@ -513,12 +513,12 @@
     [self filterAndSortWords];
     [self selectBoundaryWords];
     
-    if (!wordCounts.count) {
+    if (!_wordCounts.count) {
         
         [self.wordCloudSKScene generateSceneWithSortedWords:@[]];
         return;
     }
-    [self.wordCloudSKScene generateSceneWithSortedWords:sortedWords];
+    [self.wordCloudSKScene generateSceneWithSortedWords:_sortedWords];
 }
 
 -(CGAffineTransform)getRotationTransformationForProbabilityOfRotation:(CGFloat)probabilityOfRoation rotationMode:(CPTWordRotationMode)rotationMode;
@@ -643,7 +643,7 @@
     if (minimumWordLength == self.minimumWordLength) return;    
     _minimumWordLength = minimumWordLength;
     
-    [self rebuild:[wordCounts.allKeys copy]];
+    [self rebuild:[_wordCounts.allKeys copy]];
 }
 
 -(void)setProbabilityOfWordRotation:(CGFloat)probabilityOfWordRotation;

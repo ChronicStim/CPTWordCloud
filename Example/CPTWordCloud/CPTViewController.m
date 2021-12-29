@@ -151,8 +151,8 @@
         
         if ([mode isEqualToString:@"Alpha"]) {
 
-            wordCloud.lowCountColor = [UIColor blueColor];
-            wordCloud.highCountColor = [UIColor redColor];
+            wordCloud.lowCountColor = [UIColor colorWithRed:0.022 green:0.000 blue:0.751 alpha:1.000];
+            wordCloud.highCountColor = [UIColor colorWithRed:0.751 green:0.000 blue:0.052 alpha:1.000];
             
             wordCloud.scalingMode = CPTWordScalingMode_rank;
             [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.scalingMode];
