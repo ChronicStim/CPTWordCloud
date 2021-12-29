@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *useRandomFontButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *fontSizingMethodSelector;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rotationMethodSegmentedControl;
+@property (nonatomic) CPTWordCloud *wordCloudAlpha;
+@property (nonatomic) CPTWordCloud *wordCloudBeta;
 
 - (IBAction)initializeAlphaButtonPressed:(id)sender;
 - (IBAction)initializeBetaButtonPressed:(id)sender;
@@ -124,7 +126,7 @@
     BOOL newFontSetting = !currentFontSetting;
     wordCloud.usingRandomFontPerWord = newFontSetting;
     wordCloud.selectableFontNames = [wordCloud allSystemFontNames];
-    [wordCloud generateCloud];
+    [wordCloud updateCloudSceneWithRegenerateNodes:@(YES)];
     // Change button display
     [(UIButton *)sender setTitle:(wordCloud.isUsingRandomFontPerWord ? @"Use Single Font" : @"Use Random Fonts") forState:UIControlStateNormal];
 }
@@ -135,8 +137,59 @@
 
 - (IBAction)regenerateCloudButtonPressed:(id)sender {
     if (self.wordCloudView) {
-        [self.wordCloudView.wordCloud generateCloud];
+        [self.wordCloudView.wordCloud updateCloudSceneWithRegenerateNodes:@(YES)];
     }
+}
+
+-(CPTWordCloud *)wordCloudAlpha;
+{
+    if (nil != _wordCloudAlpha) {
+        return _wordCloudAlpha;
+    }
+    
+    _wordCloudAlpha = [[CPTWordCloud alloc] init];
+    _wordCloudAlpha.lowCountColor = [UIColor colorWithRed:0.022 green:0.000 blue:0.751 alpha:1.000];
+    _wordCloudAlpha.highCountColor = [UIColor colorWithRed:0.751 green:0.000 blue:0.052 alpha:1.000];
+    
+    _wordCloudAlpha.scalingMode = CPTWordScalingMode_rank;
+    
+    _wordCloudAlpha.probabilityOfWordRotation = 0.8f;
+    _wordCloudAlpha.rotationMode = CPTWordRotationMode_Deg30;
+    
+    _wordCloudAlpha.usingRandomFontPerWord = NO;
+    
+    _wordCloudAlpha.convertingAllWordsToLowercase = YES;
+    
+    [_wordCloudAlpha addWords:@"Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?' So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her. There was nothing so very remarkable in that; nor did Alice think it so very much out of the way to hear the Rabbit say to itself, `Oh dear! Oh dear! I shall be late!' (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually took a watch out of its waistcoat-pocket, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge." delimiter:@" "];
+
+    return _wordCloudAlpha;
+}
+
+-(CPTWordCloud *)wordCloudBeta;
+{
+    if (nil != _wordCloudBeta) {
+        return _wordCloudBeta;
+    }
+    
+    _wordCloudBeta = [[CPTWordCloud alloc] init];
+    
+    _wordCloudBeta.lowCountColor = [UIColor greenColor];
+    _wordCloudBeta.highCountColor = [UIColor orangeColor];
+    
+    _wordCloudBeta.wordWithCountOfZeroDisplayed = YES;
+    
+    _wordCloudBeta.scalingMode = CPTWordScalingMode_rank;
+    
+    _wordCloudBeta.rotationMode = CPTWordRotationMode_HorizVertOnly;
+    _wordCloudBeta.probabilityOfWordRotation = 0.2f;
+    
+    _wordCloudBeta.usingRandomFontPerWord = NO;
+    
+    _wordCloudBeta.convertingAllWordsToLowercase = NO;
+    
+    [_wordCloudBeta addWordsWithCounts:@{@"onto" : @(1),@"picture" : @(0),@"survive" : @(6), @"Gift" : @(5), @"size" : @(1), @"furthermore" : @(2), @"last" : @(4), @"male" : @(1), @"distant" : @(8), @"seed" : @(1), @"anyway" : @(0), @"weapon" : @(3), @"income" : @(5), @"especially" : @(2), @"steal" : @(3), @"whisper" : @(6), @"Offense" : @(3), @"its" : @(4), @"talent" : @(4), @"fresh" : @(8), @"remaining" : @(2), @"makeup" : @(1), @"effective" : @(2), @"thin" : @(0), @"tremendous" : @(5), @"Wisdom" : @(6), @"Worth" : @(7), @"roughly" : @(4), @"empty" : @(11), @"interpret" : @(2), @"engineer" : @(1), @"mad" : @(0), @"celebrity" : @(2), @"Gentleman" : @(10), @"lawn" : @(4), @"debt" : @(3), @"indeed" : @(4), @"feeling" : @(3), @"aside" : @(2), @"crisis" : @(5), @"across" : @(3), @"fall" : @(1), @"difference" : @(1), @"Nation" : @(5), @"floor" : @(0), @"useful" : @(3), @"Capital" : @(13), @"surprised" : @(4), @"include" : @(0)}];
+
+    return _wordCloudBeta;
 }
 
 -(void)initializeWordCloud:(NSString *)mode;
@@ -144,52 +197,26 @@
     if (nil != self.wordCloudView) {
         
         self.wordCloudView.backgroundColor = [UIColor whiteColor];
-        
-        CPTWordCloud *wordCloud = self.wordCloudView.wordCloud;
-        wordCloud.cloudSize = self.wordCloudView.bounds.size;
-        [wordCloud resetCloud];
-        
+                
         if ([mode isEqualToString:@"Alpha"]) {
 
-            wordCloud.lowCountColor = [UIColor colorWithRed:0.022 green:0.000 blue:0.751 alpha:1.000];
-            wordCloud.highCountColor = [UIColor colorWithRed:0.751 green:0.000 blue:0.052 alpha:1.000];
+            [self.wordCloudView assignWordCloud:self.wordCloudAlpha];
             
-            wordCloud.scalingMode = CPTWordScalingMode_rank;
-            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.scalingMode];
-            
-            wordCloud.probabilityOfWordRotation = 0.8f;
-            wordCloud.rotationMode = CPTWordRotationMode_Deg30;
-            self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordRotation;
-            self.rotationMethodSegmentedControl.selectedSegmentIndex = (int)wordCloud.rotationMode;
+            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)_wordCloudAlpha.scalingMode];
+            self.verticalProbabilitySlider.value = _wordCloudAlpha.probabilityOfWordRotation;
+            self.rotationMethodSegmentedControl.selectedSegmentIndex = (int)_wordCloudAlpha.rotationMode;
+            [self.useRandomFontButton setTitle:(_wordCloudAlpha.isUsingRandomFontPerWord ? @"Use Single Font" : @"Use Random Fonts") forState:UIControlStateNormal];
 
-            wordCloud.usingRandomFontPerWord = NO;
-            [self.useRandomFontButton setTitle:(wordCloud.isUsingRandomFontPerWord ? @"Use Single Font" : @"Use Random Fonts") forState:UIControlStateNormal];
-
-            wordCloud.convertingAllWordsToLowercase = YES;
-
-            [wordCloud addWords:@"Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?' So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her. There was nothing so very remarkable in that; nor did Alice think it so very much out of the way to hear the Rabbit say to itself, `Oh dear! Oh dear! I shall be late!' (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually took a watch out of its waistcoat-pocket, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge." delimiter:@" "];
         }
         else if ([mode isEqualToString:@"Beta"]) {
             
-            wordCloud.lowCountColor = [UIColor greenColor];
-            wordCloud.highCountColor = [UIColor orangeColor];
+            [self.wordCloudView assignWordCloud:self.wordCloudBeta];
             
-            wordCloud.wordWithCountOfZeroDisplayed = YES;
-            
-            wordCloud.scalingMode = CPTWordScalingMode_rank;
-            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.scalingMode];
+            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)_wordCloudBeta.scalingMode];
+            self.verticalProbabilitySlider.value = _wordCloudBeta.probabilityOfWordRotation;
+            self.rotationMethodSegmentedControl.selectedSegmentIndex = (int)_wordCloudBeta.rotationMode;
+            [self.useRandomFontButton setTitle:(_wordCloudBeta.isUsingRandomFontPerWord ? @"Use Single Font" : @"Use Random Fonts") forState:UIControlStateNormal];
 
-            wordCloud.rotationMode = CPTWordRotationMode_HorizVertOnly;
-            wordCloud.probabilityOfWordRotation = 0.2f;
-            self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordRotation;
-            self.rotationMethodSegmentedControl.selectedSegmentIndex = (int)wordCloud.rotationMode;
-
-            wordCloud.usingRandomFontPerWord = NO;
-            [self.useRandomFontButton setTitle:(wordCloud.isUsingRandomFontPerWord ? @"Use Single Font" : @"Use Random Fonts") forState:UIControlStateNormal];
-
-            wordCloud.convertingAllWordsToLowercase = NO;
-            
-            [wordCloud addWordsWithCounts:@{@"onto" : @(1),@"picture" : @(0),@"survive" : @(6), @"Gift" : @(5), @"size" : @(1), @"furthermore" : @(2), @"last" : @(4), @"male" : @(1), @"distant" : @(8), @"seed" : @(1), @"anyway" : @(0), @"weapon" : @(3), @"income" : @(5), @"especially" : @(2), @"steal" : @(3), @"whisper" : @(6), @"Offense" : @(3), @"its" : @(4), @"talent" : @(4), @"fresh" : @(8), @"remaining" : @(2), @"makeup" : @(1), @"effective" : @(2), @"thin" : @(0), @"tremendous" : @(5), @"Wisdom" : @(6), @"Worth" : @(7), @"roughly" : @(4), @"empty" : @(11), @"interpret" : @(2), @"engineer" : @(1), @"mad" : @(0), @"celebrity" : @(2), @"Gentleman" : @(10), @"lawn" : @(4), @"debt" : @(3), @"indeed" : @(4), @"feeling" : @(3), @"aside" : @(2), @"crisis" : @(5), @"across" : @(3), @"fall" : @(1), @"difference" : @(1), @"Nation" : @(5), @"floor" : @(0), @"useful" : @(3), @"Capital" : @(13), @"surprised" : @(4), @"include" : @(0)}];
         }
     }
 }

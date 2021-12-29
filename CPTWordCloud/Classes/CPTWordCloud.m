@@ -27,7 +27,6 @@
 - (void) incrementCount:(NSString*)word;
 - (void) decrementCount:(NSString*)word;
 -(void)setNeedsUpdateCloudSceneWithRegenerateNodes:(BOOL)regenerateNodes;
-- (void) generateCloud;
 
 @end
 
@@ -165,6 +164,13 @@
     }
     
     return _wordCloudSKScene;
+}
+
+-(void)wordCloudHasBeenAddedToSKView;
+{
+    if (nil != self.delegate && [(NSObject *)self.delegate respondsToSelector:@selector(wordCloud:readyToPresentScene:)]) {
+        [self.delegate wordCloud:self readyToPresentScene:self.wordCloudSKScene];
+    }
 }
 
 #pragma mark - Stopword Handling
@@ -484,7 +490,7 @@
 {
     @synchronized(self)
     {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(generateCloud) object:nil];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateCloudSceneWithRegenerateNodes:) object:@(YES)];
         [self performSelector:@selector(updateCloudSceneWithRegenerateNodes:) withObject:@(regenerateNodes) afterDelay:0.1f];
     }
 }
@@ -505,20 +511,6 @@
         
         [self.wordCloudSKScene generateSceneWithSortedWords:_sortedWords];
     }
-}
-
-// sorts words if needed, and lays them out
-- (void) generateCloud
-{
-    [self filterAndSortWords];
-    [self selectBoundaryWords];
-    
-    if (!_wordCounts.count) {
-        
-        [self.wordCloudSKScene generateSceneWithSortedWords:@[]];
-        return;
-    }
-    [self.wordCloudSKScene generateSceneWithSortedWords:_sortedWords];
 }
 
 -(CGAffineTransform)getRotationTransformationForProbabilityOfRotation:(CGFloat)probabilityOfRoation rotationMode:(CPTWordRotationMode)rotationMode;

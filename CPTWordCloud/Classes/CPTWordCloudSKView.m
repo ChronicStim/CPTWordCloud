@@ -35,6 +35,12 @@
     return self;
 }
 
+-(void)assignWordCloud:(CPTWordCloud *)wordCloud;
+{
+    self.wordCloud = wordCloud;
+    [self.wordCloud updateCloudSceneWithRegenerateNodes:@(NO)];
+}
+
 -(void)startupSKViewDisplay;
 {
     self.ignoresSiblingOrder = YES;
@@ -43,10 +49,17 @@
 //    self.showsFPS = YES;
 //    self.showsNodeCount = YES;
 
-    self.wordCloud = [[CPTWordCloud alloc] init];
-    self.wordCloud.cloudSize = self.frame.size;
-    self.wordCloud.delegate = self;
     self.backgroundColor = [UIColor clearColor];
+}
+
+-(void)setWordCloud:(CPTWordCloud *)wordCloud;
+{
+    if (wordCloud != _wordCloud) {
+        _wordCloud = wordCloud;
+    }
+    _wordCloud.delegate = self;
+    _wordCloud.cloudSize = self.frame.size;
+    [_wordCloud wordCloudHasBeenAddedToSKView];
 }
 
 /*
@@ -71,7 +84,7 @@
 
 - (void)wordCloud:(CPTWordCloud *)wc readyToPresentScene:(CPTWordCloudSKScene *)scene;
 {
-    [self presentScene:scene transition:[SKTransition fadeWithDuration:0.5]];
+    [self presentScene:scene transition:[SKTransition fadeWithDuration:0.25]];
 }
 
 #pragma mark - Drawing Code

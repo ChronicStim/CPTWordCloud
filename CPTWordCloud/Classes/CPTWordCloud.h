@@ -105,11 +105,13 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 
 // regenerate the wordCloud using current words and settings
 -(NSArray *)sortedWords;
-- (void)generateCloud;
+-(void)updateCloudSceneWithRegenerateNodes:(NSNumber *)regenerateNodes;
 -(CGFloat)fontSizeForOccuranceCount:(NSInteger)count usingScalingMode:(CPTWordScalingMode)fontSizeMode;
 -(UIColor *)wordColorForOccuranceCount:(NSUInteger)count usingScalingMode:(CPTWordScalingMode)sizingMode;
 -(CGFloat)getRotationAngleInRadiansForProbabilityOfRotation:(CGFloat)probabilityOfRoation rotationMode:(CPTWordRotationMode)rotationMode;
 -(UIFont *)randomFontFromFontNames:(NSArray *)fontNames ofSize:(CGFloat)size;
+
+-(void)wordCloudHasBeenAddedToSKView;
 
 // reset the wordCloud, removing all words
 - (void)resetCloud;
