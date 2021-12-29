@@ -29,9 +29,9 @@ double lerp(double a, double b, double fraction) {
 -(instancetype)initWordCloudSKSceneForWordCloud:(CPTWordCloud *)wordCloud withSize:(CGSize)size;
 {
     if (self = [super initWithSize:size]) {
-        self.wordCloud = wordCloud;
-        self.currentWordNodes = [NSMutableArray new];
-        _wordOutlineColor = [UIColor clearColor];
+        _wordCloud = wordCloud;
+        _currentWordNodes = [NSMutableArray new];
+        _wordOutlineColor = _wordCloud.wordOutlineColor;
     }
     return self;
 }

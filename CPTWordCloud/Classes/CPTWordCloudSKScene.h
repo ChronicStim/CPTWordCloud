@@ -10,7 +10,7 @@
 @class CPTWordCloud;
 @interface CPTWordCloudSKScene : SKScene
 
-@property (nonatomic, strong, readonly) CPTWordCloud* wordCloud;
+@property (nonatomic, weak) CPTWordCloud* wordCloud;
 @property (nonatomic) UIColor *wordOutlineColor;
 @property (nonatomic, readonly) CGFloat scalingFactor;
 @property (nonatomic, readonly) CGPoint cloudOriginShift;

@@ -12,7 +12,6 @@
 @interface CPTWordCloudSKView ()
 
 @property (nonatomic, strong, readwrite) CPTWordCloud* wordCloud;
-@property (nonatomic, strong) CPTWordCloudSKScene *wordCloudSKScene;
 
 @end
 
@@ -50,29 +49,6 @@
     self.backgroundColor = [UIColor clearColor];
 }
 
--(CPTWordCloudSKScene *)wordCloudSKScene;
-{
-    if (nil != _wordCloudSKScene) {
-        return _wordCloudSKScene;
-    }
-    
-    _wordCloudSKScene = [[CPTWordCloudSKScene alloc] initWordCloudSKSceneForWordCloud:self.wordCloud withSize:self.bounds.size];
-    _wordCloudSKScene.scaleMode = SKSceneScaleModeAspectFit;
-    [self presentScene:_wordCloudSKScene transition:[SKTransition fadeWithDuration:0.5]];
-    
-    return _wordCloudSKScene;
-}
-
--(void)changeWordOutlineColor:(UIColor *)outlineColor;
-{
-    self.wordCloudSKScene.wordOutlineColor = outlineColor;
-}
-
--(UIColor *)currentWordOutlineColor;
-{
-    return self.wordCloudSKScene.wordOutlineColor;
-}
-
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -95,7 +71,12 @@
 
 - (void)wordCloudDidRequestGenerationOfCloud:(CPTWordCloud *)wc withSortedWordArray:(NSArray *)words;
 {
-    [self.wordCloudSKScene generateSceneWithSortedWords:words];
+
+}
+
+- (void)wordCloud:(CPTWordCloud *)wc readyToPresentScene:(CPTWordCloudSKScene *)scene;
+{
+    [self presentScene:scene transition:[SKTransition fadeWithDuration:0.5]];
 }
 
 #pragma mark - Drawing Code
@@ -138,13 +119,13 @@
         
         CGContextSaveGState(context);
         
-        CGPoint scaledShiftedOrigin = CGPointMake((self.wordCloudSKScene.scalingFactor*word.wordOrigin.x)+(self.bounds.size.width/2.0f)+self.wordCloudSKScene.cloudOriginShift.x, (self.wordCloudSKScene.scalingFactor*word.wordOrigin.y)+(self.bounds.size.height/2.0f)+self.wordCloudSKScene.cloudOriginShift.y);
+        CGPoint scaledShiftedOrigin = CGPointMake((self.wordCloud.wordCloudSKScene.scalingFactor*word.wordOrigin.x)+(self.bounds.size.width/2.0f)+self.wordCloud.wordCloudSKScene.cloudOriginShift.x, (self.wordCloud.wordCloudSKScene.scalingFactor*word.wordOrigin.y)+(self.bounds.size.height/2.0f)+self.wordCloud.wordCloudSKScene.cloudOriginShift.y);
         
         CGContextTranslateCTM(context, scaledShiftedOrigin.x, scaledShiftedOrigin.y);
         if (!CGAffineTransformIsIdentity(word.rotationTransform)) {
             CGContextConcatCTM(context, word.rotationTransform);
         }
-        CGContextScaleCTM(context, self.wordCloudSKScene.scalingFactor, self.wordCloudSKScene.scalingFactor);
+        CGContextScaleCTM(context, self.wordCloud.wordCloudSKScene.scalingFactor, self.wordCloud.wordCloudSKScene.scalingFactor);
         
         CTLineDraw(line, context);
         CFRelease(line);
@@ -156,8 +137,8 @@
         if (!CGAffineTransformIsIdentity(word.rotationTransform)) {
             CGContextConcatCTM(context, word.rotationTransform);
         }
-        CGContextScaleCTM(context, self.wordCloudSKScene.scalingFactor, self.wordCloudSKScene.scalingFactor);
-        CGContextSetStrokeColorWithColor(context, self.wordCloudSKScene.wordOutlineColor.CGColor);
+        CGContextScaleCTM(context, self.wordCloud.wordCloudSKScene.scalingFactor, self.wordCloud.wordCloudSKScene.scalingFactor);
+        CGContextSetStrokeColorWithColor(context, self.wordCloud.wordCloudSKScene.wordOutlineColor.CGColor);
         CGContextStrokeRect(context, word.wordGlyphBounds);
         CGContextRestoreGState(context);
     }

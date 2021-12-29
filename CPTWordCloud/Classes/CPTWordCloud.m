@@ -10,6 +10,7 @@
 #import <GameplayKit/GameplayKit.h>
 #import <math.h>
 #import <CoreText/CoreText.h>
+#import "CPTWordCloudSKScene.h"
 
 @interface CPTWordCloud ()
 {
@@ -21,6 +22,7 @@
 }
 @property (nonatomic, strong) GKRandomSource *randomSource;
 @property (nonatomic, strong) NSArray *arrayOfStopwords;
+@property (nonatomic, strong, readwrite) CPTWordCloudSKScene *wordCloudSKScene;
 
 - (void) incrementCount:(NSString*)word;
 - (void) decrementCount:(NSString*)word;
@@ -47,6 +49,7 @@
         _filteringStopWords = NO;
         _colorMappingHSBBased = NO;
         _rotationMode = CPTWordRotationMode_HorizVertOnly;
+        _wordOutlineColor = [UIColor clearColor];
         
         _minFontSize = 10;
         _maxFontSize = 100;
@@ -147,6 +150,24 @@
 -(void)resetCloud;
 {
     [self removeAllWords];
+}
+
+#pragma mark - SpriteKit methods
+
+-(CPTWordCloudSKScene *)wordCloudSKScene;
+{
+    if (nil != _wordCloudSKScene) {
+        return _wordCloudSKScene;
+    }
+    
+    _wordCloudSKScene = [[CPTWordCloudSKScene alloc] initWordCloudSKSceneForWordCloud:self withSize:self.cloudSize];
+    _wordCloudSKScene.scaleMode = SKSceneScaleModeAspectFit;
+    
+    if (nil != self.delegate && [(NSObject *)self.delegate respondsToSelector:@selector(wordCloud:readyToPresentScene:)]) {
+        [self.delegate wordCloud:self readyToPresentScene:_wordCloudSKScene];
+    }
+    
+    return _wordCloudSKScene;
 }
 
 #pragma mark - Stopword Handling
@@ -480,163 +501,15 @@
 // sorts words if needed, and lays them out
 - (void) generateCloud
 {
-    double scalingFactor = 1;
-    double xShift = 0;
-    double yShift = 0;
-    
     [self filterAndSortWords];
     [self selectBoundaryWords];
     
     if (!wordCounts.count) {
-        // No words in wordCloud, so pass empty array to the delegate
-        if ([self.delegate respondsToSelector:@selector(wordCloudDidRequestGenerationOfCloud:withSortedWordArray:)]) {
-            [self.delegate wordCloudDidRequestGenerationOfCloud:self withSortedWordArray:@[]];
-        }
         
-        if ([self.delegate respondsToSelector:@selector(wordCloudDidGenerateCloud:sortedWordArray:scalingFactor:xShift:yShift:)])
-        {
-            [self.delegate wordCloudDidGenerateCloud:self sortedWordArray:@[] scalingFactor:scalingFactor xShift:xShift yShift:yShift];
-        }
+        [self.wordCloudSKScene generateSceneWithSortedWords:@[]];
         return;
     }
-    else if ([self.delegate respondsToSelector:@selector(wordCloudDidRequestGenerationOfCloud:withSortedWordArray:)]) {
-        // If using SpriteKit, follow the delegate method to complete cloud generation in the SKScene class
-        [self.delegate wordCloudDidRequestGenerationOfCloud:self withSortedWordArray:sortedWords];
-        return;
-    }
-    
-    if (!topWord) return;
-    if (!topWord.count) return;
-    if (true == CGSizeEqualToSize(self.cloudSize, CGSizeZero)) return;
-    
-    double step = 2;
-    double aspectRatio = self.cloudSize.width / self.cloudSize.height;
-
-    [self zeroExistingWordFrames];
-    
-    CGRect unionRect = CGRectZero;
-    int wordLimit = self.maxNumberOfWords ? self.maxNumberOfWords : (int)sortedWords.count;
-    for (int index=0; index < wordLimit; index++)
-    {
-        CPTWord* word = [sortedWords objectAtIndex:index];
-        
-        CGFloat fontSize = [self fontSizeForOccuranceCount:word.count usingScalingMode:self.scalingMode];
-        if (self.isUsingRandomFontPerWord) {
-            word.font = [self randomFontFromFontNames:self.selectableFontNames ofSize:fontSize];
-        }
-        else {
-            word.font = [self.font fontWithSize:fontSize];
-        }
-                        
-        if (0 >= word.count) {
-            word.color = self.zeroCountColor;
-        }
-        else {
-            word.color = [self wordColorForOccuranceCount:word.count usingScalingMode:self.scalingMode];
-        }
-            
-        CGRect proposedWordFrame = CGRectZero;
-        NSDictionary *textAttributes = @{ NSFontAttributeName : word.font,
-                                          NSForegroundColorAttributeName : word.color };
-        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:word.text attributes:textAttributes];
-        CFAttributedStringRef cfAttrString  = (__bridge CFAttributedStringRef)attrString;
-        
-        CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
-        proposedWordFrame = CTLineGetImageBounds(line, NULL);
-        
-        /*
-        NSMutableArray *glyphRectArray = [NSMutableArray new];
-        CFArrayRef runs = CTLineGetGlyphRuns((CTLineRef)line);
-        CFIndex runCount = CFArrayGetCount(runs);
-        CFIndex runIndex;
-        for (runIndex = 0; runIndex < runCount; ++runIndex) {
-            
-            CTRunRef run = (CTRunRef)CFArrayGetValueAtIndex(runs, runIndex);
-            CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
-            CFIndex glyphCount = CTRunGetGlyphCount(run);
-            CGGlyph glyphs[glyphCount];
-            CGPoint positions[glyphCount];
-            CGRect boundingRects[glyphCount];
-            CFRange everything = CFRangeMake(0, 0);
-            CTRunGetGlyphs(run, everything, glyphs);
-            CTRunGetPositions(run, everything, positions);
-
-            CTFontGetBoundingRectsForGlyphs(runFont, kCTFontOrientationDefault, glyphs, boundingRects, glyphCount);
-            for (int i=0; i<glyphCount; i++) {
-                CGRect boundingRect = boundingRects[i];
-                CGPoint position = positions[i];
-                CGRect glyphRect = CGRectMake(position.x+boundingRect.origin.x, position.y+boundingRect.origin.y, boundingRect.size.width, boundingRect.size.height);
-                [glyphRectArray addObject:[NSValue valueWithCGRect:glyphRect]];
-            }
-        }
-        NSLog(@"String: %@; GlyphRect: %@",attrString,glyphRectArray);
-        word.wordGlyphRects = glyphRectArray;
-        */
-        
-        word.rotationTransform = [self getRotationTransformationForProbabilityOfRotation:self.probabilityOfWordRotation rotationMode:self.rotationMode];
-
-        proposedWordFrame = CGRectInset(proposedWordFrame, -self.wordBorderSize.width*2, -self.wordBorderSize.height*2);
-        word.wordGlyphBounds = proposedWordFrame;
-
-        CGPoint proposedWordOrigin = CGPointMake((-proposedWordFrame.size.width)/2, (-proposedWordFrame.size.height)/2);
-        word.wordOrigin = proposedWordOrigin;
-        
-        BOOL intersects = FALSE;
-        double angleStep = (index % 2 == 0 ? 1 : -1) * step;
-        double radius = 0;
-        double angle = 10 * random();
-
-        do
-        {
-            for (int otherIndex=0; otherIndex < index; otherIndex++)
-            {
-                CGRect wordRect = [word wordRectForCurrentOriginWithScaling:NO];
-                CPTWord *otherWord = (CPTWord*)[sortedWords objectAtIndex:otherIndex];
-                CGRect otherRect =  [otherWord wordRectForCurrentOriginWithScaling:NO];
-                intersects = CGRectIntersectsRect(wordRect,otherRect) && (word != otherWord);
-                
-                // if the current word intersects with word that has already been placed, move the current word, and
-                // recheck against all already-placed words
-                if (intersects)
-                {
-                    radius += step;
-                    angle += angleStep;
-                    
-                    int xPos = word.wordOrigin.x + (radius * cos(angle)) * aspectRatio;
-                    int yPos = word.wordOrigin.y + radius * sin(angle);
-                    
-                    word.wordOrigin = CGPointMake(xPos, yPos);
-                    break;
-                }
-            }
-        } while (intersects);
-        
-        CGRect wordRect = [word wordRectForCurrentOriginWithScaling:NO];
-        unionRect = CGRectUnion(unionRect,wordRect);
-    }
-
-    // Get min & max
-    NSLog(@"UnionRect = %@",NSStringFromCGRect(unionRect));
-    CGFloat midX = CGRectGetMidX(unionRect);
-    CGFloat midY = CGRectGetMidY(unionRect);
-    
-    // scale down if necessary
-    CGFloat scalingFactorX = 1.0f;
-    CGFloat scalingFactorY = 1.0f;
-    
-    if (!CGRectEqualToRect(CGRectZero, unionRect)) {
-        scalingFactorX = self.cloudSize.width / unionRect.size.width;
-        scalingFactorY = self.cloudSize.height / unionRect.size.height;
-    }
-
-    scalingFactor = fminf(scalingFactorX,scalingFactorY);
-    xShift = -midX;
-    yShift = -midY;
-        
-    if ([self.delegate respondsToSelector:@selector(wordCloudDidGenerateCloud:sortedWordArray:scalingFactor:xShift:yShift:)])
-    {
-        [self.delegate wordCloudDidGenerateCloud:self sortedWordArray:sortedWords scalingFactor:scalingFactor xShift:xShift yShift:yShift];
-    }
+    [self.wordCloudSKScene generateSceneWithSortedWords:sortedWords];
 }
 
 -(CGAffineTransform)getRotationTransformationForProbabilityOfRotation:(CGFloat)probabilityOfRoation rotationMode:(CPTWordRotationMode)rotationMode;
@@ -833,6 +706,14 @@
     if (colorMappingHSBBased != _colorMappingHSBBased) {
         _colorMappingHSBBased = colorMappingHSBBased;
         [self setNeedsGenerateCloud];
+    }
+}
+
+-(void)setWordOutlineColor:(UIColor *)wordOutlineColor;
+{
+    if (wordOutlineColor != _wordOutlineColor) {
+        _wordOutlineColor = wordOutlineColor;
+        self.wordCloudSKScene.wordOutlineColor = _wordOutlineColor;
     }
 }
 

@@ -22,7 +22,6 @@
 - (IBAction)initializeAlphaButtonPressed:(id)sender;
 - (IBAction)initializeBetaButtonPressed:(id)sender;
 - (IBAction)regenerateCloudButtonPressed:(id)sender;
-- (IBAction)clearCloudButtonPressed:(id)sender;
 - (IBAction)showImageButtonPressed:(id)sender;
 - (IBAction)randomizeFontsButtonPressed:(id)sender;
 - (IBAction)showRectButtonPressed:(id)sender;
@@ -107,14 +106,14 @@
 }
 
 - (IBAction)showRectButtonPressed:(id)sender {
-    if ([self.wordCloudView currentWordOutlineColor] == [UIColor clearColor]) {
+    if ([self.wordCloudView.wordCloud wordOutlineColor] == [UIColor clearColor]) {
         // Turn background display ON
-        [self.wordCloudView changeWordOutlineColor:[UIColor lightGrayColor]];
+        self.wordCloudView.wordCloud.wordOutlineColor = [UIColor lightGrayColor];
         [(UIButton *)sender setTitle:@"Hide RECTs" forState:UIControlStateNormal];
     }
     else {
         // Turn background display OFF
-        [self.wordCloudView changeWordOutlineColor:[UIColor clearColor]];
+        self.wordCloudView.wordCloud.wordOutlineColor = [UIColor clearColor];
         [(UIButton *)sender setTitle:@"Show RECTs" forState:UIControlStateNormal];
     }
 }
@@ -132,13 +131,6 @@
 
 - (IBAction)showImageButtonPressed:(id)sender {
     [self.wordCloudView createPDFSaveToDocuments:YES withFileName:@"SamplePDFWordCloud.pdf"];
-}
-
-- (IBAction)clearCloudButtonPressed:(id)sender {
-    
-    if (self.wordCloudView) {
-        [self.wordCloudView.wordCloud resetCloud];
-    }
 }
 
 - (IBAction)regenerateCloudButtonPressed:(id)sender {

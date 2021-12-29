@@ -12,9 +12,6 @@
 
 @property (nonatomic, strong, readonly) CPTWordCloud* wordCloud;
 
--(void)changeWordOutlineColor:(UIColor *)outlineColor;
--(UIColor *)currentWordOutlineColor;
-
 - (UIImage *)imageByRenderingView;
 -(UIImage *)imageByDrawingView;
 -(NSData *)createPDFSaveToDocuments:(BOOL)saveToDocuments withFileName:(NSString*)aFilename;

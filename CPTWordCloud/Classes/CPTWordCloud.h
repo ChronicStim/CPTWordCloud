@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 };
 
 @protocol CPTWordCloudDelegate;
-
+@class CPTWordCloudSKScene, CPTWordCloudSKView;
 @interface CPTWordCloud : NSObject
 
 @property (nonatomic, weak) id <CPTWordCloudDelegate> delegate;
@@ -55,6 +55,9 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 /// RGB mode combined with the EXP sizingMode may produce darker colors for mid-count words and may be a less desirable combination. In this situation, switch to the HSB mode.
 @property (nonatomic, getter=isColorMappingHSBBased) BOOL colorMappingHSBBased;
 
+/// Color used for drawing rect outline around word for debugging purposes (Default = Clear)
+@property (nonatomic, retain) UIColor* wordOutlineColor;
+
 /// When words with count==0 are included in the wordCloud (minimumWordCountAllowed == 0), then this color will be used for any word with a count <= 0. Defaults to darkGrayColor
 @property (nonatomic, retain) UIColor* zeroCountColor;
 
@@ -83,6 +86,9 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 
 /// Flag used to trigger the removal of words from the input stream that don't typically add value or meaning to the word cloud (e.g. a, the, I, he, she, it) (Default == YES)
 @property (nonatomic, getter=isFilteringStopWords) BOOL filteringStopWords;
+
+/// SpriteKit scene used to build the wordCloud
+@property (nonatomic, strong, readonly) CPTWordCloudSKScene *wordCloudSKScene;
 
 - (void)rebuild:(NSArray*)words;
 
@@ -117,6 +123,7 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 @protocol CPTWordCloudDelegate <NSObject>
 
 @optional
+- (void)wordCloud:(CPTWordCloud *)wc readyToPresentScene:(CPTWordCloudSKScene *)scene;
 - (void)wordCloudDidRequestGenerationOfCloud:(CPTWordCloud *)wc withSortedWordArray:(NSArray *)words;
 - (void)wordCloudDidGenerateCloud:(CPTWordCloud *)wc sortedWordArray:(NSArray *)words scalingFactor:(double)scalingFactor xShift:(double)xShift yShift:(double)yShift;
 
