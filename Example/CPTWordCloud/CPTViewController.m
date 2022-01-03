@@ -173,6 +173,9 @@
     
     _wordCloudBeta = [[CPTWordCloud alloc] init];
     
+    _wordCloudBeta.minFontSize = 50;
+    _wordCloudBeta.maxFontSize = 200;
+    
     _wordCloudBeta.lowCountColor = [UIColor greenColor];
     _wordCloudBeta.highCountColor = [UIColor orangeColor];
     

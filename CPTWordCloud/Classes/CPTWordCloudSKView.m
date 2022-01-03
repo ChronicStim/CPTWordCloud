@@ -127,7 +127,9 @@
         
         CGContextSaveGState(context);
         
-        CGPoint scaledShiftedOrigin = CGPointMake((self.wordCloud.wordCloudSKScene.scalingFactor*word.wordOrigin.x)+(self.bounds.size.width/2.0f)+self.wordCloud.wordCloudSKScene.cloudOriginShift.x, (self.wordCloud.wordCloudSKScene.scalingFactor*word.wordOrigin.y)+(self.bounds.size.height/2.0f)+self.wordCloud.wordCloudSKScene.cloudOriginShift.y);
+        CGFloat scalingFactor = self.wordCloud.wordCloudSKScene.scalingFactor;
+        
+        CGPoint scaledShiftedOrigin = CGPointMake((scalingFactor*word.wordOrigin.x)+(self.bounds.size.width/2.0f)+(scalingFactor*self.wordCloud.wordCloudSKScene.cloudOriginShift.x), (scalingFactor*word.wordOrigin.y)+(self.bounds.size.height/2.0f)+(scalingFactor*self.wordCloud.wordCloudSKScene.cloudOriginShift.y));
         
         CGContextTranslateCTM(context, scaledShiftedOrigin.x, scaledShiftedOrigin.y);
         if (!CGAffineTransformIsIdentity(word.rotationTransform)) {
