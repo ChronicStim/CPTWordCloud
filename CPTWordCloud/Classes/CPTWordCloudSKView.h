@@ -16,6 +16,6 @@
 - (UIImage *)imageByRenderingView;
 -(UIImage *)imageByDrawingView;
 -(NSData *)createPDFSaveToDocuments:(BOOL)saveToDocuments withFileName:(NSString*)aFilename;
--(void)drawInPDFContext:(CGContextRef)pdfContext;
+-(void)drawWordCloudInContext:(CGContextRef)context;
 
 @end
