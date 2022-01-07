@@ -101,7 +101,7 @@
     CGContextTranslateCTM(context, 0, self.bounds.size.height);
     CGContextScaleCTM(context, 1, -1);
     
-    CGContextClearRect(context, self.bounds);
+//    CGContextClearRect(context, self.bounds);
     
     CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
     CGContextFillRect(context, self.bounds);
@@ -156,15 +156,6 @@
 
 #pragma mark - Draw to external image
 
-- (UIImage *)imageByRenderingView;
-{
-    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
-    [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
-    UIImage * snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return snapshotImage;
-}
-
 -(UIImage *)imageByDrawingView;
 {
     UIImage __block *graphImageCapture = nil;
@@ -189,46 +180,6 @@
     }
     
     return graphImageCapture;
-}
-
--(NSData *)createPDFSaveToDocuments:(BOOL)saveToDocuments withFileName:(NSString*)aFilename;
-{
-    // Creates a mutable data object for updating with binary data, like a byte array
-    NSMutableData *pdfData = [NSMutableData data];
-    
-    // Points the pdf converter to the mutable data object and to the UIView to be converted
-    UIGraphicsBeginPDFContextToData(pdfData, self.bounds, nil);
-    UIGraphicsBeginPDFPage();
-    CGContextRef pdfContext = UIGraphicsGetCurrentContext();
-    
-    // draws rect to the view and thus this is captured by UIGraphicsBeginPDFContextToData
-    [self.layer drawInContext:pdfContext];
-    
-    // remove PDF rendering context
-    UIGraphicsEndPDFContext();
-    
-    if (saveToDocuments) {
-        // Retrieves the document directories from the iOS device
-        NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
-        
-        NSString* documentDirectory = [documentDirectories objectAtIndex:0];
-        NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:aFilename];
-        
-        // instructs the mutable data object to write its context to a file on disk
-        [pdfData writeToFile:documentDirectoryFilename atomically:YES];
-        NSLog(@"documentDirectoryFileName: %@",documentDirectoryFilename);
-    }
-    
-    return [NSData dataWithData:pdfData];
-}
-
--(void)drawInPDFContext:(CGContextRef)pdfContext;
-{
-    CGContextSaveGState(pdfContext);
-    
-    [self.layer drawInContext:pdfContext];
-    
-    CGContextRestoreGState(pdfContext);
 }
 
 @end

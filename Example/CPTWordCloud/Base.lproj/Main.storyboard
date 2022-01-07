@@ -444,12 +444,12 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zvO-8r-b89">
                                         <rect key="frame" x="0.0" y="250" width="834" height="900"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" restorationIdentifier="CPTWordCloudView" translatesAutoresizingMaskIntoConstraints="NO" id="Y2W-uC-oVE" userLabel="CPTWordCloudView" customClass="CPTWordCloudSKView">
+                                            <view opaque="NO" contentMode="scaleToFill" restorationIdentifier="CPTWordCloudView" translatesAutoresizingMaskIntoConstraints="NO" id="Y2W-uC-oVE">
                                                 <rect key="frame" x="10" y="10" width="814" height="880"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="Y2W-uC-oVE" secondAttribute="trailing" constant="10" id="1Th-vn-m6P"/>
                                             <constraint firstItem="Y2W-uC-oVE" firstAttribute="leading" secondItem="zvO-8r-b89" secondAttribute="leading" constant="10" id="Szo-8L-Jl4"/>
@@ -485,7 +485,7 @@
                         <outlet property="rotationMethodSegmentedControl" destination="Fwi-5j-Xk7" id="nXC-qg-3WL"/>
                         <outlet property="useRandomFontButton" destination="Siy-2V-B7B" id="prx-Wz-yDf"/>
                         <outlet property="verticalProbabilitySlider" destination="wAC-OA-6Fw" id="dRa-EW-pGq"/>
-                        <outlet property="wordCloudView" destination="Y2W-uC-oVE" id="fqi-Jx-I1X"/>
+                        <outlet property="wordCloudContainmentView" destination="Y2W-uC-oVE" id="quG-uw-a5U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>

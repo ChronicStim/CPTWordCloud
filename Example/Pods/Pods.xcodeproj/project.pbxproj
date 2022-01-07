@@ -7,45 +7,49 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02EBFDA5F288EF4551FDFEA28539A175 /* CPTWordCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = ECFCFF26C50E8695CFAE9DAF5A037E38 /* CPTWordCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07BF6DFD483B76D19CC8F075437602A6 /* stopwords.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3ABD30B7D12C6A2B6EA9DE8AC6258CF6 /* stopwords.csv */; };
+		167D059B1AE887EA1E13EE6D66DEB995 /* CPTWordCloudView.h in Headers */ = {isa = PBXBuildFile; fileRef = EEFC10E9A3DF1EA800386655E23C36B1 /* CPTWordCloudView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		16D11E69D1FDB0E533F5FD0000B58293 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16FB1E9D7341E99E8B738B81EF60D789 /* UIKit.framework */; };
 		2AE89146A327038AD5515E367EF2F847 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF3889BF7DA9844D08E611FB7BB8E1A /* Foundation.framework */; };
-		2BA2EDAA7862A8801A19F668B1386643 /* CPTWordCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 02FE9236ABC1737EAEBB153854381B1C /* CPTWordCloud.bundle */; };
 		2EDED69FBE8AC76BD11044783927A8D9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF3889BF7DA9844D08E611FB7BB8E1A /* Foundation.framework */; };
 		3247CAB78EF63B933B9344F8C3A42623 /* Pods-CPTWordCloud_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 96F49A5FE2B0C70C7E01345DF0729F7D /* Pods-CPTWordCloud_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		36FABE8D8492BC95AE9BE6596601A903 /* CPTWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 911B623519AD5CAA1F67CE636E740DDD /* CPTWord.m */; };
-		46BA5F8E0306465C31046BAEDE74088F /* stopwords.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7F3EF1AE47FEB7ADE18CC33DEACEFD61 /* stopwords.csv */; };
-		49DF06A04CBDAD0C98CD14AC78FCC281 /* CPTWordCloudSKScene.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E72E8CC08888ECA750864D09D2D40D /* CPTWordCloudSKScene.m */; };
-		4DB1670958270BA30FF741C7D556D57D /* CPTWordCloudSKScene.h in Headers */ = {isa = PBXBuildFile; fileRef = E499F7C3B350776AD7B952A4E15E54A7 /* CPTWordCloudSKScene.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		442C0A823EBE13CFD935A961CF02DA29 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF3889BF7DA9844D08E611FB7BB8E1A /* Foundation.framework */; };
+		5B36E6391FD1028D8B9A43E9DD5F2C28 /* CPTWordCloudView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D899582028DD7C95A650AF6CE3B6E2C /* CPTWordCloudView.xib */; };
+		67E35C25EB59C7B1B5ED2D8BD0F7FF6A /* CPTWordCloud-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ACD96433939D2460BC95B6B78F991B4 /* CPTWordCloud-dummy.m */; };
+		75258C08643E510FDD780B1459837F04 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F61937E3177993F433C669D7DBF0B0 /* SpriteKit.framework */; };
 		7E89A40643AEC12478ABF61A31614A51 /* Pods-CPTWordCloud_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 701A2AA126020E4382CE336DCED5F13B /* Pods-CPTWordCloud_Tests-dummy.m */; };
-		A778378E51F0E9077E485305734F9A41 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF3889BF7DA9844D08E611FB7BB8E1A /* Foundation.framework */; };
-		AC6C22F1DD1D952956F2DCD602B485D3 /* CPTWordCloudSKView.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B24A31EEB069FAEE78EADBA6558647 /* CPTWordCloudSKView.m */; };
+		7F54D1883888FE6E6A9D6C4F70CB5FDA /* CPTWordCloud-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BB8445628932EF37D6D094D117D88F4B /* CPTWordCloud-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8AAE6ADC0E2292DF1A45F8D1716B197F /* CPTWordCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 02FE9236ABC1737EAEBB153854381B1C /* CPTWordCloud.bundle */; };
+		8C82EFDB936255F2ECF676D8D27C3111 /* CPTWordCloudSKView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4ED44217FBA3E9040250602A34B55567 /* CPTWordCloudSKView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8D188D7709EB3389F1F20F4CF1B56A12 /* CPTWordCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 5413C183D2611E99049F02FDC481FBBF /* CPTWordCloud.m */; };
+		952DB8CFE127C165E891D653B4964263 /* CPTWordCloudSKScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 25501DB788F7450CBB55CF4DB34D02A9 /* CPTWordCloudSKScene.m */; };
+		AD58CE6CE1673876B5D73FD4842DD4B0 /* CPTWordCloudSKScene.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C001525F84BF725B29D2D2D79BCB /* CPTWordCloudSKScene.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AFA766116EC2A3BAB4DEC1F22118636A /* CPTWordCloudSKView.m in Sources */ = {isa = PBXBuildFile; fileRef = B292851A01527899A30B77650F19B846 /* CPTWordCloudSKView.m */; };
 		B6FA507094EB4ABC3DC86FEE7DDA0221 /* Pods-CPTWordCloud_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 640966861FCCCFDB444166861C2807AF /* Pods-CPTWordCloud_Example-dummy.m */; };
-		BC9EB6FEE5A921E5C2B257D915E1DDC2 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F61937E3177993F433C669D7DBF0B0 /* SpriteKit.framework */; };
-		DB070BD86BD62C83E2070A0115320783 /* CPTWordCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AB97F78900B262449FFF4E498C7756F /* CPTWordCloud.m */; };
-		E79DF77BD203A55F429BCC8CD6AEB367 /* CPTWordCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 24F61DAB48F43576D0D89F96EACEFDEC /* CPTWordCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA20275508077BB6B3D866628BA6B1FB /* CPTWordCloudView.m in Sources */ = {isa = PBXBuildFile; fileRef = B724BE7B65B04BDDE576B52D810BED17 /* CPTWordCloudView.m */; };
+		C234B332E8F76B88F00DF32C66CB6216 /* CPTWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B92A1940D1482B7A89958BCB73DDB26 /* CPTWord.m */; };
 		EA26ABC7C4CD727261A0FA3CFD723362 /* Pods-CPTWordCloud_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E3C42A766BF822F76579ECDF5CD7116 /* Pods-CPTWordCloud_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EE39A394836739618B2AF9393FAB0B00 /* CPTWordCloudSKView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7529BEB779FAA8F83FADA64776A5A8 /* CPTWordCloudSKView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F1B9D959689A502CF9FA73307504D208 /* CPTWordCloud-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 268099F09EC856716454E7A7234D14EE /* CPTWordCloud-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F327A1D74BDD67F8CD1B3268EAB09235 /* CPTWordCloud-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 490C902CDE588D6957BD1CEFF31332F2 /* CPTWordCloud-dummy.m */; };
-		F599B5AE54459556D1293AE9F778BFBD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16FB1E9D7341E99E8B738B81EF60D789 /* UIKit.framework */; };
-		F60E4B21C3BA869462F200FE7CAC3730 /* CPTWord.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D1EF91E93286A13E448D614E0FB1864 /* CPTWord.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F66DD55F89269277A8782C8F7E68698F /* CPTWord.h in Headers */ = {isa = PBXBuildFile; fileRef = B66B34E90D54C3824621862DB0693EF1 /* CPTWord.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6DE444F9D242DDAC64165206638D712 /* CPTWordCloudView.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8D899582028DD7C95A650AF6CE3B6E2C /* CPTWordCloudView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		696EBD0B41E5664913925644236FE426 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 771EADAF4E2AD3FE40F29E66624795D0;
-			remoteInfo = "Pods-CPTWordCloud_Example";
-		};
-		9AD24709963D5EE55FE17D3D74FD6D65 /* PBXContainerItemProxy */ = {
+		1D6ECFE8278C880586091E21F64AEBFA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = BC2822490813276E616FB0D250C9C745;
 			remoteInfo = CPTWordCloud;
 		};
-		F9132557055AB034344035658B62AE52 /* PBXContainerItemProxy */ = {
+		78DDEA15B12D4E3E07636EE407B83414 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 771EADAF4E2AD3FE40F29E66624795D0;
+			remoteInfo = "Pods-CPTWordCloud_Example";
+		};
+		FC3258A65813F001189C2DCA166D7D6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -55,54 +59,67 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		02FE9236ABC1737EAEBB153854381B1C /* CPTWordCloud.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CPTWordCloud.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		09F4ED900E5483D7A70765C02E5FFE3E /* CPTWordCloud-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CPTWordCloud-Info.plist"; sourceTree = "<group>"; };
+		02FE9236ABC1737EAEBB153854381B1C /* CPTWordCloud.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = CPTWordCloud.bundle; path = "CPTWordCloud-CPTWordCloud.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		131F253118AEADC3DEBCD9DED723AD8C /* Pods-CPTWordCloud_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CPTWordCloud_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		16FB1E9D7341E99E8B738B81EF60D789 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		1E1601740F12236A66CA3816864D870C /* Pods-CPTWordCloud_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CPTWordCloud_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		24F61DAB48F43576D0D89F96EACEFDEC /* CPTWordCloud.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWordCloud.h; path = CPTWordCloud/Classes/CPTWordCloud.h; sourceTree = "<group>"; };
-		268099F09EC856716454E7A7234D14EE /* CPTWordCloud-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CPTWordCloud-umbrella.h"; sourceTree = "<group>"; };
-		2AB97F78900B262449FFF4E498C7756F /* CPTWordCloud.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWordCloud.m; path = CPTWordCloud/Classes/CPTWordCloud.m; sourceTree = "<group>"; };
-		316155F7844B46013FEF70F75AEA4380 /* CPTWordCloud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CPTWordCloud.debug.xcconfig; sourceTree = "<group>"; };
+		25501DB788F7450CBB55CF4DB34D02A9 /* CPTWordCloudSKScene.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWordCloudSKScene.m; path = CPTWordCloud/Classes/CPTWordCloudSKScene.m; sourceTree = "<group>"; };
+		33349A38A9BC1DDAFFC256CE70D7536F /* CPTWordCloud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CPTWordCloud.release.xcconfig; sourceTree = "<group>"; };
 		353BF2FFB8A121B6F9883ED1D571BBBF /* Pods-CPTWordCloud_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CPTWordCloud_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		37995DD75FF0225DC0264925B9D71497 /* ResourceBundle-CPTWordCloud-CPTWordCloud-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-CPTWordCloud-CPTWordCloud-Info.plist"; sourceTree = "<group>"; };
+		3ABD30B7D12C6A2B6EA9DE8AC6258CF6 /* stopwords.csv */ = {isa = PBXFileReference; includeInIndex = 1; path = stopwords.csv; sourceTree = "<group>"; };
+		3ACD96433939D2460BC95B6B78F991B4 /* CPTWordCloud-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CPTWordCloud-dummy.m"; sourceTree = "<group>"; };
 		3AF3889BF7DA9844D08E611FB7BB8E1A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		3E0F383A460E7C7AD07EDA87161CBB44 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		425141348C145EC32E8521A0A3F8E2A6 /* Pods-CPTWordCloud_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CPTWordCloud_Example.release.xcconfig"; sourceTree = "<group>"; };
-		490C902CDE588D6957BD1CEFF31332F2 /* CPTWordCloud-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CPTWordCloud-dummy.m"; sourceTree = "<group>"; };
-		4C7529BEB779FAA8F83FADA64776A5A8 /* CPTWordCloudSKView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWordCloudSKView.h; path = CPTWordCloud/Classes/CPTWordCloudSKView.h; sourceTree = "<group>"; };
+		4ED44217FBA3E9040250602A34B55567 /* CPTWordCloudSKView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWordCloudSKView.h; path = CPTWordCloud/Classes/CPTWordCloudSKView.h; sourceTree = "<group>"; };
+		5413C183D2611E99049F02FDC481FBBF /* CPTWordCloud.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWordCloud.m; path = CPTWordCloud/Classes/CPTWordCloud.m; sourceTree = "<group>"; };
 		55B09D2AABEDCA28974B65E3ED4CD8DA /* Pods-CPTWordCloud_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CPTWordCloud_Tests.modulemap"; sourceTree = "<group>"; };
-		5FCB8BEE5218D400C84306E6B8820FA8 /* CPTWordCloud-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CPTWordCloud-prefix.pch"; sourceTree = "<group>"; };
+		5859048DE6B9DE4BFFDDFBEE6B35C1D2 /* CPTWordCloud.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = CPTWordCloud.modulemap; sourceTree = "<group>"; };
+		5CAAC19F5C55B046702AED723EB0484B /* CPTWordCloud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CPTWordCloud.debug.xcconfig; sourceTree = "<group>"; };
 		640966861FCCCFDB444166861C2807AF /* Pods-CPTWordCloud_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CPTWordCloud_Example-dummy.m"; sourceTree = "<group>"; };
+		657B892B5F6996450E070A127B71765A /* CPTWordCloud-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CPTWordCloud-prefix.pch"; sourceTree = "<group>"; };
+		6B92A1940D1482B7A89958BCB73DDB26 /* CPTWord.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWord.m; path = CPTWordCloud/Classes/CPTWord.m; sourceTree = "<group>"; };
 		701A2AA126020E4382CE336DCED5F13B /* Pods-CPTWordCloud_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CPTWordCloud_Tests-dummy.m"; sourceTree = "<group>"; };
-		7F3EF1AE47FEB7ADE18CC33DEACEFD61 /* stopwords.csv */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = stopwords.csv; path = CPTWordCloud/Assets/stopwords.csv; sourceTree = "<group>"; };
+		7761C001525F84BF725B29D2D2D79BCB /* CPTWordCloudSKScene.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWordCloudSKScene.h; path = CPTWordCloud/Classes/CPTWordCloudSKScene.h; sourceTree = "<group>"; };
+		7765C854267F119C21CF7A9A6FB08450 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		8502402F883A75D3BD5C57D6AAD8CF14 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		86CC62EC00E120FB6DDD6A0C10DBBED7 /* Pods-CPTWordCloud_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CPTWordCloud_Example-Info.plist"; sourceTree = "<group>"; };
-		8ADD8266A059960D61EFF2921D7C097B /* Pods_CPTWordCloud_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CPTWordCloud_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D1EF91E93286A13E448D614E0FB1864 /* CPTWord.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWord.h; path = CPTWordCloud/Classes/CPTWord.h; sourceTree = "<group>"; };
-		911B623519AD5CAA1F67CE636E740DDD /* CPTWord.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWord.m; path = CPTWordCloud/Classes/CPTWord.m; sourceTree = "<group>"; };
+		8ADD8266A059960D61EFF2921D7C097B /* Pods_CPTWordCloud_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_CPTWordCloud_Tests.framework; path = "Pods-CPTWordCloud_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D899582028DD7C95A650AF6CE3B6E2C /* CPTWordCloudView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = CPTWordCloudView.xib; path = CPTWordCloud/Classes/CPTWordCloudView.xib; sourceTree = "<group>"; };
 		91AF53406AFB8D33418D4DB3D6127D16 /* Pods-CPTWordCloud_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CPTWordCloud_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		96F49A5FE2B0C70C7E01345DF0729F7D /* Pods-CPTWordCloud_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CPTWordCloud_Tests-umbrella.h"; sourceTree = "<group>"; };
-		99B2E757595C36AE0ECD4A2ECCE074B7 /* CPTWordCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CPTWordCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		99B2E757595C36AE0ECD4A2ECCE074B7 /* CPTWordCloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CPTWordCloud.framework; path = CPTWordCloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E3C42A766BF822F76579ECDF5CD7116 /* Pods-CPTWordCloud_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CPTWordCloud_Example-umbrella.h"; sourceTree = "<group>"; };
-		A5B24A31EEB069FAEE78EADBA6558647 /* CPTWordCloudSKView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWordCloudSKView.m; path = CPTWordCloud/Classes/CPTWordCloudSKView.m; sourceTree = "<group>"; };
 		A944BA88EB91A0BB9F6E2205420312FF /* Pods-CPTWordCloud_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CPTWordCloud_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		AF8A6F3DCEE8DCABF3B7AC3AA67AD837 /* Pods-CPTWordCloud_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CPTWordCloud_Example-frameworks.sh"; sourceTree = "<group>"; };
+		B00EB53D5CF23EE917E2D9EE9FFE658F /* CPTWordCloud.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = CPTWordCloud.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B292851A01527899A30B77650F19B846 /* CPTWordCloudSKView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWordCloudSKView.m; path = CPTWordCloud/Classes/CPTWordCloudSKView.m; sourceTree = "<group>"; };
+		B66B34E90D54C3824621862DB0693EF1 /* CPTWord.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWord.h; path = CPTWordCloud/Classes/CPTWord.h; sourceTree = "<group>"; };
+		B724BE7B65B04BDDE576B52D810BED17 /* CPTWordCloudView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWordCloudView.m; path = CPTWordCloud/Classes/CPTWordCloudView.m; sourceTree = "<group>"; };
 		B8F61937E3177993F433C669D7DBF0B0 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/SpriteKit.framework; sourceTree = DEVELOPER_DIR; };
-		C1E72E8CC08888ECA750864D09D2D40D /* CPTWordCloudSKScene.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTWordCloudSKScene.m; path = CPTWordCloud/Classes/CPTWordCloudSKScene.m; sourceTree = "<group>"; };
+		BB8445628932EF37D6D094D117D88F4B /* CPTWordCloud-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CPTWordCloud-umbrella.h"; sourceTree = "<group>"; };
 		C29E727B9CC39FDF9240A05D74713377 /* Pods-CPTWordCloud_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CPTWordCloud_Example.modulemap"; sourceTree = "<group>"; };
-		C5516F9D8343411CD094577B4038DE41 /* CPTWordCloud.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = CPTWordCloud.modulemap; sourceTree = "<group>"; };
-		C9C94BFB6D9B9E4C24398282CFA4F3B2 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		CD6830BB4F538D3AC30877A2E7408698 /* Pods_CPTWordCloud_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CPTWordCloud_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6830BB4F538D3AC30877A2E7408698 /* Pods_CPTWordCloud_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_CPTWordCloud_Example.framework; path = "Pods-CPTWordCloud_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFE5BFFF36E5739E086F34E5BB3F1680 /* Pods-CPTWordCloud_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CPTWordCloud_Tests-Info.plist"; sourceTree = "<group>"; };
 		D3B6E7D6B387A3BC2C3FFE177D676C0D /* Pods-CPTWordCloud_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CPTWordCloud_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		D7CB19AA65E7D9458172F806A7A0CC87 /* Pods-CPTWordCloud_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CPTWordCloud_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		E499F7C3B350776AD7B952A4E15E54A7 /* CPTWordCloudSKScene.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWordCloudSKScene.h; path = CPTWordCloud/Classes/CPTWordCloudSKScene.h; sourceTree = "<group>"; };
-		F56038A1CE7D23BCDF593D9844765616 /* ResourceBundle-CPTWordCloud-CPTWordCloud-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-CPTWordCloud-CPTWordCloud-Info.plist"; sourceTree = "<group>"; };
-		FB5F9A193C5865FCB1D3B3B86FF88DD2 /* CPTWordCloud.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = CPTWordCloud.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		FC33C6462DBF744472F4E2CE9B7B5AF9 /* CPTWordCloud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CPTWordCloud.release.xcconfig; sourceTree = "<group>"; };
+		ECFCFF26C50E8695CFAE9DAF5A037E38 /* CPTWordCloud.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWordCloud.h; path = CPTWordCloud/Classes/CPTWordCloud.h; sourceTree = "<group>"; };
+		EEFC10E9A3DF1EA800386655E23C36B1 /* CPTWordCloudView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTWordCloudView.h; path = CPTWordCloud/Classes/CPTWordCloudView.h; sourceTree = "<group>"; };
+		FDE86A512AE5608CCFA62AF3871A9FDC /* CPTWordCloud-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CPTWordCloud-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		196CD630C3D980B4209AA58534D9676F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				442C0A823EBE13CFD935A961CF02DA29 /* Foundation.framework in Frameworks */,
+				75258C08643E510FDD780B1459837F04 /* SpriteKit.framework in Frameworks */,
+				16D11E69D1FDB0E533F5FD0000B58293 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6899F8771B631B6B0EC1FCD930DBD1B4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -111,17 +128,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		712DFD7376FE93CE6FF32C59CD772B40 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A778378E51F0E9077E485305734F9A41 /* Foundation.framework in Frameworks */,
-				BC9EB6FEE5A921E5C2B257D915E1DDC2 /* SpriteKit.framework in Frameworks */,
-				F599B5AE54459556D1293AE9F778BFBD /* UIKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9C0445F3FF9A99D6F82391A4F1795BB9 /* Frameworks */ = {
+		BA1A970EB1B850C5E8B416D39304D03B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -157,27 +164,39 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		260BA556826B9B6D5B72EFBCF8CE7AB5 /* Pod */ = {
+		0419E1C648A5491BC3119445D93A916B /* CPTWordCloud */ = {
 			isa = PBXGroup;
 			children = (
-				FB5F9A193C5865FCB1D3B3B86FF88DD2 /* CPTWordCloud.podspec */,
-				3E0F383A460E7C7AD07EDA87161CBB44 /* LICENSE */,
-				C9C94BFB6D9B9E4C24398282CFA4F3B2 /* README.md */,
+				B66B34E90D54C3824621862DB0693EF1 /* CPTWord.h */,
+				6B92A1940D1482B7A89958BCB73DDB26 /* CPTWord.m */,
+				ECFCFF26C50E8695CFAE9DAF5A037E38 /* CPTWordCloud.h */,
+				5413C183D2611E99049F02FDC481FBBF /* CPTWordCloud.m */,
+				7761C001525F84BF725B29D2D2D79BCB /* CPTWordCloudSKScene.h */,
+				25501DB788F7450CBB55CF4DB34D02A9 /* CPTWordCloudSKScene.m */,
+				4ED44217FBA3E9040250602A34B55567 /* CPTWordCloudSKView.h */,
+				B292851A01527899A30B77650F19B846 /* CPTWordCloudSKView.m */,
+				EEFC10E9A3DF1EA800386655E23C36B1 /* CPTWordCloudView.h */,
+				B724BE7B65B04BDDE576B52D810BED17 /* CPTWordCloudView.m */,
+				8D899582028DD7C95A650AF6CE3B6E2C /* CPTWordCloudView.xib */,
+				F4B995868040F0E4D77A466DFD41E1CB /* Assets */,
+				ED39BBEDD02C7D462388019034B3D2C1 /* Pod */,
+				3833E83F9A0BCFFA4832B4A1F66F462D /* Support Files */,
 			);
-			name = Pod;
+			name = CPTWordCloud;
+			path = ../..;
 			sourceTree = "<group>";
 		};
-		352C57FF57FC03495B38AF80DB6448B0 /* Support Files */ = {
+		3833E83F9A0BCFFA4832B4A1F66F462D /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				C5516F9D8343411CD094577B4038DE41 /* CPTWordCloud.modulemap */,
-				490C902CDE588D6957BD1CEFF31332F2 /* CPTWordCloud-dummy.m */,
-				09F4ED900E5483D7A70765C02E5FFE3E /* CPTWordCloud-Info.plist */,
-				5FCB8BEE5218D400C84306E6B8820FA8 /* CPTWordCloud-prefix.pch */,
-				268099F09EC856716454E7A7234D14EE /* CPTWordCloud-umbrella.h */,
-				316155F7844B46013FEF70F75AEA4380 /* CPTWordCloud.debug.xcconfig */,
-				FC33C6462DBF744472F4E2CE9B7B5AF9 /* CPTWordCloud.release.xcconfig */,
-				F56038A1CE7D23BCDF593D9844765616 /* ResourceBundle-CPTWordCloud-CPTWordCloud-Info.plist */,
+				5859048DE6B9DE4BFFDDFBEE6B35C1D2 /* CPTWordCloud.modulemap */,
+				3ACD96433939D2460BC95B6B78F991B4 /* CPTWordCloud-dummy.m */,
+				FDE86A512AE5608CCFA62AF3871A9FDC /* CPTWordCloud-Info.plist */,
+				657B892B5F6996450E070A127B71765A /* CPTWordCloud-prefix.pch */,
+				BB8445628932EF37D6D094D117D88F4B /* CPTWordCloud-umbrella.h */,
+				5CAAC19F5C55B046702AED723EB0484B /* CPTWordCloud.debug.xcconfig */,
+				33349A38A9BC1DDAFFC256CE70D7536F /* CPTWordCloud.release.xcconfig */,
+				37995DD75FF0225DC0264925B9D71497 /* ResourceBundle-CPTWordCloud-CPTWordCloud-Info.plist */,
 			);
 			name = "Support Files";
 			path = "Example/Pods/Target Support Files/CPTWordCloud";
@@ -197,6 +216,14 @@
 			);
 			name = "Pods-CPTWordCloud_Tests";
 			path = "Target Support Files/Pods-CPTWordCloud_Tests";
+			sourceTree = "<group>";
+		};
+		3E04DD438B7117993BC859A760E9BE5A /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0419E1C648A5491BC3119445D93A916B /* CPTWordCloud */,
+			);
+			name = "Development Pods";
 			sourceTree = "<group>";
 		};
 		551D3F7C964DC1AD0654608B54D7D7E2 /* Pods-CPTWordCloud_Example */ = {
@@ -236,42 +263,34 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		C754E982CE09AF92826B027BDB7BDD82 /* CPTWordCloud */ = {
-			isa = PBXGroup;
-			children = (
-				8D1EF91E93286A13E448D614E0FB1864 /* CPTWord.h */,
-				911B623519AD5CAA1F67CE636E740DDD /* CPTWord.m */,
-				24F61DAB48F43576D0D89F96EACEFDEC /* CPTWordCloud.h */,
-				2AB97F78900B262449FFF4E498C7756F /* CPTWordCloud.m */,
-				E499F7C3B350776AD7B952A4E15E54A7 /* CPTWordCloudSKScene.h */,
-				C1E72E8CC08888ECA750864D09D2D40D /* CPTWordCloudSKScene.m */,
-				4C7529BEB779FAA8F83FADA64776A5A8 /* CPTWordCloudSKView.h */,
-				A5B24A31EEB069FAEE78EADBA6558647 /* CPTWordCloudSKView.m */,
-				7F3EF1AE47FEB7ADE18CC33DEACEFD61 /* stopwords.csv */,
-				260BA556826B9B6D5B72EFBCF8CE7AB5 /* Pod */,
-				352C57FF57FC03495B38AF80DB6448B0 /* Support Files */,
-			);
-			name = CPTWordCloud;
-			path = ../..;
-			sourceTree = "<group>";
-		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				E42E18EDA10A893BEB015A2E3FCF297E /* Development Pods */,
+				3E04DD438B7117993BC859A760E9BE5A /* Development Pods */,
 				03C5C200A0787E300053CFA8F53CA094 /* Frameworks */,
 				6F7F0BBFDADC20B2D16B751C1C8A9E2F /* Products */,
 				74ACB3C2D5D19E8A16F3A45C3B3F7E5B /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		E42E18EDA10A893BEB015A2E3FCF297E /* Development Pods */ = {
+		ED39BBEDD02C7D462388019034B3D2C1 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				C754E982CE09AF92826B027BDB7BDD82 /* CPTWordCloud */,
+				B00EB53D5CF23EE917E2D9EE9FFE658F /* CPTWordCloud.podspec */,
+				8502402F883A75D3BD5C57D6AAD8CF14 /* LICENSE */,
+				7765C854267F119C21CF7A9A6FB08450 /* README.md */,
 			);
-			name = "Development Pods";
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		F4B995868040F0E4D77A466DFD41E1CB /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				3ABD30B7D12C6A2B6EA9DE8AC6258CF6 /* stopwords.csv */,
+			);
+			name = Assets;
+			path = CPTWordCloud/Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,23 +304,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1BD17CA17EE272C46D43E8415547F9C9 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F60E4B21C3BA869462F200FE7CAC3730 /* CPTWord.h in Headers */,
-				F1B9D959689A502CF9FA73307504D208 /* CPTWordCloud-umbrella.h in Headers */,
-				E79DF77BD203A55F429BCC8CD6AEB367 /* CPTWordCloud.h in Headers */,
-				4DB1670958270BA30FF741C7D556D57D /* CPTWordCloudSKScene.h in Headers */,
-				EE39A394836739618B2AF9393FAB0B00 /* CPTWordCloudSKView.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5988B375B0E97CA5B90D759AE647E7E9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				EA26ABC7C4CD727261A0FA3CFD723362 /* Pods-CPTWordCloud_Example-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8C62FE83C9C6869EFDA5813A1E1AA10 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F66DD55F89269277A8782C8F7E68698F /* CPTWord.h in Headers */,
+				7F54D1883888FE6E6A9D6C4F70CB5FDA /* CPTWordCloud-umbrella.h in Headers */,
+				02EBFDA5F288EF4551FDFEA28539A175 /* CPTWordCloud.h in Headers */,
+				AD58CE6CE1673876B5D73FD4842DD4B0 /* CPTWordCloudSKScene.h in Headers */,
+				8C82EFDB936255F2ECF676D8D27C3111 /* CPTWordCloudSKView.h in Headers */,
+				167D059B1AE887EA1E13EE6D66DEB995 /* CPTWordCloudView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +340,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				5926635EC33AF695EFFC45611971E4D2 /* PBXTargetDependency */,
+				83B12104044001A4AB24231AA2513F0F /* PBXTargetDependency */,
 			);
 			name = "Pods-CPTWordCloud_Example";
 			productName = "Pods-CPTWordCloud_Example";
@@ -339,7 +359,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				BA57A7900969C764E90E873DBCA0C1BD /* PBXTargetDependency */,
+				8AA5DD4C8CBC2BA986F9EAB0299D8B1B /* PBXTargetDependency */,
 			);
 			name = "Pods-CPTWordCloud_Tests";
 			productName = "Pods-CPTWordCloud_Tests";
@@ -348,11 +368,11 @@
 		};
 		AEEAF2A5694347F0DF855B6227E5222D /* CPTWordCloud-CPTWordCloud */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3D745DADB8E89DE56B5D2A993B23CCFD /* Build configuration list for PBXNativeTarget "CPTWordCloud-CPTWordCloud" */;
+			buildConfigurationList = 9C5CB78D3DA66701C23A87D3AF3597FC /* Build configuration list for PBXNativeTarget "CPTWordCloud-CPTWordCloud" */;
 			buildPhases = (
-				9E5A1485BCD085B186E8C76D05172FFC /* Sources */,
-				9C0445F3FF9A99D6F82391A4F1795BB9 /* Frameworks */,
-				94617E59D2EE1DC25A0E3542689B9FD0 /* Resources */,
+				55614A9BACB7B9418B3DD56D8E53B5EA /* Sources */,
+				BA1A970EB1B850C5E8B416D39304D03B /* Frameworks */,
+				D5E17EB08525712E9544B3C1F70BA98B /* Resources */,
 			);
 			buildRules = (
 			);
@@ -365,17 +385,17 @@
 		};
 		BC2822490813276E616FB0D250C9C745 /* CPTWordCloud */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 46CF892C12C5894CB08FAD298497F912 /* Build configuration list for PBXNativeTarget "CPTWordCloud" */;
+			buildConfigurationList = 4D18607C71BB93F9C66908ED06253BDA /* Build configuration list for PBXNativeTarget "CPTWordCloud" */;
 			buildPhases = (
-				1BD17CA17EE272C46D43E8415547F9C9 /* Headers */,
-				CDFAFEFCBE5832002F36D78B167BB52C /* Sources */,
-				712DFD7376FE93CE6FF32C59CD772B40 /* Frameworks */,
-				A9796E74C4E7AC0D7D405A77AE171CB1 /* Resources */,
+				A8C62FE83C9C6869EFDA5813A1E1AA10 /* Headers */,
+				0FE3FB4442278EFBE41F86228B6F0424 /* Sources */,
+				196CD630C3D980B4209AA58534D9676F /* Frameworks */,
+				BC41798885CC780F6A899369B36F4283 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				756A2A378F94C882D904071A81B16992 /* PBXTargetDependency */,
+				0CB8A3E1F16C940B93482F48C4D42F5C /* PBXTargetDependency */,
 			);
 			name = CPTWordCloud;
 			productName = CPTWordCloud;
@@ -413,14 +433,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		94617E59D2EE1DC25A0E3542689B9FD0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				46BA5F8E0306465C31046BAEDE74088F /* stopwords.csv in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A565342C7D7F6BB2545A13FE800F312A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -428,11 +440,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A9796E74C4E7AC0D7D405A77AE171CB1 /* Resources */ = {
+		BC41798885CC780F6A899369B36F4283 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BA2EDAA7862A8801A19F668B1386643 /* CPTWordCloud.bundle in Resources */,
+				8AAE6ADC0E2292DF1A45F8D1716B197F /* CPTWordCloud.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5E17EB08525712E9544B3C1F70BA98B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B36E6391FD1028D8B9A43E9DD5F2C28 /* CPTWordCloudView.xib in Resources */,
+				07BF6DFD483B76D19CC8F075437602A6 /* stopwords.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +467,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0FE3FB4442278EFBE41F86228B6F0424 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C234B332E8F76B88F00DF32C66CB6216 /* CPTWord.m in Sources */,
+				67E35C25EB59C7B1B5ED2D8BD0F7FF6A /* CPTWordCloud-dummy.m in Sources */,
+				8D188D7709EB3389F1F20F4CF1B56A12 /* CPTWordCloud.m in Sources */,
+				952DB8CFE127C165E891D653B4964263 /* CPTWordCloudSKScene.m in Sources */,
+				AFA766116EC2A3BAB4DEC1F22118636A /* CPTWordCloudSKView.m in Sources */,
+				BA20275508077BB6B3D866628BA6B1FB /* CPTWordCloudView.m in Sources */,
+				F6DE444F9D242DDAC64165206638D712 /* CPTWordCloudView.xib in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D6635E65C19BC1676CECFC69466DECB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -454,7 +489,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9E5A1485BCD085B186E8C76D05172FFC /* Sources */ = {
+		55614A9BACB7B9418B3DD56D8E53B5EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -469,38 +504,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CDFAFEFCBE5832002F36D78B167BB52C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				36FABE8D8492BC95AE9BE6596601A903 /* CPTWord.m in Sources */,
-				F327A1D74BDD67F8CD1B3268EAB09235 /* CPTWordCloud-dummy.m in Sources */,
-				DB070BD86BD62C83E2070A0115320783 /* CPTWordCloud.m in Sources */,
-				49DF06A04CBDAD0C98CD14AC78FCC281 /* CPTWordCloudSKScene.m in Sources */,
-				AC6C22F1DD1D952956F2DCD602B485D3 /* CPTWordCloudSKView.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5926635EC33AF695EFFC45611971E4D2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CPTWordCloud;
-			target = BC2822490813276E616FB0D250C9C745 /* CPTWordCloud */;
-			targetProxy = 9AD24709963D5EE55FE17D3D74FD6D65 /* PBXContainerItemProxy */;
-		};
-		756A2A378F94C882D904071A81B16992 /* PBXTargetDependency */ = {
+		0CB8A3E1F16C940B93482F48C4D42F5C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "CPTWordCloud-CPTWordCloud";
 			target = AEEAF2A5694347F0DF855B6227E5222D /* CPTWordCloud-CPTWordCloud */;
-			targetProxy = F9132557055AB034344035658B62AE52 /* PBXContainerItemProxy */;
+			targetProxy = FC3258A65813F001189C2DCA166D7D6D /* PBXContainerItemProxy */;
 		};
-		BA57A7900969C764E90E873DBCA0C1BD /* PBXTargetDependency */ = {
+		83B12104044001A4AB24231AA2513F0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CPTWordCloud;
+			target = BC2822490813276E616FB0D250C9C745 /* CPTWordCloud */;
+			targetProxy = 1D6ECFE8278C880586091E21F64AEBFA /* PBXContainerItemProxy */;
+		};
+		8AA5DD4C8CBC2BA986F9EAB0299D8B1B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-CPTWordCloud_Example";
 			target = 771EADAF4E2AD3FE40F29E66624795D0 /* Pods-CPTWordCloud_Example */;
-			targetProxy = 696EBD0B41E5664913925644236FE426 /* PBXContainerItemProxy */;
+			targetProxy = 78DDEA15B12D4E3E07636EE407B83414 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -571,25 +594,40 @@
 			};
 			name = Debug;
 		};
-		50AF4C13A50612FF3E8B8C328B12A1B8 /* Debug */ = {
+		744337E01304B104AD1A4B6B9C681D9F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 316155F7844B46013FEF70F75AEA4380 /* CPTWordCloud.debug.xcconfig */;
+			baseConfigurationReference = 33349A38A9BC1DDAFFC256CE70D7536F /* CPTWordCloud.release.xcconfig */;
 			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CPTWordCloud";
-				IBSC_MODULE = CPTWordCloud;
-				INFOPLIST_FILE = "Target Support Files/CPTWordCloud/ResourceBundle-CPTWordCloud-CPTWordCloud-Info.plist";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/CPTWordCloud/CPTWordCloud-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CPTWordCloud/CPTWordCloud-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/CPTWordCloud/CPTWordCloud.modulemap";
+				PRODUCT_MODULE_NAME = CPTWordCloud;
 				PRODUCT_NAME = CPTWordCloud;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
-		72C4C5DD1276D5A1A342218DE5160F35 /* Debug */ = {
+		7716FB4511B00874FC5D3E622F86E716 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 316155F7844B46013FEF70F75AEA4380 /* CPTWordCloud.debug.xcconfig */;
+			baseConfigurationReference = 5CAAC19F5C55B046702AED723EB0484B /* CPTWordCloud.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -649,6 +687,22 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		8BDDD41BFDF7589BD7DF8DC3A3E2B758 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5CAAC19F5C55B046702AED723EB0484B /* CPTWordCloud.debug.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CPTWordCloud";
+				IBSC_MODULE = CPTWordCloud;
+				INFOPLIST_FILE = "Target Support Files/CPTWordCloud/ResourceBundle-CPTWordCloud-CPTWordCloud-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PRODUCT_NAME = CPTWordCloud;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
 		};
 		8CEC9F06A13F7A067B48470BBE43C0AB /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -770,15 +824,16 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
 		};
-		CCA29AD94C57EB0F5CAC39A2AAFCBAC3 /* Release */ = {
+		E56384C7AC2AFCEC9E542F75F900427C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FC33C6462DBF744472F4E2CE9B7B5AF9 /* CPTWordCloud.release.xcconfig */;
+			baseConfigurationReference = 33349A38A9BC1DDAFFC256CE70D7536F /* CPTWordCloud.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/CPTWordCloud";
 				IBSC_MODULE = CPTWordCloud;
@@ -789,37 +844,6 @@
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		D7C8134A5FE7462D901414283748065E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FC33C6462DBF744472F4E2CE9B7B5AF9 /* CPTWordCloud.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/CPTWordCloud/CPTWordCloud-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/CPTWordCloud/CPTWordCloud-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/CPTWordCloud/CPTWordCloud.modulemap";
-				PRODUCT_MODULE_NAME = CPTWordCloud;
-				PRODUCT_NAME = CPTWordCloud;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -858,29 +882,29 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3D745DADB8E89DE56B5D2A993B23CCFD /* Build configuration list for PBXNativeTarget "CPTWordCloud-CPTWordCloud" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				50AF4C13A50612FF3E8B8C328B12A1B8 /* Debug */,
-				CCA29AD94C57EB0F5CAC39A2AAFCBAC3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		46CF892C12C5894CB08FAD298497F912 /* Build configuration list for PBXNativeTarget "CPTWordCloud" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				72C4C5DD1276D5A1A342218DE5160F35 /* Debug */,
-				D7C8134A5FE7462D901414283748065E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				25AD9454612BF454A1E3DC4CD4FA8C6D /* Debug */,
 				CA547D2C7E9A8A153DC2B27FBE00B112 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D18607C71BB93F9C66908ED06253BDA /* Build configuration list for PBXNativeTarget "CPTWordCloud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7716FB4511B00874FC5D3E622F86E716 /* Debug */,
+				744337E01304B104AD1A4B6B9C681D9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C5CB78D3DA66701C23A87D3AF3597FC /* Build configuration list for PBXNativeTarget "CPTWordCloud-CPTWordCloud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BDDD41BFDF7589BD7DF8DC3A3E2B758 /* Debug */,
+				E56384C7AC2AFCEC9E542F75F900427C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

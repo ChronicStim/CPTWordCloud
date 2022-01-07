@@ -7,19 +7,21 @@
 //
 
 #import "CPTViewController.h"
+#import <CPTWordCloud/CPTWordCloudView.h>
 #import <CPTWordCloud/CPTWordCloudSKView.h>
 #import "CPTPopoverViewController.h"
 
 @interface CPTViewController ()
 
 @property (nonatomic, strong) UIImage *capturedImage;
-@property (weak, nonatomic) IBOutlet CPTWordCloudSKView *wordCloudView;
+@property (nonatomic) CPTWordCloudView *wordCloudView;
 @property (weak, nonatomic) IBOutlet UISlider *verticalProbabilitySlider;
 @property (weak, nonatomic) IBOutlet UIButton *useRandomFontButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *fontSizingMethodSelector;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rotationMethodSegmentedControl;
 @property (nonatomic) CPTWordCloud *wordCloudAlpha;
 @property (nonatomic) CPTWordCloud *wordCloudBeta;
+@property (weak, nonatomic) IBOutlet UIView *wordCloudContainmentView;
 
 - (IBAction)initializeAlphaButtonPressed:(id)sender;
 - (IBAction)initializeBetaButtonPressed:(id)sender;
@@ -65,12 +67,12 @@
 
 - (IBAction)rotationMethodSegmentedControlValueChanged:(id)sender {
     int selection = (int)[(UISegmentedControl *)sender selectedSegmentIndex];
-    self.wordCloudView.wordCloud.rotationMode = (CPTWordRotationMode)selection;
+    self.wordCloudView.wordCloudSKView.wordCloud.rotationMode = (CPTWordRotationMode)selection;
 }
 
 - (IBAction)blendColorModeSwitchValueChanged:(id)sender {
     BOOL blendColorUsingHSB = [(UISwitch *)sender isOn];
-    self.wordCloudView.wordCloud.colorMappingHSBBased = blendColorUsingHSB;
+    self.wordCloudView.wordCloudSKView.wordCloud.colorMappingHSBBased = blendColorUsingHSB;
 }
 
 - (IBAction)fontSizingSegmentedSwitchSelected:(id)sender {
@@ -93,35 +95,35 @@
             break;
     }
     
-    self.wordCloudView.wordCloud.scalingMode = fontSizingMode;
+    self.wordCloudView.wordCloudSKView.wordCloud.scalingMode = fontSizingMode;
 }
 
 - (IBAction)filterStopwordsSwitchChanged:(id)sender {
     BOOL isSwitchOn = [(UISwitch *)sender isOn];
-    self.wordCloudView.wordCloud.filteringStopWords = isSwitchOn;
+    self.wordCloudView.wordCloudSKView.wordCloud.filteringStopWords = isSwitchOn;
 }
 
 - (IBAction)verticalWordSliderValueChanged:(id)sender {
     CGFloat verticalProbability = [(UISlider *)sender value];
-    CPTWordCloud *wordCloud = self.wordCloudView.wordCloud;
+    CPTWordCloud *wordCloud = self.wordCloudView.wordCloudSKView.wordCloud;
     wordCloud.probabilityOfWordRotation = verticalProbability;
 }
 
 - (IBAction)showRectButtonPressed:(id)sender {
-    if ([self.wordCloudView.wordCloud wordOutlineColor] == [UIColor clearColor]) {
+    if ([self.wordCloudView.wordCloudSKView.wordCloud wordOutlineColor] == [UIColor clearColor]) {
         // Turn background display ON
-        self.wordCloudView.wordCloud.wordOutlineColor = [UIColor lightGrayColor];
+        self.wordCloudView.wordCloudSKView.wordCloud.wordOutlineColor = [UIColor lightGrayColor];
         [(UIButton *)sender setTitle:@"Hide RECTs" forState:UIControlStateNormal];
     }
     else {
         // Turn background display OFF
-        self.wordCloudView.wordCloud.wordOutlineColor = [UIColor clearColor];
+        self.wordCloudView.wordCloudSKView.wordCloud.wordOutlineColor = [UIColor clearColor];
         [(UIButton *)sender setTitle:@"Show RECTs" forState:UIControlStateNormal];
     }
 }
 
 - (IBAction)randomizeFontsButtonPressed:(id)sender {
-    CPTWordCloud *wordCloud = self.wordCloudView.wordCloud;
+    CPTWordCloud *wordCloud = self.wordCloudView.wordCloudSKView.wordCloud;
     BOOL currentFontSetting = wordCloud.isUsingRandomFontPerWord;
     BOOL newFontSetting = !currentFontSetting;
     wordCloud.usingRandomFontPerWord = newFontSetting;
@@ -137,7 +139,7 @@
 
 - (IBAction)regenerateCloudButtonPressed:(id)sender {
     if (self.wordCloudView) {
-        [self.wordCloudView.wordCloud updateCloudSceneWithRegenerateNodes:@(YES)];
+        [self.wordCloudView.wordCloudSKView.wordCloud updateCloudSceneWithRegenerateNodes:@(YES)];
     }
 }
 
@@ -195,15 +197,34 @@
     return _wordCloudBeta;
 }
 
+-(CPTWordCloudView *)wordCloudView;
+{
+    if (nil != _wordCloudView) {
+        return _wordCloudView;
+    }
+    
+    _wordCloudView = (CPTWordCloudView *)[[[NSBundle bundleForClass:[CPTWordCloud class]] loadNibNamed:@"CPTWordCloudView" owner:self options:nil] objectAtIndex:0];
+    _wordCloudView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.wordCloudContainmentView addSubview:_wordCloudView];
+    [_wordCloudView.widthAnchor constraintEqualToAnchor:self.wordCloudContainmentView.widthAnchor].active = YES;
+    [_wordCloudView.heightAnchor constraintEqualToAnchor:self.wordCloudContainmentView.heightAnchor].active = YES;
+    [_wordCloudView.centerXAnchor constraintEqualToAnchor:self.wordCloudContainmentView.centerXAnchor].active = YES;
+    [_wordCloudView.centerYAnchor constraintEqualToAnchor:self.wordCloudContainmentView.centerYAnchor].active = YES;
+    
+    return _wordCloudView;
+}
+
 -(void)initializeWordCloud:(NSString *)mode;
 {
     if (nil != self.wordCloudView) {
         
-        self.wordCloudView.backgroundColor = [UIColor whiteColor];
-                
+        [self.wordCloudView removeFromSuperview];
+        self.wordCloudView = nil;
+        
         if ([mode isEqualToString:@"Alpha"]) {
 
-            [self.wordCloudView assignWordCloud:self.wordCloudAlpha];
+            [self.wordCloudView.wordCloudSKView assignWordCloud:self.wordCloudAlpha];
+            self.wordCloudView.titleString = @"Word Cloud Demo Alpha";
             
             [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)_wordCloudAlpha.scalingMode];
             self.verticalProbabilitySlider.value = _wordCloudAlpha.probabilityOfWordRotation;
@@ -213,8 +234,9 @@
         }
         else if ([mode isEqualToString:@"Beta"]) {
             
-            [self.wordCloudView assignWordCloud:self.wordCloudBeta];
-            
+            [self.wordCloudView.wordCloudSKView assignWordCloud:self.wordCloudBeta];
+            self.wordCloudView.titleString = @"Word Cloud Demo Beta";
+
             [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)_wordCloudBeta.scalingMode];
             self.verticalProbabilitySlider.value = _wordCloudBeta.probabilityOfWordRotation;
             self.rotationMethodSegmentedControl.selectedSegmentIndex = (int)_wordCloudBeta.rotationMode;

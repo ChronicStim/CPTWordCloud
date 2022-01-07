@@ -13,9 +13,7 @@
 @property (nonatomic, strong, readonly) CPTWordCloud* wordCloud;
 
 -(void)assignWordCloud:(CPTWordCloud *)wordCloud;
-- (UIImage *)imageByRenderingView;
 -(UIImage *)imageByDrawingView;
--(NSData *)createPDFSaveToDocuments:(BOOL)saveToDocuments withFileName:(NSString*)aFilename;
 -(void)drawWordCloudInContext:(CGContextRef)context;
 
 @end

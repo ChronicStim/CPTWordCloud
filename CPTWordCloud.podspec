@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CPTWordCloud'
-  s.version          = '0.1.16'
+  s.version          = '0.1.17'
   s.summary          = 'Framework used to create a word cloud graphic from an input of string content.'
 
 # This description is used to generate tags and improve search results.
@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
   s.source_files = 'CPTWordCloud/Classes/**/*'
   
   s.resource_bundles = {
-     'CPTWordCloud' => ['CPTWordCloud/Assets/*.csv']
+     'CPTWordCloud' => ['CPTWordCloud/Assets/*.csv','CPTWordCloud/Classes/*.xib']
   }
 
   s.public_header_files = 'CPTWordCloud/Classes/**/*.h'
