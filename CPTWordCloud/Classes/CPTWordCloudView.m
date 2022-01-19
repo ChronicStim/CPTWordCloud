@@ -7,32 +7,34 @@
 
 #import "CPTWordCloudView.h"
 #import "CPTWordCloudSKView.h"
+#import "CPTWordCloudSKScene.h"
 
 @interface CPTWordCloudView ()
 {
     CGSize _cloudSize;
 }
-
+@property (nonatomic, strong) UIView *rootView;
 @property (weak, nonatomic) IBOutlet UIView *outerContainmentView;
 @property (weak, nonatomic) IBOutlet UIStackView *verticalStackView;
 @property (weak, nonatomic) IBOutlet UIView *titleContainmentView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *cloudContainmentView;
 @property (weak, nonatomic) IBOutlet UIView *cloudBorderView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cloudViewWidthConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cloudViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cloudSKViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cloudSKViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cloudBorderViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cloudBorderViewHeightConstraint;
 
 @end
 
+IB_DESIGNABLE
 @implementation CPTWordCloudView
 
 -(instancetype)initWithFrame:(CGRect)frame;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        [self xibSetup];
         [self setupViewDefaults];
     }
     return self;
@@ -42,10 +44,65 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        
+        [self xibSetup];
         [self setupViewDefaults];
     }
     return self;
+}
+
+-(void)xibSetup;
+{
+    if (nil != _rootView) {
+        return;
+    }
+    
+    _rootView = [self loadViewFromNib];
+    _rootView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:_rootView];
+    [_rootView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+    [_rootView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+    [_rootView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
+    [_rootView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+}
+
+-(UIView *)loadViewFromNib;
+{
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    UINib *nib = [UINib nibWithNibName:NSStringFromClass([self class]) bundle:bundle];
+    UIView *view = [[nib instantiateWithOwner:self options:nil] objectAtIndex:0];
+    return view;
+}
+
+-(void)prepareForInterfaceBuilder;
+{
+    [super prepareForInterfaceBuilder];
+
+    // Add a default CPTWordCloud to view to provide some data to display
+    {
+       CPTWordCloud *ibWordCloud = [[CPTWordCloud alloc] init];
+        ibWordCloud.lowCountColor = [UIColor colorWithRed:0.022 green:0.000 blue:0.751 alpha:1.000];
+        ibWordCloud.highCountColor = [UIColor colorWithRed:0.751 green:0.000 blue:0.052 alpha:1.000];
+        
+        ibWordCloud.scalingMode = CPTWordScalingMode_rank;
+        
+        ibWordCloud.probabilityOfWordRotation = 0.8f;
+        ibWordCloud.rotationMode = CPTWordRotationMode_Deg30;
+        
+        ibWordCloud.usingRandomFontPerWord = NO;
+        
+        ibWordCloud.convertingAllWordsToLowercase = YES;
+        
+        [ibWordCloud addWords:@"Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, `and what is the use of a book,' thought Alice `without pictures or conversation?' So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her. There was nothing so very remarkable in that; nor did Alice think it so very much out of the way to hear the Rabbit say to itself, `Oh dear! Oh dear! I shall be late!' (when she thought it over afterwards, it occurred to her that she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually took a watch out of its waistcoat-pocket, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge." delimiter:@" "];
+        [self assignWordCloud:ibWordCloud];
+    }
+    [self setNeedsUpdateConstraints];
+    [self updateConstraintsIfNeeded];
+    
+//    self.wordCloud.cloudSize = self.bounds.size;
+//    self.wordCloud.wordCloudSKScene.size = self.bounds.size;
+//    self.wordCloud.colorMappingHSBBased = YES;
 }
 
 -(void)setupViewDefaults;
@@ -62,15 +119,25 @@
     
 }
 
--(void)updateConstraints;
+-(void)adjustCloudViewSizingConstraints;
 {
     CGFloat borderWidth = ceilf(self.bounds.size.width * self.borderWidthAsPercentOfViewWidth / 100.0f);
-    self.cloudBorderViewWidthConstraint.constant = -(borderWidth * 2);
-    self.cloudBorderViewHeightConstraint.constant = -(borderWidth * 2);
+    self.cloudBorderViewWidthConstraint.constant = -(borderWidth);
+    self.cloudBorderViewHeightConstraint.constant = -(borderWidth);
     CGFloat widthInset = ceilf(self.bounds.size.width * self.wordCloudInsetsFromBorderAsPercentOfViewWidth.width / 100.0f);
     CGFloat heightInset = ceilf(self.bounds.size.width * self.wordCloudInsetsFromBorderAsPercentOfViewWidth.height / 100.0f);
-    self.cloudViewWidthConstraint.constant = -((2 * borderWidth + widthInset) * 2);
-    self.cloudViewHeightConstraint.constant = -((2 * borderWidth + heightInset) * 2);
+    CGFloat cloudWidthConst = -((borderWidth + widthInset) * 2);
+    CGFloat cloudHeightConst = -((borderWidth + heightInset) * 2);
+    self.cloudSKViewWidthConstraint.constant = cloudWidthConst;
+    self.cloudSKViewHeightConstraint.constant = cloudHeightConst;
+    
+    CGSize targetCloudSize = CGSizeMake(self.bounds.size.width+cloudWidthConst, self.bounds.size.height+cloudHeightConst);
+    self.wordCloud.cloudSize = targetCloudSize;
+}
+
+-(void)updateConstraints;
+{
+    [self adjustCloudViewSizingConstraints];
     
     [super updateConstraints];
 }
@@ -87,6 +154,14 @@
     CGFloat fontSize = [self fontSizeForString:self.titleString toFitSize:self.titleLabel.bounds.size withFont:self.titleFont minFontScale:0.1 maxFontSize:60 lineBreakMode:NSLineBreakByClipping alignment:NSTextAlignmentCenter];
     self.titleLabel.font = [self.titleFont fontWithSize:fontSize];
     self.titleLabel.text = self.titleString;
+}
+
+-(void)assignWordCloud:(CPTWordCloud *)wordCloud;
+{
+    if (nil != wordCloud) {
+        wordCloud.wordCloudSKScene.backgroundColor = self.cloudAreaBackgroundColor;
+    }
+    [self.wordCloudSKView assignWordCloud:wordCloud];
 }
 
 -(void)setBorderWidthAsPercentOfViewWidth:(CGFloat)borderWidthAsPercentOfViewWidth;
@@ -117,6 +192,7 @@
 {
     if (cloudAreaBackgroundColor != _cloudAreaBackgroundColor) {
         _cloudAreaBackgroundColor = cloudAreaBackgroundColor;
+        self.wordCloud.wordCloudSKScene.backgroundColor = cloudAreaBackgroundColor;
         [self setNeedsDisplay];
     }
 }
@@ -192,6 +268,11 @@
     }
 
     return finalFontSize;
+}
+
+-(CGSize)autoLayoutCalculatedWordCloudSKViewSize;
+{
+    return self.wordCloudSKView.bounds.size;
 }
 
 #pragma mark - Drawing methods

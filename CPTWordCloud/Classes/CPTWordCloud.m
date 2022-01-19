@@ -157,7 +157,6 @@
     }
     
     _wordCloudSKScene = [[CPTWordCloudSKScene alloc] initWordCloudSKSceneForWordCloud:self withSize:self.cloudSize];
-    _wordCloudSKScene.scaleMode = SKSceneScaleModeAspectFit;
     
     if (nil != self.delegate && [(NSObject *)self.delegate respondsToSelector:@selector(wordCloud:readyToPresentScene:)]) {
         [self.delegate wordCloud:self readyToPresentScene:_wordCloudSKScene];
@@ -565,6 +564,9 @@
 {
     if (true == CGSizeEqualToSize(cloudSize, self.cloudSize)) return;
     _cloudSize = cloudSize;
+    if (nil != _wordCloudSKScene) {
+        self.wordCloudSKScene.size = _cloudSize;
+    }
     
     [self setNeedsUpdateCloudSceneWithRegenerateNodes:NO];
 }

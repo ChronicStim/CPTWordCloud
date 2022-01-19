@@ -7,14 +7,13 @@
 //
 
 #import "CPTViewController.h"
-#import <CPTWordCloud/CPTWordCloudView.h>
-#import <CPTWordCloud/CPTWordCloudSKView.h>
+#import <CPTWordCloud/CPTWordCloud_Headers.h>
 #import "CPTPopoverViewController.h"
 
 @interface CPTViewController ()
 
 @property (nonatomic, strong) UIImage *capturedImage;
-@property (nonatomic) CPTWordCloudView *wordCloudView;
+@property (weak, nonatomic) IBOutlet CPTWordCloudView *wordCloudView;
 @property (weak, nonatomic) IBOutlet UISlider *verticalProbabilitySlider;
 @property (weak, nonatomic) IBOutlet UIButton *useRandomFontButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *fontSizingMethodSelector;
@@ -175,8 +174,8 @@
     
     _wordCloudBeta = [[CPTWordCloud alloc] init];
     
-    _wordCloudBeta.minFontSize = 50;
-    _wordCloudBeta.maxFontSize = 200;
+//    _wordCloudBeta.minFontSize = 50;
+//    _wordCloudBeta.maxFontSize = 200;
     
     _wordCloudBeta.lowCountColor = [UIColor greenColor];
     _wordCloudBeta.highCountColor = [UIColor orangeColor];
@@ -197,33 +196,13 @@
     return _wordCloudBeta;
 }
 
--(CPTWordCloudView *)wordCloudView;
-{
-    if (nil != _wordCloudView) {
-        return _wordCloudView;
-    }
-    
-    _wordCloudView = (CPTWordCloudView *)[[[NSBundle bundleForClass:[CPTWordCloud class]] loadNibNamed:@"CPTWordCloudView" owner:self options:nil] objectAtIndex:0];
-    _wordCloudView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.wordCloudContainmentView addSubview:_wordCloudView];
-    [_wordCloudView.widthAnchor constraintEqualToAnchor:self.wordCloudContainmentView.widthAnchor].active = YES;
-    [_wordCloudView.heightAnchor constraintEqualToAnchor:self.wordCloudContainmentView.heightAnchor].active = YES;
-    [_wordCloudView.centerXAnchor constraintEqualToAnchor:self.wordCloudContainmentView.centerXAnchor].active = YES;
-    [_wordCloudView.centerYAnchor constraintEqualToAnchor:self.wordCloudContainmentView.centerYAnchor].active = YES;
-    
-    return _wordCloudView;
-}
-
 -(void)initializeWordCloud:(NSString *)mode;
 {
     if (nil != self.wordCloudView) {
         
-        [self.wordCloudView removeFromSuperview];
-        self.wordCloudView = nil;
-        
         if ([mode isEqualToString:@"Alpha"]) {
 
-            [self.wordCloudView.wordCloudSKView assignWordCloud:self.wordCloudAlpha];
+            [self.wordCloudView assignWordCloud:self.wordCloudAlpha];
             self.wordCloudView.titleString = @"Word Cloud Demo Alpha";
             
             [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)_wordCloudAlpha.scalingMode];
@@ -234,7 +213,7 @@
         }
         else if ([mode isEqualToString:@"Beta"]) {
             
-            [self.wordCloudView.wordCloudSKView assignWordCloud:self.wordCloudBeta];
+            [self.wordCloudView assignWordCloud:self.wordCloudBeta];
             self.wordCloudView.titleString = @"Word Cloud Demo Beta";
 
             [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)_wordCloudBeta.scalingMode];

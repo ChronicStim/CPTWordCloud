@@ -446,7 +446,39 @@
                                         <subviews>
                                             <view opaque="NO" contentMode="scaleToFill" restorationIdentifier="CPTWordCloudView" translatesAutoresizingMaskIntoConstraints="NO" id="Y2W-uC-oVE">
                                                 <rect key="frame" x="10" y="10" width="814" height="880"/>
+                                                <subviews>
+                                                    <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1XA-SS-h6h" customClass="CPTWordCloudView">
+                                                        <rect key="frame" x="0.0" y="0.0" width="814" height="880"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidthAsPercentOfViewWidth">
+                                                                <real key="value" value="1.5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusAsPercentOfViewWidth">
+                                                                <real key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="cloudAreaBackgroundColor">
+                                                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="size" keyPath="wordCloudInsetsFromBorderAsPercentOfViewWidth">
+                                                                <size key="value" width="2" height="2"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="1XA-SS-h6h" firstAttribute="centerX" secondItem="Y2W-uC-oVE" secondAttribute="centerX" id="ScP-FO-XFs"/>
+                                                    <constraint firstItem="1XA-SS-h6h" firstAttribute="height" secondItem="Y2W-uC-oVE" secondAttribute="height" id="bb0-dy-HZX"/>
+                                                    <constraint firstItem="1XA-SS-h6h" firstAttribute="centerY" secondItem="Y2W-uC-oVE" secondAttribute="centerY" id="fZJ-WM-hSd"/>
+                                                    <constraint firstItem="1XA-SS-h6h" firstAttribute="width" secondItem="Y2W-uC-oVE" secondAttribute="width" id="fuz-zb-uLP"/>
+                                                </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -486,6 +518,7 @@
                         <outlet property="useRandomFontButton" destination="Siy-2V-B7B" id="prx-Wz-yDf"/>
                         <outlet property="verticalProbabilitySlider" destination="wAC-OA-6Fw" id="dRa-EW-pGq"/>
                         <outlet property="wordCloudContainmentView" destination="Y2W-uC-oVE" id="quG-uw-a5U"/>
+                        <outlet property="wordCloudView" destination="1XA-SS-h6h" id="uHX-dO-S8R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>

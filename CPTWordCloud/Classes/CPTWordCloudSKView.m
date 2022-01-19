@@ -15,6 +15,7 @@
 
 @end
 
+IB_DESIGNABLE
 @implementation CPTWordCloudSKView
 
 -(instancetype)initWithFrame:(CGRect)frame;
@@ -33,6 +34,16 @@
         [self startupSKViewDisplay];
     }
     return self;
+}
+
+-(void)prepareForInterfaceBuilder;
+{
+    [super prepareForInterfaceBuilder];
+ 
+    if (nil != self.wordCloud) {
+        self.wordCloud.cloudSize = self.bounds.size;
+        [self.wordCloud updateCloudSceneWithRegenerateNodes:@(NO)];
+    }
 }
 
 -(void)assignWordCloud:(CPTWordCloud *)wordCloud;
@@ -98,13 +109,14 @@
 
 -(void)drawWordCloudInContext:(CGContextRef)context;
 {
+    CGContextSaveGState(context);
     CGContextTranslateCTM(context, 0, self.bounds.size.height);
     CGContextScaleCTM(context, 1, -1);
     
 //    CGContextClearRect(context, self.bounds);
     
-    CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
-    CGContextFillRect(context, self.bounds);
+//    CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
+//    CGContextFillRect(context, self.bounds);
     
     NSArray *words = [self.wordCloud sortedWords];
     
@@ -112,6 +124,8 @@
     
     for (CPTWord* word in words)
     {
+        CGContextSaveGState(context);
+        
         UIColor* color = word.color;
         UIFont *font = [word.font fontWithSize:word.font.pointSize];
         NSDictionary *attrsDictionary = @{ NSFontAttributeName : font,
@@ -124,8 +138,6 @@
         CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
         
         CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-        
-        CGContextSaveGState(context);
         
         CGFloat scalingFactor = self.wordCloud.wordCloudSKScene.scalingFactor;
         
@@ -152,6 +164,8 @@
         CGContextStrokeRect(context, word.wordGlyphBounds);
         CGContextRestoreGState(context);
     }
+
+    CGContextRestoreGState(context);
 }
 
 #pragma mark - Draw to external image

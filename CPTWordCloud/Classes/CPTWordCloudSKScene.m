@@ -104,6 +104,7 @@ double lerp(double a, double b, double fraction) {
 {
     self.anchorPoint = CGPointMake(0.5, 0.5);
     self.scaleMode = SKSceneScaleModeResizeFill;
+//    self.scaleMode = SKSceneScaleModeAspectFit;
     [self.cloudNode removeChildrenInArray:self.currentWordNodes];
     [self removeAllChildren];
     [self.currentWordNodes removeAllObjects];
@@ -114,6 +115,7 @@ double lerp(double a, double b, double fraction) {
     
     self.cloudNode = [SKSpriteNode spriteNodeWithColor:[UIColor whiteColor] size:CGSizeZero];
     self.cloudNode.anchorPoint = CGPointMake(0.5, 0.5);
+    self.cloudNode.zPosition = 2;
     [self addChild:self.cloudNode];
     
     self.unionNode = [SKShapeNode shapeNodeWithRect:unionRect];

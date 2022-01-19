@@ -7,9 +7,44 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CPTWordCloudView">
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="borderWidthAsPercentOfViewWidth">
+                    <real key="value" value="2"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusAsPercentOfViewWidth">
+                    <real key="value" value="8"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="color" keyPath="cloudAreaBackgroundColor">
+                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                    <color key="value" red="0.0015153357530000001" green="0.02977542952" blue="0.38633361459999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="string" keyPath="titleString" value="Sample Word Cloud Data"/>
+                <userDefinedRuntimeAttribute type="size" keyPath="wordCloudInsetsFromBorderAsPercentOfViewWidth">
+                    <size key="value" width="3" height="3"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="cloudBorderView" destination="5kD-tO-zj4" id="WeV-mP-ehs"/>
+                <outlet property="cloudBorderViewHeightConstraint" destination="Ltu-X4-3W9" id="XTS-e8-YGB"/>
+                <outlet property="cloudBorderViewWidthConstraint" destination="PEB-wv-BzA" id="AIH-wD-9Ba"/>
+                <outlet property="cloudContainmentView" destination="20I-jm-f7h" id="UxQ-I5-OSJ"/>
+                <outlet property="cloudSKViewHeightConstraint" destination="qDj-BY-IrR" id="A5f-ed-iHl"/>
+                <outlet property="cloudSKViewWidthConstraint" destination="igI-Nm-qTx" id="SI4-eQ-e74"/>
+                <outlet property="outerContainmentView" destination="4Jc-Oh-vEc" id="Njs-rx-WuA"/>
+                <outlet property="titleContainmentView" destination="02P-yL-got" id="700-2L-Py5"/>
+                <outlet property="titleLabel" destination="E36-ac-2Sc" id="qCZ-CV-9iB"/>
+                <outlet property="verticalStackView" destination="crH-wY-7YI" id="1uB-wa-xbY"/>
+                <outlet property="wordCloudSKView" destination="Dcf-67-Dzv" id="UUx-x4-B01"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CPTWordCloudView" id="TZS-lU-4w5" userLabel="CPTWordCloudView" customClass="CPTWordCloudView">
+        <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" id="TZS-lU-4w5">
             <rect key="frame" x="0.0" y="0.0" width="400" height="500"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -45,10 +80,10 @@
                                             <subviews>
                                                 <view opaque="NO" contentMode="scaleToFill" restorationIdentifier="CPTWordCloudSKView" translatesAutoresizingMaskIntoConstraints="NO" id="Dcf-67-Dzv" userLabel="CPTWordCloudSKView" customClass="CPTWordCloudSKView">
                                                     <rect key="frame" x="0.0" y="0.0" width="400" height="437.5"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" red="1" green="0.79077105809888326" blue="0.72146191168305596" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" red="0.66472625499794014" green="0.97821343948294015" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
                                                 <constraint firstItem="Dcf-67-Dzv" firstAttribute="centerX" secondItem="5kD-tO-zj4" secondAttribute="centerX" id="RdO-jU-SSw"/>
                                                 <constraint firstItem="Dcf-67-Dzv" firstAttribute="centerY" secondItem="5kD-tO-zj4" secondAttribute="centerY" id="YKs-yR-ksu"/>
@@ -90,19 +125,6 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <connections>
-                <outlet property="cloudBorderView" destination="5kD-tO-zj4" id="ccY-gV-k3J"/>
-                <outlet property="cloudBorderViewHeightConstraint" destination="Ltu-X4-3W9" id="afg-n9-P9B"/>
-                <outlet property="cloudBorderViewWidthConstraint" destination="PEB-wv-BzA" id="vIg-tT-tum"/>
-                <outlet property="cloudContainmentView" destination="20I-jm-f7h" id="jIe-sX-G19"/>
-                <outlet property="cloudViewHeightConstraint" destination="qDj-BY-IrR" id="ARV-qN-hdz"/>
-                <outlet property="cloudViewWidthConstraint" destination="igI-Nm-qTx" id="PGr-qU-yms"/>
-                <outlet property="outerContainmentView" destination="4Jc-Oh-vEc" id="uPL-mR-ZF9"/>
-                <outlet property="titleContainmentView" destination="02P-yL-got" id="7qY-fJ-hNu"/>
-                <outlet property="titleLabel" destination="E36-ac-2Sc" id="PI0-FY-6Az"/>
-                <outlet property="verticalStackView" destination="crH-wY-7YI" id="Gqw-54-mai"/>
-                <outlet property="wordCloudSKView" destination="Dcf-67-Dzv" id="l26-nt-0my"/>
-            </connections>
             <point key="canvasLocation" x="139" y="153"/>
         </view>
     </objects>
