@@ -150,8 +150,9 @@ IB_DESIGNABLE
     self.cloudBorderView.backgroundColor = self.cloudAreaBackgroundColor;
     
     self.titleLabel.textColor = self.titleColor;
+    CGSize titleAreaSize = self.titleLabel.bounds.size;
     
-    CGFloat fontSize = [self fontSizeForString:self.titleString toFitSize:self.titleLabel.bounds.size withFont:self.titleFont minFontScale:0.1 maxFontSize:60 lineBreakMode:NSLineBreakByClipping alignment:NSTextAlignmentCenter];
+    CGFloat fontSize = [self fontSizeForString:self.titleString toFitSize:self.titleLabel.bounds.size withFont:self.titleFont minFontScale:0.1 maxFontSize:titleAreaSize.height lineBreakMode:NSLineBreakByClipping alignment:NSTextAlignmentCenter];
     self.titleLabel.font = [self.titleFont fontWithSize:fontSize];
     self.titleLabel.text = self.titleString;
 }
@@ -229,6 +230,14 @@ IB_DESIGNABLE
     }
 }
 
+/// Calculates a font size in points that will allow the supplied string to be displayed within the given boxSize using the font at min/max size, linebreak mode, and alignment.
+/// @param string The string to be displayed
+/// @param boxSize The target drawing area size into which the string will be drawn.
+/// @param font The font to be used for drawing the string. The supplied font can be of any size - this will be adjusted based on the min/max values supplied.
+/// @param minFontScale The scaling factor to be used to calculate the minimum font size. (E.g. If minFontScale = 0.1 and maxFontSize = 60, then the minimum font size in the calculation will be 6 points.) Recommended value = 0.1
+/// @param maxFontSize The maximum font size (in points) to use when trying to fit the string in the boxSize area. Recommended to be no more than 1x the height of the boxSize (to avoid clipping).
+/// @param lineBreakMode NSLineBreakMode to be used when calculating the string drawing parameters
+/// @param alignment NSTextAlignment to be used when calculating the string drawing parameters
 -(CGFloat)fontSizeForString:(NSString *)string toFitSize:(CGSize)boxSize withFont:(UIFont *)font minFontScale:(CGFloat)minFontScale maxFontSize:(CGFloat)maxFontSize lineBreakMode:(NSLineBreakMode)lineBreakMode alignment:(NSTextAlignment)alignment;
 {
     if (0 >= minFontScale) {

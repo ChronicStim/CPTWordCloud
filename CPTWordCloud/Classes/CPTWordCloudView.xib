@@ -44,7 +44,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" id="TZS-lU-4w5">
+        <view opaque="NO" contentMode="scaleToFill" id="TZS-lU-4w5">
             <rect key="frame" x="0.0" y="0.0" width="400" height="500"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -57,7 +57,7 @@
                                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="02P-yL-got">
                                     <rect key="frame" x="0.0" y="0.0" width="400" height="62.5"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word Cloud Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="E36-ac-2Sc">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Word Cloud Title" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="E36-ac-2Sc">
                                             <rect key="frame" x="0.0" y="0.0" width="400" height="62.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                             <nil key="textColor"/>
@@ -66,9 +66,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
+                                        <constraint firstItem="E36-ac-2Sc" firstAttribute="centerY" secondItem="02P-yL-got" secondAttribute="centerY" id="LKw-fL-WwO"/>
                                         <constraint firstItem="E36-ac-2Sc" firstAttribute="centerX" secondItem="02P-yL-got" secondAttribute="centerX" id="eAf-mD-Bv9"/>
-                                        <constraint firstAttribute="bottom" secondItem="E36-ac-2Sc" secondAttribute="bottom" id="ljU-yT-nXc"/>
-                                        <constraint firstItem="E36-ac-2Sc" firstAttribute="top" secondItem="02P-yL-got" secondAttribute="top" id="rxN-en-bc2"/>
+                                        <constraint firstItem="E36-ac-2Sc" firstAttribute="height" secondItem="02P-yL-got" secondAttribute="height" id="gDX-ln-WzX"/>
                                         <constraint firstItem="E36-ac-2Sc" firstAttribute="width" secondItem="02P-yL-got" secondAttribute="width" id="vJE-Zo-tXF"/>
                                     </constraints>
                                 </view>

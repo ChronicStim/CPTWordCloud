@@ -103,8 +103,8 @@ double lerp(double a, double b, double fraction) {
 -(void)generateSceneWithSortedWords:(NSArray *)sortedWords;
 {
     self.anchorPoint = CGPointMake(0.5, 0.5);
-    self.scaleMode = SKSceneScaleModeResizeFill;
-//    self.scaleMode = SKSceneScaleModeAspectFit;
+//    self.scaleMode = SKSceneScaleModeResizeFill;
+    self.scaleMode = SKSceneScaleModeAspectFit;
     [self.cloudNode removeChildrenInArray:self.currentWordNodes];
     [self removeAllChildren];
     [self.currentWordNodes removeAllObjects];
