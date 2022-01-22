@@ -29,6 +29,7 @@
 
 IB_DESIGNABLE
 @implementation CPTWordCloudView
+@synthesize titleString = _titleString;
 
 -(instancetype)initWithFrame:(CGRect)frame;
 {
@@ -114,7 +115,7 @@ IB_DESIGNABLE
     self.cloudAreaBackgroundColor = [UIColor whiteColor];
     self.titleColor = [UIColor blackColor];
     self.titleFont = [UIFont boldSystemFontOfSize:34];
-    self.titleString = @"Sample Word Cloud Title";
+    self.titleString = nil;
     self.wordCloudInsetsFromBorderAsPercentOfViewWidth = CGSizeMake(5, 5);
     
 }
@@ -212,6 +213,16 @@ IB_DESIGNABLE
         _titleFont = titleFont;
         [self setNeedsDisplay];
     }
+}
+
+-(NSString *)titleString;
+{
+    if (nil != _titleString) {
+        return _titleString;
+    }
+    
+    _titleString = self.wordCloud.wordCloudDisplayTitle;
+    return _titleString;
 }
 
 -(void)setTitleString:(NSString *)titleString;

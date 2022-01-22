@@ -90,6 +90,9 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 /// SpriteKit scene used to build the wordCloud
 @property (nonatomic, strong, readonly) CPTWordCloudSKScene *wordCloudSKScene;
 
+/// String to display above the word cloud as a title
+@property (nonatomic, strong) NSString *wordCloudDisplayTitle;
+
 - (void)rebuild:(NSArray*)words;
 
 // add words to the wordCloud

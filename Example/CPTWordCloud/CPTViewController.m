@@ -160,6 +160,7 @@
     }
     
     _wordCloudAlpha = [[CPTWordCloud alloc] init];
+    _wordCloudAlpha.wordCloudDisplayTitle = @"Demo 1 - Alice in Wonderland";
     _wordCloudAlpha.lowCountColor = [UIColor colorWithRed:0.022 green:0.000 blue:0.751 alpha:1.000];
     _wordCloudAlpha.highCountColor = [UIColor colorWithRed:0.751 green:0.000 blue:0.052 alpha:1.000];
     
@@ -186,7 +187,7 @@
     }
     
     _wordCloudBeta = [[CPTWordCloud alloc] init];
-    
+    _wordCloudBeta.wordCloudDisplayTitle = @"Demo 2 - Random Word List";
     _wordCloudBeta.lowCountColor = [UIColor greenColor];
     _wordCloudBeta.highCountColor = [UIColor orangeColor];
     
@@ -214,6 +215,7 @@
     }
     
     _wordCloudGamma = [[CPTWordCloud alloc] init];
+    _wordCloudGamma.wordCloudDisplayTitle = @"Demo 3 - 20,000 Leagues";
     _wordCloudGamma.lowCountColor = [UIColor colorWithRed:0.537 green:0.000 blue:0.751 alpha:1.000];
     _wordCloudGamma.highCountColor = [UIColor colorWithRed:0.751 green:0.430 blue:0.000 alpha:1.000];
     
@@ -241,26 +243,22 @@
     if (nil != self.wordCloudView) {
         
         CPTWordCloud *wordCloud = nil;
-        NSString *demoTitleString = nil;
         
         if ([mode isEqualToString:@"Alpha"]) {
 
             wordCloud = self.wordCloudAlpha;
-            demoTitleString = @"Word Cloud Demo 1";
         }
         else if ([mode isEqualToString:@"Beta"]) {
             
             wordCloud = self.wordCloudBeta;
-            demoTitleString = @"Word Cloud Demo 2";
         }
         else if ([mode isEqualToString:@"Gamma"]) {
             
             wordCloud = self.wordCloudGamma;
-            demoTitleString = @"Word Cloud Demo 3";
         }
 
         [self.wordCloudView assignWordCloud:wordCloud];
-        self.wordCloudView.titleString = demoTitleString;
+        self.wordCloudView.titleString = wordCloud.wordCloudDisplayTitle;
         
         [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.scalingMode];
         self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordRotation;

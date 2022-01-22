@@ -752,4 +752,13 @@
     }
 }
 
+-(void)setWordCloudDisplayTitle:(NSString *)wordCloudDisplayTitle;
+{
+    if (![wordCloudDisplayTitle isEqualToString:_wordCloudDisplayTitle]) {
+        _wordCloudDisplayTitle = wordCloudDisplayTitle;
+        
+        [self setNeedsUpdateCloudSceneWithRegenerateNodes:NO];
+    }
+}
+
 @end
