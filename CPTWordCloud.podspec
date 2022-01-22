@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CPTWordCloud'
-  s.version          = '0.1.18'
+  s.version          = '1.0.0'
   s.summary          = 'Framework used to create a word cloud graphic from an input of string content.'
 
 # This description is used to generate tags and improve search results.
