@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 
 @property (nonatomic, weak) id <CPTWordCloudDelegate> delegate;
 
-// if specified, display only the most frequent words. default is unlimited
+// if specified, display only the most frequent words. Set to zero to make unlimited. (default == 100)
 @property (nonatomic) int maxNumberOfWords;
 
 // ignore all words shorter than this. defaults to 3
@@ -97,6 +97,7 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 - (void)addWords:(NSArray*)words;
 - (void)addWord:(NSString*)word;
 - (void)addWordsWithCounts:(NSDictionary <NSString *, NSNumber *> *)wordsWithCounts;
+- (void)loadWordsFromPath:(NSString *)filePath;
 
 // remove words from wordCloud
 - (void)removeWord:(NSString*)word;

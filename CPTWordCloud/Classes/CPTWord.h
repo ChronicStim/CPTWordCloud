@@ -12,6 +12,7 @@
 
 @property (nonatomic, retain, readonly) NSString* text;
 @property (nonatomic) int count;
+@property (nonatomic, readonly) NSUInteger wordLength;
 @property (nonatomic) CGPoint wordOrigin;
 @property (nonatomic) CGRect wordGlyphBounds;
 @property (nonatomic, strong) NSArray *wordGlyphRects;

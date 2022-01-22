@@ -20,10 +20,15 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *rotationMethodSegmentedControl;
 @property (nonatomic) CPTWordCloud *wordCloudAlpha;
 @property (nonatomic) CPTWordCloud *wordCloudBeta;
+@property (nonatomic) CPTWordCloud *wordCloudGamma;
 @property (weak, nonatomic) IBOutlet UIView *wordCloudContainmentView;
+@property (weak, nonatomic) IBOutlet UISwitch *blendColorModeSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *filterStopWordsSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *showRectButton;
 
-- (IBAction)initializeAlphaButtonPressed:(id)sender;
-- (IBAction)initializeBetaButtonPressed:(id)sender;
+- (IBAction)showDemo1ButtonPressed:(id)sender;
+- (IBAction)showDemo2ButtonPressed:(id)sender;
+- (IBAction)showDemo3ButtonPressed:(id)sender;
 - (IBAction)regenerateCloudButtonPressed:(id)sender;
 - (IBAction)showImageButtonPressed:(id)sender;
 - (IBAction)randomizeFontsButtonPressed:(id)sender;
@@ -52,15 +57,21 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)initializeAlphaButtonPressed:(id)sender {
+- (IBAction)showDemo1ButtonPressed:(id)sender {
     if (self.wordCloudView) {
         [self initializeWordCloud:@"Alpha"];
     }
 }
 
-- (IBAction)initializeBetaButtonPressed:(id)sender {
+- (IBAction)showDemo2ButtonPressed:(id)sender {
     if (self.wordCloudView) {
         [self initializeWordCloud:@"Beta"];
+    }
+}
+
+- (IBAction)showDemo3ButtonPressed:(id)sender {
+    if (self.wordCloudView) {
+        [self initializeWordCloud:@"Gamma"];
     }
 }
 
@@ -156,7 +167,9 @@
     
     _wordCloudAlpha.probabilityOfWordRotation = 0.8f;
     _wordCloudAlpha.rotationMode = CPTWordRotationMode_Deg30;
-    
+    _wordCloudAlpha.maxNumberOfWords = 0;
+    _wordCloudAlpha.minimumWordLength = 2;
+
     _wordCloudAlpha.usingRandomFontPerWord = NO;
     
     _wordCloudAlpha.convertingAllWordsToLowercase = YES;
@@ -174,9 +187,6 @@
     
     _wordCloudBeta = [[CPTWordCloud alloc] init];
     
-//    _wordCloudBeta.minFontSize = 50;
-//    _wordCloudBeta.maxFontSize = 200;
-    
     _wordCloudBeta.lowCountColor = [UIColor greenColor];
     _wordCloudBeta.highCountColor = [UIColor orangeColor];
     
@@ -186,7 +196,8 @@
     
     _wordCloudBeta.rotationMode = CPTWordRotationMode_HorizVertOnly;
     _wordCloudBeta.probabilityOfWordRotation = 0.2f;
-    
+    _wordCloudBeta.maxNumberOfWords = 0;
+
     _wordCloudBeta.usingRandomFontPerWord = NO;
     
     _wordCloudBeta.convertingAllWordsToLowercase = NO;
@@ -196,32 +207,68 @@
     return _wordCloudBeta;
 }
 
+-(CPTWordCloud *)wordCloudGamma;
+{
+    if (nil != _wordCloudGamma) {
+        return _wordCloudGamma;
+    }
+    
+    _wordCloudGamma = [[CPTWordCloud alloc] init];
+    _wordCloudGamma.lowCountColor = [UIColor colorWithRed:0.537 green:0.000 blue:0.751 alpha:1.000];
+    _wordCloudGamma.highCountColor = [UIColor colorWithRed:0.751 green:0.430 blue:0.000 alpha:1.000];
+    
+    _wordCloudGamma.scalingMode = CPTWordScalingMode_logN;
+    _wordCloudGamma.maxNumberOfWords = 150;
+    _wordCloudGamma.minimumWordLength = 3;
+
+    _wordCloudGamma.probabilityOfWordRotation = 0.8f;
+    _wordCloudGamma.rotationMode = CPTWordRotationMode_Deg30;
+    _wordCloudGamma.filteringStopWords = YES;
+    _wordCloudGamma.colorMappingHSBBased = YES;
+    
+    _wordCloudGamma.usingRandomFontPerWord = NO;
+    
+    _wordCloudGamma.convertingAllWordsToLowercase = YES;
+    
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"TwentyThousandLeagues" ofType:@"txt"];
+    [_wordCloudGamma loadWordsFromPath:filePath];
+    
+    return _wordCloudGamma;
+}
+
 -(void)initializeWordCloud:(NSString *)mode;
 {
     if (nil != self.wordCloudView) {
         
+        CPTWordCloud *wordCloud = nil;
+        NSString *demoTitleString = nil;
+        
         if ([mode isEqualToString:@"Alpha"]) {
 
-            [self.wordCloudView assignWordCloud:self.wordCloudAlpha];
-            self.wordCloudView.titleString = @"Word Cloud Demo Alpha";
-            
-            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)_wordCloudAlpha.scalingMode];
-            self.verticalProbabilitySlider.value = _wordCloudAlpha.probabilityOfWordRotation;
-            self.rotationMethodSegmentedControl.selectedSegmentIndex = (int)_wordCloudAlpha.rotationMode;
-            [self.useRandomFontButton setTitle:(_wordCloudAlpha.isUsingRandomFontPerWord ? @"Use Single Font" : @"Use Random Fonts") forState:UIControlStateNormal];
-
+            wordCloud = self.wordCloudAlpha;
+            demoTitleString = @"Word Cloud Demo 1";
         }
         else if ([mode isEqualToString:@"Beta"]) {
             
-            [self.wordCloudView assignWordCloud:self.wordCloudBeta];
-            self.wordCloudView.titleString = @"Word Cloud Demo Beta";
-
-            [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)_wordCloudBeta.scalingMode];
-            self.verticalProbabilitySlider.value = _wordCloudBeta.probabilityOfWordRotation;
-            self.rotationMethodSegmentedControl.selectedSegmentIndex = (int)_wordCloudBeta.rotationMode;
-            [self.useRandomFontButton setTitle:(_wordCloudBeta.isUsingRandomFontPerWord ? @"Use Single Font" : @"Use Random Fonts") forState:UIControlStateNormal];
-
+            wordCloud = self.wordCloudBeta;
+            demoTitleString = @"Word Cloud Demo 2";
         }
+        else if ([mode isEqualToString:@"Gamma"]) {
+            
+            wordCloud = self.wordCloudGamma;
+            demoTitleString = @"Word Cloud Demo 3";
+        }
+
+        [self.wordCloudView assignWordCloud:wordCloud];
+        self.wordCloudView.titleString = demoTitleString;
+        
+        [self.fontSizingMethodSelector setSelectedSegmentIndex:(int)wordCloud.scalingMode];
+        self.verticalProbabilitySlider.value = wordCloud.probabilityOfWordRotation;
+        self.rotationMethodSegmentedControl.selectedSegmentIndex = (int)wordCloud.rotationMode;
+        [self.useRandomFontButton setTitle:(wordCloud.isUsingRandomFontPerWord ? @"Use Single Font" : @"Use Random Fonts") forState:UIControlStateNormal];
+        self.blendColorModeSwitch.on = wordCloud.isColorMappingHSBBased;
+        self.filterStopWordsSwitch.on = wordCloud.isFilteringStopWords;
+        [self.showRectButton setTitle:(wordCloud.wordOutlineColor == [UIColor clearColor] ? @"Show RECTs" : @"Hide RECTs") forState:UIControlStateNormal];
     }
 }
 

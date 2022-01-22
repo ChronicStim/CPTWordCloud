@@ -38,7 +38,7 @@
     if (self = [super init])
     {
         // defaults
-        _maxNumberOfWords = 0;
+        _maxNumberOfWords = 100;
         _minimumWordLength = 1;
         _probabilityOfWordRotation = 0.0f;
         _usingRandomFontPerWord = NO;
@@ -84,6 +84,31 @@
 {
     [self removeAllWords];
     [self addWords:words];
+}
+
+- (void)loadWordsFromPath:(NSString *)filePath;
+{
+    NSString *stringFromFile = nil;
+    if (nil != filePath) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:filePath]) {
+            NSError *error = nil;
+            stringFromFile = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+            if (nil != error) {
+                NSLog(@"Error reading string from file: %@; Error %@",filePath,[error description]);
+            }
+        }
+    }
+    
+    if (stringFromFile) {
+        NSMutableArray * words = [NSMutableArray array];
+        [stringFromFile enumerateSubstringsInRange:(NSRange){0, [stringFromFile length]}
+                                       options:NSStringEnumerationByWords
+                                    usingBlock:^(NSString * substring, NSRange r, NSRange s, BOOL * b){
+            [words addObject:substring];
+        }];
+        [self addWords:words];
+    }
 }
 
 - (void) addWords:(NSString*)wordString delimiter:(NSString*)delimiter
@@ -277,8 +302,6 @@
     if (!word.length) return;
     // trim non-letter characters and convert to lower case
     NSString* cleanWord = [self cleanWordForWord:word];
-    // ignore all words shorter than the minimum word length
-    if (cleanWord.length < self.minimumWordLength) return;
         
     CPTWord* cptword = [self wordForCleanWord:cleanWord];
     [self updateWord:cptword withCount:cptword.count+1];
@@ -299,8 +322,6 @@
     if (!word.length) return;
     // trim non-letter characters and convert to lower case
     NSString* cleanWord = [self cleanWordForWord:word];
-    // ignore all words shorter than the minimum word length
-    if (cleanWord.length < self.minimumWordLength) return;
     
     CPTWord* cptword = [self wordForCleanWord:cleanWord];
     [self updateWord:cptword withCount:count];
@@ -335,9 +356,20 @@
         NSPredicate *stopwordsPredicate = [NSPredicate predicateWithFormat:@"%K == NO",@"stopword"];
         predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate,stopwordsPredicate]];
     }
+    if (0 < self.minimumWordLength) {
+        // Filter words less than the min wordLength
+        NSPredicate *minWordLengthPredicate = [NSPredicate predicateWithFormat:@"%K >= %i",@"wordLength",(int)self.minimumWordLength];
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate,minWordLengthPredicate]];
+    }
     
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"count" ascending:FALSE];
-    _sortedWords = [[_wordCounts.allValues filteredArrayUsingPredicate:predicate] sortedArrayUsingDescriptors:@[sortDescriptor]];
+    NSArray *allSortedWords = [[_wordCounts.allValues filteredArrayUsingPredicate:predicate] sortedArrayUsingDescriptors:@[sortDescriptor]];
+    if (0 < self.maxNumberOfWords) {
+        _sortedWords = [allSortedWords subarrayWithRange:NSMakeRange(0,MIN([allSortedWords count], self.maxNumberOfWords))];
+    }
+    else {
+        _sortedWords = allSortedWords;
+    }
 }
 
 -(GKRandomSource *)randomSource;
@@ -628,7 +660,7 @@
 {
     if (maxNumberOfWords == self.maxNumberOfWords) return;
     
-    _maxFontSize = maxNumberOfWords;
+    _maxNumberOfWords = maxNumberOfWords;
     [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
 }
 
@@ -637,7 +669,7 @@
     if (minimumWordLength == self.minimumWordLength) return;    
     _minimumWordLength = minimumWordLength;
     
-    [self rebuild:[_wordCounts.allKeys copy]];
+    [self setNeedsUpdateCloudSceneWithRegenerateNodes:YES];
 }
 
 -(void)setProbabilityOfWordRotation:(CGFloat)probabilityOfWordRotation;

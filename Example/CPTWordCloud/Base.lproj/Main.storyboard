@@ -57,33 +57,48 @@
                                                         <rect key="frame" x="83.5" y="0.0" width="328.5" height="50"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EeR-24-QWW">
-                                                                <rect key="frame" x="0.0" y="3" width="164" height="44"/>
-                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <rect key="frame" x="0.0" y="3" width="109.5" height="44"/>
+                                                                <color key="backgroundColor" systemColor="systemPinkColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="44" id="P97-fo-D7n"/>
                                                                 </constraints>
                                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <state key="normal" title="Demo Alpha">
+                                                                <state key="normal" title="Demo 1">
                                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="initializeAlphaButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="DEK-FX-N53"/>
+                                                                    <action selector="showDemo1ButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="DEK-FX-N53"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3z6-Q4-vKz">
-                                                                <rect key="frame" x="164" y="3" width="164.5" height="44"/>
-                                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <rect key="frame" x="109.5" y="3" width="109.5" height="44"/>
+                                                                <color key="backgroundColor" systemColor="systemBlueColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="44" id="sHG-h9-WkG"/>
                                                                 </constraints>
                                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <state key="normal" title="Demo Beta">
+                                                                <state key="normal" title="Demo 2">
                                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="initializeBetaButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="bxD-eG-8hl"/>
+                                                                    <action selector="showDemo2ButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="bxD-eG-8hl"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Msi-4y-Gi1">
+                                                                <rect key="frame" x="219" y="3" width="109.5" height="44"/>
+                                                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="44" id="u1j-AX-gO8"/>
+                                                                </constraints>
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <state key="normal" title="Demo 3">
+                                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="showDemo3ButtonPressed:" destination="whP-gf-Uak" eventType="touchUpInside" id="Xgd-Hy-3Zr"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -513,8 +528,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="blendColorModeSwitch" destination="9Xc-4z-OfG" id="ua0-FP-deo"/>
+                        <outlet property="filterStopWordsSwitch" destination="MPH-hx-6KO" id="KOJ-dF-0Bp"/>
                         <outlet property="fontSizingMethodSelector" destination="mvw-3h-YPK" id="Tas-ad-JuL"/>
                         <outlet property="rotationMethodSegmentedControl" destination="Fwi-5j-Xk7" id="nXC-qg-3WL"/>
+                        <outlet property="showRectButton" destination="agn-OS-cL2" id="W3Z-kT-nJB"/>
                         <outlet property="useRandomFontButton" destination="Siy-2V-B7B" id="prx-Wz-yDf"/>
                         <outlet property="verticalProbabilitySlider" destination="wAC-OA-6Fw" id="dRa-EW-pGq"/>
                         <outlet property="wordCloudContainmentView" destination="Y2W-uC-oVE" id="quG-uw-a5U"/>
@@ -560,11 +578,17 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBrownColor">
             <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPurpleColor">
             <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

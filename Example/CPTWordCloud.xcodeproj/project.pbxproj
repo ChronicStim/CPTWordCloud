@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		295BA473279B1BA4002D1801 /* TwentyThousandLeagues.txt in Resources */ = {isa = PBXBuildFile; fileRef = 295BA472279B1BA4002D1801 /* TwentyThousandLeagues.txt */; };
 		298A6FA32735845B00116249 /* CPTPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298A6FA22735845B00116249 /* CPTPopoverViewController.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		25434103A90D0A5492614DD3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		295BA472279B1BA4002D1801 /* TwentyThousandLeagues.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TwentyThousandLeagues.txt; sourceTree = "<group>"; };
 		298A6FA12735845A00116249 /* CPTPopoverViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPTPopoverViewController.h; sourceTree = "<group>"; };
 		298A6FA22735845B00116249 /* CPTPopoverViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPTPopoverViewController.m; sourceTree = "<group>"; };
 		2B8424717245264E62954E5F /* Pods_CPTWordCloud_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CPTWordCloud_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +148,7 @@
 		6003F593195388D20070C39A /* Example for CPTWordCloud */ = {
 			isa = PBXGroup;
 			children = (
+				295BA472279B1BA4002D1801 /* TwentyThousandLeagues.txt */,
 				6003F59C195388D20070C39A /* CPTAppDelegate.h */,
 				6003F59D195388D20070C39A /* CPTAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -286,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
+				295BA473279B1BA4002D1801 /* TwentyThousandLeagues.txt in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,

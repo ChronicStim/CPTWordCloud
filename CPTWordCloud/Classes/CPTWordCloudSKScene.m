@@ -122,7 +122,10 @@ double lerp(double a, double b, double fraction) {
     [self.unionNode setStrokeColor:[UIColor clearColor]];
     [self.cloudNode addChild:self.unionNode];
     
-    int wordLimit = self.wordCloud.maxNumberOfWords ? self.wordCloud.maxNumberOfWords : (int)sortedWords.count;
+    int wordLimit = (int)sortedWords.count;
+    if (0 < self.wordCloud.maxNumberOfWords) {
+        wordLimit = MIN((int)sortedWords.count, (int)self.wordCloud.maxNumberOfWords);
+    }
     for (int index=0; index < wordLimit; index++)
     {
         CPTWord* word = [sortedWords objectAtIndex:index];

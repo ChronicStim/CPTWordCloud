@@ -16,6 +16,7 @@
     {
         _text = word;
         _count = count;
+        _wordLength = [word length];
         _color = [UIColor blackColor];
         _rotationTransform = CGAffineTransformIdentity;
         _scalingTransform = CGAffineTransformIdentity;

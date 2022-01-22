@@ -316,12 +316,13 @@ IB_DESIGNABLE
 {
     CGContextRef c = UIGraphicsGetCurrentContext();
     
-    [self updateCloudViewFeatures];
     [self drawWordCloudInContext:c];
 }
 
 -(void)drawWordCloudInContext:(CGContextRef)context;
 {
+    [self updateCloudViewFeatures];
+
     CGContextSaveGState(context);
 
     CGRect titleFrame = [self.titleLabel convertRect:self.titleLabel.frame toView:self];
