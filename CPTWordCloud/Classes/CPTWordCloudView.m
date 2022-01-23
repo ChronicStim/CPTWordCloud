@@ -166,6 +166,11 @@ IB_DESIGNABLE
     [self.wordCloudSKView assignWordCloud:wordCloud];
 }
 
+-(CPTWordCloud __weak *)wordCloud;
+{
+    return self.wordCloudSKView.wordCloud;
+}
+
 -(void)setBorderWidthAsPercentOfViewWidth:(CGFloat)borderWidthAsPercentOfViewWidth;
 {
     if (borderWidthAsPercentOfViewWidth != _borderWidthAsPercentOfViewWidth) {
@@ -251,6 +256,10 @@ IB_DESIGNABLE
 /// @param alignment NSTextAlignment to be used when calculating the string drawing parameters
 -(CGFloat)fontSizeForString:(NSString *)string toFitSize:(CGSize)boxSize withFont:(UIFont *)font minFontScale:(CGFloat)minFontScale maxFontSize:(CGFloat)maxFontSize lineBreakMode:(NSLineBreakMode)lineBreakMode alignment:(NSTextAlignment)alignment;
 {
+    if (nil == string || 0 == string.length) {
+        return maxFontSize;
+    }
+    
     if (0 >= minFontScale) {
         minFontScale = 0.5f;
     }
