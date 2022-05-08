@@ -156,6 +156,7 @@ double lerp(double a, double b, double fraction) {
         
         CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
         proposedWordFrame = CGRectInset(CTLineGetImageBounds(line, NULL), -self.wordCloud.wordBorderSize.width*2, -self.wordCloud.wordBorderSize.height*2);
+        CFRelease(line);
         
         // Store wordFrame with CPTWord object
         word.wordGlyphBounds = proposedWordFrame;
@@ -219,7 +220,9 @@ double lerp(double a, double b, double fraction) {
         // Update the unionNode tracking size of the cloud
         unionRect = CGRectUnion(unionRect,[wordBorder calculateAccumulatedFrame]);
     }
-    [self.unionNode setPath:CGPathCreateWithRect(unionRect, NULL)];
+    CGPathRef unionRectPath = CGPathCreateWithRect(unionRect, NULL);
+    [self.unionNode setPath:unionRectPath];
+    CGPathRelease(unionRectPath);
 
     // Use the unionNode to resize cloudNode to fit placement of shapeNodes
     CGFloat unionRectAR = unionRect.size.width / unionRect.size.height;

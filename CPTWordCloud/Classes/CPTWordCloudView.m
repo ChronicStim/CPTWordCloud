@@ -364,6 +364,7 @@ IB_DESIGNABLE
     CGContextSetStrokeColorWithColor(context, self.borderColor.CGColor);
     CGContextSetLineWidth(context, self.bounds.size.width * self.borderWidthAsPercentOfViewWidth / 100.0f);
     CGContextDrawPath(context, kCGPathStroke);
+    CGPathRelease(rectPath);
     
     CGContextRestoreGState(context);
     CGContextSaveGState(context);
