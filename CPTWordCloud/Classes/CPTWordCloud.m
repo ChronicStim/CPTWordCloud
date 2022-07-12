@@ -32,6 +32,7 @@
 
 @implementation CPTWordCloud
 @synthesize font = _font;
+@synthesize cloudSize = _cloudSize;
 
 - (id) init
 {
@@ -592,9 +593,14 @@
 
 #pragma mark - accessors
 
+-(CGSize)cloudSize;
+{
+    return _cloudSize;
+}
+
 - (void) setCloudSize:(CGSize)cloudSize
 {
-    if (true == CGSizeEqualToSize(cloudSize, self.cloudSize)) return;
+    if (true == CGSizeEqualToSize(cloudSize, _cloudSize)) return;
     _cloudSize = cloudSize;
     if (nil != _wordCloudSKScene) {
         self.wordCloudSKScene.size = _cloudSize;

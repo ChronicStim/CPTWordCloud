@@ -65,7 +65,7 @@ typedef NS_ENUM(NSUInteger, CPTWordRotationMode) {
 @property (nonatomic) CGSize wordBorderSize;
 
 // the size of the word wordCloud
-@property (nonatomic) CGSize cloudSize;
+@property (nonatomic, assign) CGSize cloudSize;
 
 // probability that words are rotated to a vertical position (defaults to 0%)
 @property (nonatomic) CGFloat probabilityOfWordRotation;

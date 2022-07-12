@@ -110,7 +110,12 @@ double lerp(double a, double b, double fraction) {
     [self.currentWordNodes removeAllObjects];
     
     double step = 2;
-    double aspectRatio = self.wordCloud.cloudSize.width / self.wordCloud.cloudSize.height;
+    double aspectRatio = 1.0f;
+    if (nil != self.wordCloud && !(0 == self.wordCloud.cloudSize.width || 0 == self.wordCloud.cloudSize.height)) {
+        // Avoid any situation where we can end up with a zero or undefined aspectRatio
+        aspectRatio = self.wordCloud.cloudSize.width / self.wordCloud.cloudSize.height;
+    }
+    
     CGRect unionRect = CGRectZero;
     
     self.cloudNode = [SKSpriteNode spriteNodeWithColor:[UIColor whiteColor] size:CGSizeZero];
@@ -213,6 +218,9 @@ double lerp(double a, double b, double fraction) {
         word.wordOrigin = wordBorder.position;
         word.rotationAngle = wordBorder.zRotation;
         word.rotationTransform = CGAffineTransformMakeRotation(word.rotationAngle);
+        
+        // Debugging log statement
+        //NSLog(@"wordOrigin: (%.f,%.f); rotationAngle: %.f;",word.wordOrigin.x,word.wordOrigin.y,word.rotationAngle);
         
         // Store the shapeNode to the scene's collection
         [self.currentWordNodes addObject:wordBorder];
