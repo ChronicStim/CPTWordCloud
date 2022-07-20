@@ -160,7 +160,7 @@ double lerp(double a, double b, double fraction) {
         CFAttributedStringRef cfAttrString  = (__bridge CFAttributedStringRef)attrString;
         
         CTLineRef line = CTLineCreateWithAttributedString(cfAttrString);
-        proposedWordFrame = CGRectInset(CTLineGetImageBounds(line, NULL), -self.wordCloud.wordBorderSize.width*2, -self.wordCloud.wordBorderSize.height*2);
+        proposedWordFrame = CGRectIntegral(CGRectInset(CTLineGetImageBounds(line, NULL), -self.wordCloud.wordBorderSize.width*2, -self.wordCloud.wordBorderSize.height*2));
         CFRelease(line);
         
         // Store wordFrame with CPTWord object
@@ -170,7 +170,7 @@ double lerp(double a, double b, double fraction) {
         SKShapeNode *wordBorder = [SKShapeNode shapeNodeWithRect:proposedWordFrame];
         wordBorder.strokeColor = self.wordOutlineColor; // for debugging
         // Initially place in center of scene
-        wordBorder.position = CGPointMake(-proposedWordFrame.size.width/2.0f, -proposedWordFrame.size.height/2.0f);
+        wordBorder.position = CGPointMake(roundf(-proposedWordFrame.size.width/2.0f), roundf(-proposedWordFrame.size.height/2.0f));
         wordBorder.zRotation = word.rotationAngle;
         wordBorder.name = word.text;
         wordBorder.userData = [NSMutableDictionary dictionaryWithDictionary:@{ kCPTWordCloudWordCount : @(word.count)}];
@@ -205,8 +205,14 @@ double lerp(double a, double b, double fraction) {
                     radius += step;
                     angle += angleStep;
                     
-                    int xPos = wordBorder.position.x + (radius * cos(angle)) * aspectRatio;
-                    int yPos = wordBorder.position.y + radius * sin(angle);
+                    if ((CGFLOAT_MIN >= radius || CGFLOAT_MAX <= radius) || (CGFLOAT_MIN >= angle || CGFLOAT_MAX <= angle)) {
+                        // If limits are exceeded, start the process over
+                        radius = 0;
+                        angle = 10 * random();
+                    }
+
+                    CGFloat xPos = roundf(wordBorder.position.x + (radius * cos(angle)) * aspectRatio);
+                    CGFloat yPos = roundf(wordBorder.position.y + radius * sin(angle));
                     
                     wordBorder.position = CGPointMake(xPos, yPos);
                     break;
@@ -226,7 +232,7 @@ double lerp(double a, double b, double fraction) {
         [self.currentWordNodes addObject:wordBorder];
         
         // Update the unionNode tracking size of the cloud
-        unionRect = CGRectUnion(unionRect,[wordBorder calculateAccumulatedFrame]);
+        unionRect = CGRectIntegral(CGRectUnion(unionRect,[wordBorder calculateAccumulatedFrame]));
     }
     CGPathRef unionRectPath = CGPathCreateWithRect(unionRect, NULL);
     [self.unionNode setPath:unionRectPath];
