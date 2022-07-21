@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>Driving - Long Distance</string>
+	<string>Driving - Stop &amp; Go</string>
+	<string>Phone calls</string>
+	<string>Playing with the kids</string>
+	<string>House Cleaning</string>
+	<string>Lack of Sleep</string>
+	<string>Weather - Rain</string>
+	<string>Weather - Cold</string>
+	<string>Noise</string>
+	<string>Physical Exertion</string>
+	<string>Depression</string>
+	<string>Walking</string>
+	<string>Exercise/Stretching</string>
+	<string>Second Hand Smoke Exposure</string>
+	<string>Caffine / Soft Drinks</string>
+	<string>Bright Lights / Sunlight</string>
+	<string>Cough / Cold</string>
+	<string>Too much time on Computer</string>
+	<string>Menstrual Cycle</string>
+	<string>Alcohol</string>
+	<string>Sinus Pressure</string>
+	<string>Stress</string>
+	<string>Anxiety</string>
+	<string>Illness</string>
+</array>
+</plist>

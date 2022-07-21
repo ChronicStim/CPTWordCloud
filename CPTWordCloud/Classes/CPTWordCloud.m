@@ -446,10 +446,22 @@
             case CPTWordScalingMode_logN: {
                 // Use word frequency (count) to determine font sizing from min to max based on an logarithmic ramp
                 CGFloat maxCount = (float)_topWord.count;
-                CGFloat minCount = (_bottomWord.count > 0) ? (float)_bottomWord.count : 1.0f;
-                CGFloat a = ((float)minValue - (float)maxValue)/(log10f(minCount)-log10f(maxCount));
-                CGFloat b = powf(10, (float)minValue/a)/minCount;
-                scaledValue = a * log10f(b * (float)count);
+                CGFloat minCount = (float)_bottomWord.count;
+                if (0 == minCount || 0 == count) {
+                    // For scaling equation, bump min & max by 1 to avoid inf value
+                    minCount = 1;
+                    maxCount += 1;
+                    count += 1;
+                }
+                if (minCount == maxCount) {
+                    // To avoid inf value
+                    scaledValue = minValue;
+                }
+                else {
+                    CGFloat a = ((float)minValue - (float)maxValue)/(log10f(minCount)-log10f(maxCount));
+                    CGFloat b = powf(10, (float)minValue/a)/minCount;
+                    scaledValue = a * log10f(b * (float)count);
+                }
             }   break;
             default:
                 break;

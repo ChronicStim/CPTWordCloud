@@ -210,7 +210,7 @@ double lerp(double a, double b, double fraction) {
                         radius = 0;
                         angle = 10 * random();
                     }
-
+                    
                     CGFloat xPos = roundf(wordBorder.position.x + (radius * cos(angle)) * aspectRatio);
                     CGFloat yPos = roundf(wordBorder.position.y + radius * sin(angle));
                     

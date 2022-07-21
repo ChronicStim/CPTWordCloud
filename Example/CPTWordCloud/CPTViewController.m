@@ -21,6 +21,7 @@
 @property (nonatomic) CPTWordCloud *wordCloudAlpha;
 @property (nonatomic) CPTWordCloud *wordCloudBeta;
 @property (nonatomic) CPTWordCloud *wordCloudGamma;
+@property (nonatomic) CPTWordCloud *wordCloudDelta;
 @property (weak, nonatomic) IBOutlet UIView *wordCloudContainmentView;
 @property (weak, nonatomic) IBOutlet UISwitch *blendColorModeSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *filterStopWordsSwitch;
@@ -29,6 +30,7 @@
 - (IBAction)showDemo1ButtonPressed:(id)sender;
 - (IBAction)showDemo2ButtonPressed:(id)sender;
 - (IBAction)showDemo3ButtonPressed:(id)sender;
+- (IBAction)showDemo4ButtonPressed:(id)sender;
 - (IBAction)regenerateCloudButtonPressed:(id)sender;
 - (IBAction)showImageButtonPressed:(id)sender;
 - (IBAction)randomizeFontsButtonPressed:(id)sender;
@@ -72,6 +74,12 @@
 - (IBAction)showDemo3ButtonPressed:(id)sender {
     if (self.wordCloudView) {
         [self initializeWordCloud:@"Gamma"];
+    }
+}
+
+- (IBAction)showDemo4ButtonPressed:(id)sender {
+    if (self.wordCloudView) {
+        [self initializeWordCloud:@"Delta"];
     }
 }
 
@@ -238,6 +246,50 @@
     return _wordCloudGamma;
 }
 
+-(CPTWordCloud *)wordCloudDelta;
+{
+    if (nil != _wordCloudDelta) {
+        return _wordCloudDelta;
+    }
+    
+    _wordCloudDelta = [[CPTWordCloud alloc] init];
+    _wordCloudDelta.wordCloudDisplayTitle = @"Demo 4 - Multi-Word Phrases";
+    _wordCloudDelta.lowCountColor = [UIColor colorWithRed:0.537 green:0.000 blue:0.751 alpha:1.000];
+    _wordCloudDelta.highCountColor = [UIColor colorWithRed:0.751 green:0.430 blue:0.000 alpha:1.000];
+    
+    _wordCloudDelta.scalingMode = CPTWordScalingMode_logN;
+    _wordCloudDelta.maxNumberOfWords = 50;
+    _wordCloudDelta.minimumWordLength = 3;
+    
+    _wordCloudDelta.probabilityOfWordRotation = 0.5f;
+    _wordCloudDelta.rotationMode = CPTWordRotationMode_NoRotation;
+    _wordCloudDelta.filteringStopWords = YES;
+    _wordCloudDelta.colorMappingHSBBased = YES;
+    
+    _wordCloudDelta.usingRandomFontPerWord = NO;
+    
+    _wordCloudDelta.convertingAllWordsToLowercase = YES;
+    
+    _wordCloudDelta.wordWithCountOfZeroDisplayed = YES;
+    _wordCloudDelta.minFontSize = 40.0f;
+    _wordCloudDelta.maxFontSize = 100.0f;
+    _wordCloudDelta.wordBorderSize = CGSizeMake(8, 2);
+    _wordCloudDelta.zeroCountColor = [UIColor lightGrayColor];
+    _wordCloudDelta.convertingAllWordsToLowercase = NO;
+    _wordCloudDelta.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:_wordCloudDelta.minFontSize];
+    
+    NSArray *words = [NSArray arrayWithContentsOfURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"WordCloudDeltaPhrases" ofType:@"plist"]]];
+    NSMutableDictionary *mutDict = [[NSMutableDictionary alloc] initWithCapacity:words.count];
+    for (NSString *word in words) {
+        NSInteger randomCount = arc4random() % 4;
+        [mutDict setObject:@(randomCount) forKey:word];
+    }
+    
+    [_wordCloudDelta addWordsWithCounts:[NSDictionary dictionaryWithDictionary:mutDict]];
+    
+    return _wordCloudDelta;
+}
+
 -(void)initializeWordCloud:(NSString *)mode;
 {
     if (nil != self.wordCloudView) {
@@ -255,6 +307,10 @@
         else if ([mode isEqualToString:@"Gamma"]) {
             
             wordCloud = self.wordCloudGamma;
+        }
+        else if ([mode isEqualToString:@"Delta"]) {
+            
+            wordCloud = self.wordCloudDelta;
         }
 
         [self.wordCloudView assignWordCloud:wordCloud];

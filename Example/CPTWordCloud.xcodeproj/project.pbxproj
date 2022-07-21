@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		295BA473279B1BA4002D1801 /* TwentyThousandLeagues.txt in Resources */ = {isa = PBXBuildFile; fileRef = 295BA472279B1BA4002D1801 /* TwentyThousandLeagues.txt */; };
 		298A6FA32735845B00116249 /* CPTPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 298A6FA22735845B00116249 /* CPTPopoverViewController.m */; };
+		29D6D2F228899D77007BCCB1 /* WordCloudDeltaPhrases.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D6D2F128899D77007BCCB1 /* WordCloudDeltaPhrases.plist */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -43,6 +44,7 @@
 		295BA472279B1BA4002D1801 /* TwentyThousandLeagues.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TwentyThousandLeagues.txt; sourceTree = "<group>"; };
 		298A6FA12735845A00116249 /* CPTPopoverViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPTPopoverViewController.h; sourceTree = "<group>"; };
 		298A6FA22735845B00116249 /* CPTPopoverViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPTPopoverViewController.m; sourceTree = "<group>"; };
+		29D6D2F128899D77007BCCB1 /* WordCloudDeltaPhrases.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WordCloudDeltaPhrases.plist; sourceTree = "<group>"; };
 		2B8424717245264E62954E5F /* Pods_CPTWordCloud_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CPTWordCloud_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37B2B60177BAC7B4937E30C9 /* Pods-CPTWordCloud_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CPTWordCloud_Example.debug.xcconfig"; path = "Target Support Files/Pods-CPTWordCloud_Example/Pods-CPTWordCloud_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		3884DEC1D96AC225304BDFC7 /* Pods-CPTWordCloud_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CPTWordCloud_Tests.release.xcconfig"; path = "Target Support Files/Pods-CPTWordCloud_Tests/Pods-CPTWordCloud_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				295BA472279B1BA4002D1801 /* TwentyThousandLeagues.txt */,
+				29D6D2F128899D77007BCCB1 /* WordCloudDeltaPhrases.plist */,
 				6003F59C195388D20070C39A /* CPTAppDelegate.h */,
 				6003F59D195388D20070C39A /* CPTAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -292,6 +295,7 @@
 				295BA473279B1BA4002D1801 /* TwentyThousandLeagues.txt in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				29D6D2F228899D77007BCCB1 /* WordCloudDeltaPhrases.plist in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
